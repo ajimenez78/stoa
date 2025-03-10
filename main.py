@@ -1,34 +1,6 @@
 import random
-from dataclasses import dataclass, field
-from typing import List, Dict
-
-@dataclass
-class Virtue:
-    name: str
-    points: int = 0
-    level: int = 1
-
-@dataclass
-class Challenge:
-    title: str
-    description: str
-    difficulty: int
-    target_virtues: List[str]
-    reward_points: int
-
-@dataclass
-class Player:
-    name: str
-    level: int = 1
-    total_experience: int = 0
-    virtues: Dict[str, Virtue] = field(default_factory=lambda: {
-        'Sabiduría': Virtue('Sabiduría'),
-        'Coraje': Virtue('Coraje'),
-        'Justicia': Virtue('Justicia'),
-        'Templanza': Virtue('Templanza')
-    })
-    badges: List[str] = field(default_factory=list)
-    journal: List[str] = field(default_factory=list)
+from typing import List
+from model import *
 
 class StoicQuest:
     def __init__(self):
@@ -38,6 +10,7 @@ class StoicQuest:
             "Vivimos en la brevedad del tiempo, y nuestro mundo es pequeño. - Marco Aurelio",
             "Lo que nos hace infelices es nuestra opinión sobre las cosas, no las cosas en sí. - Séneca"
         ]
+        self.running = True
 
     def _generate_challenges(self) -> List[Challenge]:
         return [
@@ -112,24 +85,30 @@ def main():
     player = game.create_player("Filosofo en Entrenamiento")
     
     # Example game loop
-    for _ in range(3):
-        challenge = game.select_random_challenge()
-        print(f"\nDesafío del día: {challenge.title}")
-        print(challenge.description)
-        
-        # Simulate challenge completion
-        game.complete_challenge(player, challenge)
-        
-        # Add reflection to journal
-        reflection = f"Hoy completé el desafío: {challenge.title}. Aprendí que..."
-        game.add_journal_entry(player, reflection)
+    while game.running:
         
         # Show stoic quote
         print("\nReflexión estoica del día:")
         print(game.get_stoic_quote())
     
-    # Show final player status
-    game.show_player_status(player)
+        # Show player status
+        game.show_player_status(player)
+
+        # Select and show challenge
+        challenge = game.select_random_challenge()
+        print(f"\nDesafío del día: {challenge.title}")
+        print(challenge.description)
+
+        completion = input('¿Has completado el desafío? (s/n/q): ')
+        if completion.lower() == 's':
+            game.complete_challenge(player, challenge)
+            reflection = input('¿Qué aprendiste sobre el desafío? ')
+            game.add_journal_entry(player,
+                    f"Hoy completé el desafío: {challenge.title}. Aprendí que... {reflection}")
+        elif completion.lower() == 'q':
+            game.running = False
+
+    print("\nGracias por jugar Stoic Quest. Hasta luego!")
 
 if __name__ == "__main__":
     main()
