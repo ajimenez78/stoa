@@ -1,15 +1,12 @@
 import random
 from typing import List
 from model import *
+from persistence import Persistence
 
 class StoicQuest:
     def __init__(self):
         self.challenges = self._generate_challenges()
-        self.stoic_quotes = [
-            "No son las cosas las que nos perturban, sino nuestra opinión sobre ellas. - Epicteto",
-            "Vivimos en la brevedad del tiempo, y nuestro mundo es pequeño. - Marco Aurelio",
-            "Lo que nos hace infelices es nuestra opinión sobre las cosas, no las cosas en sí. - Séneca"
-        ]
+        self.persistence = Persistence()
         self.running = True
 
     def _generate_challenges(self) -> List[Challenge]:
@@ -63,7 +60,8 @@ class StoicQuest:
         player.journal.append(reflection)
 
     def get_stoic_quote(self) -> str:
-        return random.choice(self.stoic_quotes)
+        quote = self.persistence.get_random_quote()
+        return f"{quote['quote']} - {quote['author']}"
 
     def show_player_status(self, player: Player):
         print(f"\n--- Estado de {player.name} ---")
@@ -109,6 +107,7 @@ def main():
             game.running = False
 
     print("\nGracias por jugar Stoic Quest. Hasta luego!")
+    game.persistence.kill()
 
 if __name__ == "__main__":
     main()
