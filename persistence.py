@@ -1,5 +1,14 @@
 import sqlite3
 from typing import List, Dict
+from dataclasses import dataclass
+
+@dataclass
+class Challenge:
+    title: str
+    description: str
+    difficulty: int
+    target_virtues: List[str]
+    reward_points: int
 
 con = sqlite3.connect('stoic_quest.db')
 cursor = con.cursor()
