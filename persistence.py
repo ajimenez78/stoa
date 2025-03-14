@@ -10,7 +10,7 @@ class Challenge:
     target_virtues: List[str]
     reward_points: int
 
-con = sqlite3.connect('stoic_quest.db')
+con = sqlite3.connect('database/stoic_quest.db')
 cursor = con.cursor()
 
 quotes = [
