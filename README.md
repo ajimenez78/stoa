@@ -1,1 +1,2 @@
-# stoic_quest
+# Stoa
+An stoic python game
