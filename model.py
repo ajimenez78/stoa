@@ -9,6 +9,7 @@ class Virtue:
 
 @dataclass
 class Challenge:
+    challenge_id: int
     title: str
     description: str
     difficulty: int
@@ -24,6 +25,7 @@ class Quote:
 class Player:
     philosopher_id: int
     name: str
+    current_challenge: Challenge
     virtues: Dict[int, Virtue]
     level: int = 1
     total_experience: int = 0

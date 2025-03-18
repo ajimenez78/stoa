@@ -13,28 +13,36 @@ class Stoa:  # Renombrar la clase principal
     def create_player(self, name: str) -> Player:
         return self.persistence.create_player(name=name)
 
-    def select_random_challenge(self) -> Challenge:
-        return random.choice(self.challenges)
+    def assign_random_challenge(self, player) -> Challenge:
+        random_challenge = self.persistence.get_random_challenge()
+        player.current_challenge = random_challenge
+        self.persistence.save_player(player)
 
-    def complete_challenge(self, player: Player, challenge: Challenge):
+    def complete_challenge(self, player: Player):
         # Increase virtue points
-        print(f"Completaste el desafío {challenge.title}! Recibes {challenge.reward_points} puntos de virtud.")
-        for virtue_id in challenge.target_virtues:
-            player.virtues[virtue_id].points += challenge.reward_points
+        print(f"Completaste el desafío {player.current_challenge.title}! Recibes {player.current_challenge.reward_points} puntos de virtud.")
+        for virtue_id in player.current_challenge.target_virtues:
+            player.virtues[virtue_id].points += player.current_challenge.reward_points
             player.virtues[virtue_id].level = 1 + player.virtues[virtue_id].points // 50
 
         # Increase total experience
-        player.total_experience += challenge.reward_points
+        player.total_experience += player.current_challenge.reward_points
         player.level = 1 + player.total_experience // 100
 
         # Add badge if it's an important challenge
-        if challenge.difficulty >= 3:
-            badge = f"Maestro de {challenge.title}"
+        if player.current_challenge.difficulty >= 3:
+            badge = f"Maestro de {player.current_challenge.title}"
             if badge not in player.badges:
                 player.badges.append(badge)
+        
+        player.current_challenge = None
+
+        # Save player state
+        self.persistence.save_player(player)
 
     def add_journal_entry(self, player: Player, reflection: str):
         player.journal.append(reflection)
+        self.persistence.add_journal_entry(player, reflection)
 
     def get_stoic_quote(self) -> str:
         quote = self.persistence.get_random_quote()
@@ -85,16 +93,18 @@ def main():
         game.show_player_status(player)
 
         # Select and show challenge
-        challenge = game.persistence.get_random_challenge()
-        print(f"\nDesafío del día: {challenge.title}")
-        print(challenge.description)
+        if not player.current_challenge:
+            game.assign_random_challenge(player)
+        print(f"\nDesafío del día: {player.current_challenge.title}")
+        print(player.current_challenge.description)
 
         completion = input('¿Has completado el desafío? (s/n/q): ')
         if completion.lower() == 's':
-            game.complete_challenge(player, challenge)
+            completed_challenge = player.current_challenge
+            game.complete_challenge(player)
             reflection = input('¿Qué aprendiste sobre el desafío? ')
             game.add_journal_entry(player,
-                    f"Hoy completé el desafío: {challenge.title}. Aprendí que... {reflection}")
+                    f"Hoy completé el desafío: {completed_challenge.title}. Aprendí que... {reflection}")
         elif completion.lower() == 'q':
             game.running = False
 
