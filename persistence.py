@@ -4,7 +4,7 @@ from dataclasses import field
 from model import *
 from enum import Enum
 
-DATABASE_NAME = 'database/stoic_quest.db'
+DATABASE_NAME = 'database/stoa.db'
 
 class VIRTUE_IDS(Enum):
     WISDOM = 1
