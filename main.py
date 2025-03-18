@@ -3,7 +3,7 @@ from typing import List
 from model import *
 from persistence import Persistence
 
-class StoicQuest:
+class Stoa:  # Renombrar la clase principal
     def __init__(self):
         self.challenges = self._generate_challenges()
         self.persistence = Persistence()
@@ -77,7 +77,7 @@ class StoicQuest:
             print(badge)
 
 def main():
-    game = StoicQuest()
+    game = Stoa()  # Cambiar todas las referencias de StoicQuest a Stoa
     
     # Create player
     player = game.create_player("Filosofo en Entrenamiento")
@@ -106,7 +106,7 @@ def main():
         elif completion.lower() == 'q':
             game.running = False
 
-    print("\nGracias por jugar Stoic Quest. Hasta luego!")
+    print("\nGracias por jugar Stoa. Hasta luego!")  # Actualizar el mensaje de despedida
     game.persistence.kill()
 
 if __name__ == "__main__":

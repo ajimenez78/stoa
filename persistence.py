@@ -2,6 +2,8 @@ import sqlite3
 from typing import List, Dict
 from dataclasses import dataclass
 
+DB_NAME = 'database/stoa.db'
+
 @dataclass
 class Challenge:
     title: str
@@ -10,7 +12,7 @@ class Challenge:
     target_virtues: List[str]
     reward_points: int
 
-con = sqlite3.connect('database/stoic_quest.db')
+con = sqlite3.connect(DB_NAME)  # Cambiar el nombre del archivo de base de datos
 cursor = con.cursor()
 
 quotes = [
@@ -29,7 +31,7 @@ for row in cursor.execute('SELECT quote, author FROM quotes order by author'):
     print(row)
 
 class Persistence:
-    def __init__(self, db_name: str = 'stoic_quest.db'):
+    def __init__(self, db_name: str = DB_NAME):
         self.con = sqlite3.connect(db_name)
         self.cursor = self.con.cursor()
 

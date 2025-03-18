@@ -1,1 +1,1 @@
-# stoic_quest
+# Stoa
