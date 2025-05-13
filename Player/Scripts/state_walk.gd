@@ -16,7 +16,6 @@ func process(delta: float) -> State:
 	if player.direction == Vector2.ZERO:
 		return idle
 	
-	print(delta)
 	player.velocity = player.direction * move_speed * delta
 	
 	if player.set_direction():
