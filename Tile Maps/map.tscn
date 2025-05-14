@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=4 uid="uid://checff3bat52s"]
+[gd_scene load_steps=9 format=4 uid="uid://checff3bat52s"]
 
 [ext_resource type="Texture2D" uid="uid://x6um4yid51ag" path="res://Tile Maps/Sprites/Grass-01.png" id="1_pklbe"]
 [ext_resource type="Script" uid="uid://c5i0qg3uh42ip" path="res://Tile Maps/level_tile_map_layer.gd" id="2_67v0g"]
@@ -473,6 +473,18 @@ terrain_set_0/terrain_0/name = "Path"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_67v0g")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_67v0g"]
+size = Vector2(1279, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6a58x"]
+size = Vector2(1279, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e51qu"]
+size = Vector2(10, 701.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2pdj0"]
+size = Vector2(10, 701.5)
+
 [node name="Map" type="Node2D"]
 
 [node name="Grass-01" type="TileMapLayer" parent="."]
@@ -482,3 +494,23 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAEAAQAAAABAAAAAAACAAQAAAACAAEAAAADAAU
 tile_set = SubResource("TileSet_6a58x")
 rendering_quadrant_size = 32
 script = ExtResource("2_67v0g")
+
+[node name="Boundaries" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="Up" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(351.5, -258.5)
+shape = SubResource("RectangleShape2D_67v0g")
+
+[node name="Down" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(349, 455)
+shape = SubResource("RectangleShape2D_6a58x")
+
+[node name="Left" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(-295, 98.25)
+shape = SubResource("RectangleShape2D_e51qu")
+
+[node name="Right" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(995, 96)
+shape = SubResource("RectangleShape2D_2pdj0")
