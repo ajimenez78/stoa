@@ -15,6 +15,10 @@ run/main_scene="uid://dhp3l3uq4qej6"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+LevelManager="*res://00_Globals/global_level_manager.gd"
+
 [display]
 
 window/size/viewport_width=480

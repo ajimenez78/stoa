@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://tm20lpf8avmh"]
+[gd_scene load_steps=16 format=3 uid="uid://tm20lpf8avmh"]
 
 [ext_resource type="Texture2D" uid="uid://cnjed76vrunam" path="res://Player/Sprites/ExamplePlayerSprite.png" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://bv35kd66esl42" path="res://Player/Scripts/player.gd" id="1_4ntmi"]
 [ext_resource type="Script" uid="uid://bjest7xq42jmw" path="res://Player/Scripts/player_state_machine.gd" id="3_btcbx"]
 [ext_resource type="Script" uid="uid://bua7thhm31dmj" path="res://Player/Scripts/state_idle.gd" id="4_gwnis"]
 [ext_resource type="Script" uid="uid://cmneyoqmfdybp" path="res://Player/Scripts/state_walk.gd" id="5_k53q1"]
+[ext_resource type="Script" uid="uid://cfh8wcn0pdmcd" path="res://Player/Scripts/player_camera.gd" id="6_fhl08"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_edjgo"]
 radius = 11.0
@@ -166,3 +167,9 @@ script = ExtResource("4_gwnis")
 script = ExtResource("5_k53q1")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -500
+limit_top = -300
+limit_right = 500
+limit_bottom = 300
+editor_draw_limits = true
+script = ExtResource("6_fhl08")
