@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnyq1i3dqr2f1"
-path="res://.godot/imported/athens_tileset.png-80d58bd28ead54bb022cc2923096f577.ctex"
+uid="uid://coon8wmegx8p7"
+path="res://.godot/imported/grass_and_sand.png-7e4a82b2dba9bc42785b23c1a825bd0f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tile Maps/Sprites/athens_tileset.png"
-dest_files=["res://.godot/imported/athens_tileset.png-80d58bd28ead54bb022cc2923096f577.ctex"]
+source_file="res://Tile Maps/Sprites/grass_and_sand.png"
+dest_files=["res://.godot/imported/grass_and_sand.png-7e4a82b2dba9bc42785b23c1a825bd0f.ctex"]
 
 [params]
 

@@ -35,6 +35,10 @@ window/stretch/mode="viewport"
 
 project/assembly_name="Stoa"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/TileMapDual/plugin.cfg")
+
 [input]
 
 up={
