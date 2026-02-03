@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://c3kf11hrk1vxt" path="res://Tile Maps/Sprites/grass_and_dirt.png" id="2_sukj7"]
 [ext_resource type="Texture2D" uid="uid://dy66o1sqlodq4" path="res://Tile Maps/Sprites/grass_and_walls.png" id="3_kr6hp"]
 [ext_resource type="Texture2D" uid="uid://d0w2g0v4m2agq" path="res://assets/ancient_house.png" id="5_kr6hp"]
+[ext_resource type="Texture2D" uid="uid://rl8fl2qa35lm" path="res://assets/stoa.png" id="6_ti8ex"]
+[ext_resource type="Texture2D" uid="uid://hv6c13ni6x0b" path="res://assets/temple.png" id="7_sgtpi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yc75n"]
 texture = ExtResource("2_sukj7")
@@ -235,3 +237,11 @@ metadata/_custom_type_script = "uid://cjk8nronimk5r"
 [node name="AncientHouse" type="Sprite2D" parent="." unique_id=1179304974]
 position = Vector2(272, -24)
 texture = ExtResource("5_kr6hp")
+
+[node name="Stoa" type="Sprite2D" parent="." unique_id=934540514]
+position = Vector2(602, 361)
+texture = ExtResource("6_ti8ex")
+
+[node name="Temple" type="Sprite2D" parent="." unique_id=1588085384]
+position = Vector2(15, 132)
+texture = ExtResource("7_sgtpi")

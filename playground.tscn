@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://dhp3l3uq4qej6"]
 
-[ext_resource type="PackedScene" uid="uid://tm20lpf8avmh" path="res://Player/player.tscn" id="1_rupst"]
-[ext_resource type="PackedScene" uid="uid://checff3bat52s" path="res://Tile Maps/map.tscn" id="2_wt17y"]
+[ext_resource type="PackedScene" uid="uid://cicq8ink45yyk" path="res://Tile Maps/athens.tscn" id="3_is3ju"]
+[ext_resource type="PackedScene" uid="uid://cxmvb56ylfjcv" path="res://Apprentice/apprentice.tscn" id="4_o00ia"]
 
 [node name="Playground" type="Node2D" unique_id=1566043292]
 
-[node name="Player" parent="." unique_id=237747319 instance=ExtResource("1_rupst")]
-position = Vector2(144, 87)
+[node name="Athens" parent="." unique_id=1218727599 instance=ExtResource("3_is3ju")]
+position = Vector2(-274, -17)
 
-[node name="Map" parent="." unique_id=1689414023 instance=ExtResource("2_wt17y")]
+[node name="Apprentice" parent="." unique_id=17956804 instance=ExtResource("4_o00ia")]
