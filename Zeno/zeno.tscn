@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://b1gv1herqkdfm"]
+
+[ext_resource type="Texture2D" uid="uid://dvtpi31hv01b8" path="res://Zeno/Sprites/frame_000.png" id="1_eef4t"]
+[ext_resource type="Texture2D" uid="uid://c3op32q2abke3" path="res://Zeno/Sprites/frame_001.png" id="2_dixab"]
+[ext_resource type="Texture2D" uid="uid://c27iu1qh0tirq" path="res://Zeno/Sprites/frame_002.png" id="3_nm3fm"]
+[ext_resource type="Texture2D" uid="uid://ji7gyrg0y2q3" path="res://Zeno/Sprites/frame_003.png" id="4_forfh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1410y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_eef4t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_dixab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_nm3fm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_forfh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pn28t"]
+radius = 9.0
+
+[node name="Zeno" type="CharacterBody2D" unique_id=640111377]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=155350086]
+sprite_frames = SubResource("SpriteFrames_1410y")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=177646022]
+position = Vector2(-1, 13)
+shape = SubResource("CircleShape2D_pn28t")
