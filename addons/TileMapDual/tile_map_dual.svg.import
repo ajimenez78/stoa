@@ -2,16 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://coon8wmegx8p7"
-path="res://.godot/imported/grass_and_sand.png-7e4a82b2dba9bc42785b23c1a825bd0f.ctex"
+uid="uid://bqu55yxko3ofm"
+path="res://.godot/imported/tile_map_dual.svg-53ffd5e7e4d2fa588a55e62f35fec36c.ctex"
 metadata={
+"has_editor_variant": true,
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tile Maps/Sprites/grass_and_sand.png"
-dest_files=["res://.godot/imported/grass_and_sand.png-7e4a82b2dba9bc42785b23c1a825bd0f.ctex"]
+source_file="res://addons/TileMapDual/tile_map_dual.svg"
+dest_files=["res://.godot/imported/tile_map_dual.svg-53ffd5e7e4d2fa588a55e62f35fec36c.ctex"]
 
 [params]
 
@@ -38,3 +39,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=true

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2wltbo8v0vp1"
-path="res://.godot/imported/walls_and_sand.png-ed3dd1a293febf5c3c88323d89edaa83.ctex"
+uid="uid://c3kf11hrk1vxt"
+path="res://.godot/imported/grass_and_dirt.png-fb50e29280bdcfbe9e92456f53a8f1d3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tile Maps/Sprites/walls_and_sand.png"
-dest_files=["res://.godot/imported/walls_and_sand.png-ed3dd1a293febf5c3c88323d89edaa83.ctex"]
+source_file="res://Tile Maps/Sprites/grass_and_dirt.png"
+dest_files=["res://.godot/imported/grass_and_dirt.png-fb50e29280bdcfbe9e92456f53a8f1d3.ctex"]
 
 [params]
 
