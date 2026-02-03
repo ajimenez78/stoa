@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://hv6c13ni6x0b" path="res://assets/temple.png" id="7_sgtpi"]
 [ext_resource type="Texture2D" uid="uid://bgkm7tkvqyos3" path="res://assets/tree.png" id="9_2elun"]
 [ext_resource type="Texture2D" uid="uid://cppqhp6hwuuam" path="res://assets/bush.png" id="10_5ilbj"]
-[ext_resource type="Texture2D" uid="uid://dpimem8ujef0h" path="res://assets/stones.png" id="10_vid5y"]
+[ext_resource type="Texture2D" uid="uid://dlbgguq0ch88p" path="res://assets/stone.png" id="10_vid5y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yc75n"]
 texture = ExtResource("2_sukj7")
@@ -297,50 +297,168 @@ texture = ExtResource("10_5ilbj")
 position = Vector2(417, 421)
 texture = ExtResource("10_5ilbj")
 
-[node name="Stones" type="Sprite2D" parent="." unique_id=274331404]
-position = Vector2(229, 207)
+[node name="Stone" type="Sprite2D" parent="." unique_id=1162494598]
+position = Vector2(279, 151)
 texture = ExtResource("10_vid5y")
 
-[node name="Stones2" type="Sprite2D" parent="." unique_id=2099389041]
-position = Vector2(-42, 217)
+[node name="Stone2" type="Sprite2D" parent="." unique_id=278317787]
+position = Vector2(275, 146)
 texture = ExtResource("10_vid5y")
 
-[node name="Stones3" type="Sprite2D" parent="." unique_id=647913341]
-position = Vector2(215, 114)
+[node name="Stone3" type="Sprite2D" parent="." unique_id=1820244790]
+position = Vector2(46, 214)
 texture = ExtResource("10_vid5y")
 
-[node name="Stones4" type="Sprite2D" parent="." unique_id=2074304363]
-position = Vector2(86, 24)
+[node name="Stone4" type="Sprite2D" parent="." unique_id=1128889992]
+position = Vector2(53, 204)
 texture = ExtResource("10_vid5y")
 
-[node name="Stones5" type="Sprite2D" parent="." unique_id=2094575321]
-position = Vector2(-41, 6)
+[node name="Stone5" type="Sprite2D" parent="." unique_id=121583967]
+position = Vector2(-84, 155)
 texture = ExtResource("10_vid5y")
 
-[node name="Stones6" type="Sprite2D" parent="." unique_id=1081039575]
-position = Vector2(438, 344)
+[node name="Stone6" type="Sprite2D" parent="." unique_id=591967136]
+position = Vector2(67, 76)
 texture = ExtResource("10_vid5y")
 
-[node name="Stones7" type="Sprite2D" parent="." unique_id=1121519859]
-position = Vector2(693, 295)
+[node name="Stone7" type="Sprite2D" parent="." unique_id=1391043962]
+position = Vector2(271, 317)
 texture = ExtResource("10_vid5y")
 
-[node name="Stones8" type="Sprite2D" parent="." unique_id=1497207705]
-position = Vector2(671, 181)
+[node name="Stone8" type="Sprite2D" parent="." unique_id=55431928]
+position = Vector2(203, 82)
 texture = ExtResource("10_vid5y")
 
-[node name="Stones9" type="Sprite2D" parent="." unique_id=1436571377]
-position = Vector2(532, 35)
+[node name="Stone9" type="Sprite2D" parent="." unique_id=1462883585]
+position = Vector2(216, 319)
 texture = ExtResource("10_vid5y")
 
-[node name="Stones10" type="Sprite2D" parent="." unique_id=32364067]
-position = Vector2(427, 7)
+[node name="Stone10" type="Sprite2D" parent="." unique_id=403066098]
+position = Vector2(372, 172)
 texture = ExtResource("10_vid5y")
 
-[node name="Stones11" type="Sprite2D" parent="." unique_id=1461548745]
-position = Vector2(167, -99)
+[node name="Stone11" type="Sprite2D" parent="." unique_id=1901205114]
+position = Vector2(259, 202)
 texture = ExtResource("10_vid5y")
 
-[node name="Stones12" type="Sprite2D" parent="." unique_id=1270292828]
-position = Vector2(243, 370)
+[node name="Stone12" type="Sprite2D" parent="." unique_id=140746684]
+position = Vector2(395, 241)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone13" type="Sprite2D" parent="." unique_id=2005329477]
+position = Vector2(-92, 244)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone14" type="Sprite2D" parent="." unique_id=685487750]
+position = Vector2(276, 396)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone15" type="Sprite2D" parent="." unique_id=994252457]
+position = Vector2(265, 392)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone16" type="Sprite2D" parent="." unique_id=191603479]
+position = Vector2(262, 396.75)
+scale = Vector2(2, 1.1363636)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone17" type="Sprite2D" parent="." unique_id=600178898]
+position = Vector2(495, 340)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone18" type="Sprite2D" parent="." unique_id=1139523328]
+position = Vector2(524, 308)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone19" type="Sprite2D" parent="." unique_id=363132857]
+position = Vector2(610, 225)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone20" type="Sprite2D" parent="." unique_id=1172037287]
+position = Vector2(608, 232)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone21" type="Sprite2D" parent="." unique_id=269226190]
+position = Vector2(558, 28)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone22" type="Sprite2D" parent="." unique_id=995386586]
+position = Vector2(428.5, 78.25)
+scale = Vector2(2.1, 1.1363636)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone23" type="Sprite2D" parent="." unique_id=2023810105]
+position = Vector2(445, 77)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone24" type="Sprite2D" parent="." unique_id=536077521]
+position = Vector2(442, 70)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone25" type="Sprite2D" parent="." unique_id=1997547732]
+position = Vector2(445, -1)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone26" type="Sprite2D" parent="." unique_id=649146814]
+position = Vector2(405, -14)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone27" type="Sprite2D" parent="." unique_id=343527924]
+position = Vector2(489, 429)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone28" type="Sprite2D" parent="." unique_id=971344176]
+position = Vector2(444, 454)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone29" type="Sprite2D" parent="." unique_id=1482964239]
+position = Vector2(-76, -21)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone30" type="Sprite2D" parent="." unique_id=776571056]
+position = Vector2(96, -18)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone31" type="Sprite2D" parent="." unique_id=991293749]
+position = Vector2(136, 173)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone32" type="Sprite2D" parent="." unique_id=1701577070]
+position = Vector2(707, 264)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone33" type="Sprite2D" parent="." unique_id=788702026]
+position = Vector2(708, 393)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone34" type="Sprite2D" parent="." unique_id=530811884]
+position = Vector2(679.5, 407.25)
+scale = Vector2(1.9, 1.7727273)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone35" type="Sprite2D" parent="." unique_id=1186065133]
+position = Vector2(641.5, 276.25)
+scale = Vector2(2.3, 1.9545455)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone36" type="Sprite2D" parent="." unique_id=185786824]
+position = Vector2(542, 123.75)
+scale = Vector2(1.4, 1.6818181)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone37" type="Sprite2D" parent="." unique_id=2109989948]
+position = Vector2(402, -96)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone38" type="Sprite2D" parent="." unique_id=200220066]
+position = Vector2(211, -92)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone39" type="Sprite2D" parent="." unique_id=1610425585]
+position = Vector2(553.5, -58.75)
+scale = Vector2(3.1, 1.5909091)
+texture = ExtResource("10_vid5y")
+
+[node name="Stone40" type="Sprite2D" parent="." unique_id=467513107]
+position = Vector2(100, -88)
 texture = ExtResource("10_vid5y")
