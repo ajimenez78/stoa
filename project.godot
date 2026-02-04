@@ -68,8 +68,9 @@ right={
 
 [layer_names]
 
-2d_physics/layer_1="Player"
-2d_physics/layer_5="Walls"
+2d_physics/layer_1="Human"
+2d_physics/layer_3="Buildings"
+2d_physics/layer_5="Obstacles"
 
 [rendering]
 

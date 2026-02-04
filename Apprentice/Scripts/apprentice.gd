@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Apprentice extends CharacterBody2D
 
 const SPEED = 100.0
 

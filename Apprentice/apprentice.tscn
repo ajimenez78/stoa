@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cxmvb56ylfjcv"]
 
-[ext_resource type="Script" uid="uid://c6dbjindewqpw" path="res://Apprentice/apprentice.gd" id="1_c4sw5"]
+[ext_resource type="Script" uid="uid://c6dbjindewqpw" path="res://Apprentice/Scripts/apprentice.gd" id="1_c4sw5"]
 [ext_resource type="Texture2D" uid="uid://bdcee1j0b3ach" path="res://Apprentice/Sprites/animations/breathing-idle/south/frame_000.png" id="1_dg7am"]
 [ext_resource type="Texture2D" uid="uid://dnfdq3ul0k8s1" path="res://Apprentice/Sprites/animations/breathing-idle/east/frame_000.png" id="1_pngmy"]
 [ext_resource type="Texture2D" uid="uid://rn46ekqbttcr" path="res://Apprentice/Sprites/animations/breathing-idle/east/frame_001.png" id="2_c4sw5"]
@@ -206,8 +206,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dm7fg"]
+radius = 7.071068
 
 [node name="Apprentice" type="CharacterBody2D" unique_id=17956804]
+collision_mask = 21
 script = ExtResource("1_c4sw5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=345257180]
