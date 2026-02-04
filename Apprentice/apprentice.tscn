@@ -41,6 +41,7 @@
 [ext_resource type="Texture2D" uid="uid://cbeqi8qf6ndn6" path="res://Apprentice/Sprites/animations/walk/west/frame_003.png" id="38_n085r"]
 [ext_resource type="Texture2D" uid="uid://c74j2hvh7resk" path="res://Apprentice/Sprites/animations/walk/west/frame_004.png" id="39_i05fc"]
 [ext_resource type="Texture2D" uid="uid://buhrb7gvc725s" path="res://Apprentice/Sprites/animations/walk/west/frame_005.png" id="40_7kaui"]
+[ext_resource type="Script" uid="uid://bvahsuhpen4mq" path="res://Apprentice/Scripts/apprentice_camera.gd" id="42_auy62"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i00ky"]
 animations = [{
@@ -223,3 +224,4 @@ position = Vector2(0, 10)
 shape = SubResource("CircleShape2D_dm7fg")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1395258542]
+script = ExtResource("42_auy62")

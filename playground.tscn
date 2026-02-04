@@ -7,7 +7,7 @@
 [node name="Playground" type="Node2D" unique_id=1566043292]
 
 [node name="Athens" parent="." unique_id=1218727599 instance=ExtResource("3_is3ju")]
-position = Vector2(-274, -17)
+position = Vector2(-447, -200)
 
 [node name="Apprentice" parent="." unique_id=17956804 instance=ExtResource("4_o00ia")]
 
