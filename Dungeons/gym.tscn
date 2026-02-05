@@ -7,5 +7,5 @@
 script = ExtResource("1_g0ruo")
 metadata/_custom_type_script = "uid://dfqxe0yefv4cx"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1624108220]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=744345434]
 texture = ExtResource("1_awef2")

@@ -1,6 +1,7 @@
 class_name Playground extends Node2D
 
 @export var current_level: Node2D
+@onready var apprentice: Apprentice = $Apprentice
 var current_dungeon
 
 # Called when the node enters the scene tree for the first time.

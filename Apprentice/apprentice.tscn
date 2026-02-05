@@ -209,9 +209,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_dm7fg"]
 radius = 7.071068
 
-[node name="Apprentice" type="CharacterBody2D" unique_id=17956804]
+[node name="Apprentice" type="CharacterBody2D" unique_id=975076575]
 collision_mask = 21
 script = ExtResource("1_c4sw5")
+metadata/_custom_type_script = "uid://c6dbjindewqpw"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=345257180]
 sprite_frames = SubResource("SpriteFrames_i00ky")

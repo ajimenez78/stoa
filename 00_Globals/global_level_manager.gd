@@ -12,6 +12,18 @@ func change_tilemap_bounds(bounds: Array[Vector2]) -> void:
 func enter_dungeon(new_dungeon: Node2D) -> void:
 	if !playground.current_dungeon:
 		playground.add_child(new_dungeon)
+
+		# Position dungeon at the camera's actual position (viewport center)
+		var apprentice = playground.apprentice
+		if apprentice:
+			var camera = apprentice.apprentice_camera
+			if camera:
+				# Use camera's global position (actual viewport center)
+				new_dungeon.global_position = camera.get_screen_center_position()
+			else:
+				# Fallback to apprentice position
+				new_dungeon.global_position = apprentice.global_position
+
 		playground.current_dungeon = new_dungeon
 
 func exit_dungeon() -> void:

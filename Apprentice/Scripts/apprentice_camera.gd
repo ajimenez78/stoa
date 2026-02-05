@@ -1,4 +1,4 @@
-class_name apprentice_camera extends Camera2D
+class_name ApprenticeCamera extends Camera2D
 
 
 # Called when the node enters the scene tree for the first time.
