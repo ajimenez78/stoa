@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://t6bxuk2dn85x"]
+
+[ext_resource type="Script" uid="uid://dfqxe0yefv4cx" path="res://Dungeons/Scripts/dungeon.gd" id="1_k15pv"]
+[ext_resource type="Texture2D" uid="uid://b8rvcnb3mh5hu" path="res://Dungeons/Sprites/stoa.png" id="1_l4dqh"]
+
+[node name="Stoa" type="Node2D" unique_id=1541629889]
+script = ExtResource("1_k15pv")
+metadata/_custom_type_script = "uid://dfqxe0yefv4cx"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1624108220]
+texture = ExtResource("1_l4dqh")

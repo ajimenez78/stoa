@@ -273,8 +273,9 @@ size = Vector2(62.5, 46)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ilbj"]
 size = Vector2(64, 60)
 
-[node name="Athens" type="Node2D" unique_id=829978769]
+[node name="Athens" type="Node2D" unique_id=939641794]
 script = ExtResource("1_wtks4")
+metadata/_custom_type_script = "uid://dsmcusjb6bdon"
 
 [node name="TileMapDual" type="TileMapLayer" parent="." unique_id=2063012741]
 material = ExtResource("1_fmyxw")

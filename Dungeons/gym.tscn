@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bikpbw1g4pnjo"]
+
+[ext_resource type="Texture2D" uid="uid://d3j5ksqxv6qi3" path="res://Dungeons/Sprites/gym.png" id="1_awef2"]
+[ext_resource type="Script" uid="uid://dfqxe0yefv4cx" path="res://Dungeons/Scripts/dungeon.gd" id="1_g0ruo"]
+
+[node name="Gym" type="Node2D" unique_id=1101223042]
+script = ExtResource("1_g0ruo")
+metadata/_custom_type_script = "uid://dfqxe0yefv4cx"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1624108220]
+texture = ExtResource("1_awef2")

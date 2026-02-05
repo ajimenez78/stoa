@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://0jtxxhadjsk"]
+
+[ext_resource type="Script" uid="uid://dfqxe0yefv4cx" path="res://Dungeons/Scripts/dungeon.gd" id="1_is51a"]
+[ext_resource type="Texture2D" uid="uid://d3di3pbvu31us" path="res://Dungeons/Sprites/home.png" id="1_vm7jl"]
+
+[node name="Home" type="Node2D" unique_id=1476653598]
+script = ExtResource("1_is51a")
+metadata/_custom_type_script = "uid://dfqxe0yefv4cx"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1624108220]
+texture = ExtResource("1_vm7jl")
