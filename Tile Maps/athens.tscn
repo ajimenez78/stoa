@@ -5,15 +5,16 @@
 [ext_resource type="Texture2D" uid="uid://c3kf11hrk1vxt" path="res://Tile Maps/Sprites/grass_and_dirt.png" id="2_sukj7"]
 [ext_resource type="Texture2D" uid="uid://dy66o1sqlodq4" path="res://Tile Maps/Sprites/grass_and_walls.png" id="3_kr6hp"]
 [ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/tile_map_dual.gd" id="4_gj20k"]
-[ext_resource type="Script" uid="uid://b7l1opwimr64s" path="res://Tile Maps/Scripts/home.gd" id="5_gj20k"]
 [ext_resource type="Texture2D" uid="uid://d0w2g0v4m2agq" path="res://assets/ancient_house.png" id="5_kr6hp"]
-[ext_resource type="Script" uid="uid://btkhvepucbdjp" path="res://Tile Maps/Scripts/gym.gd" id="6_2elun"]
+[ext_resource type="Script" uid="uid://btkhvepucbdjp" path="res://Tile Maps/Scripts/dungeon_entrance.gd" id="6_2elun"]
 [ext_resource type="Texture2D" uid="uid://rl8fl2qa35lm" path="res://assets/stoa.png" id="6_ti8ex"]
 [ext_resource type="Texture2D" uid="uid://hv6c13ni6x0b" path="res://assets/temple.png" id="7_sgtpi"]
+[ext_resource type="PackedScene" uid="uid://0jtxxhadjsk" path="res://Dungeons/home.tscn" id="7_wtks4"]
 [ext_resource type="Texture2D" uid="uid://bgkm7tkvqyos3" path="res://assets/tree.png" id="9_2elun"]
-[ext_resource type="Script" uid="uid://bo1hvq47cwg7u" path="res://Tile Maps/Scripts/stoa.gd" id="9_wtks4"]
+[ext_resource type="PackedScene" uid="uid://bikpbw1g4pnjo" path="res://Dungeons/gym.tscn" id="9_tth6t"]
 [ext_resource type="Texture2D" uid="uid://cppqhp6hwuuam" path="res://assets/bush.png" id="10_5ilbj"]
 [ext_resource type="Texture2D" uid="uid://dlbgguq0ch88p" path="res://assets/stone.png" id="10_vid5y"]
+[ext_resource type="PackedScene" uid="uid://t6bxuk2dn85x" path="res://Dungeons/stoa.tscn" id="10_wtks4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yc75n"]
 texture = ExtResource("2_sukj7")
@@ -268,7 +269,7 @@ sources/1 = SubResource("TileSetAtlasSource_ti8ex")
 size = Vector2(62, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2elun"]
-size = Vector2(62.5, 46)
+size = Vector2(71.5, 46)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ilbj"]
 size = Vector2(64, 60)
@@ -287,10 +288,12 @@ script = ExtResource("4_gj20k")
 godot_4_3_compatibility = false
 metadata/_custom_type_script = "uid://cjk8nronimk5r"
 
-[node name="Home" type="Area2D" parent="." unique_id=866487522]
+[node name="Home" type="Area2D" parent="." unique_id=126710762]
 position = Vector2(448, 176)
 collision_layer = 4
-script = ExtResource("5_gj20k")
+script = ExtResource("6_2elun")
+dungeon_resource = ExtResource("7_wtks4")
+metadata/_custom_type_script = "uid://btkhvepucbdjp"
 
 [node name="AncientHouse" type="Sprite2D" parent="Home" unique_id=1179304974]
 position = Vector2(1, -24)
@@ -300,23 +303,26 @@ texture = ExtResource("5_kr6hp")
 position = Vector2(1, 3)
 shape = SubResource("RectangleShape2D_vid5y")
 
-[node name="Gym" type="Area2D" parent="." unique_id=1918779061]
+[node name="Gym" type="Area2D" parent="." unique_id=177707184]
 position = Vector2(193, 318)
-collision_layer = 4
 script = ExtResource("6_2elun")
+dungeon_resource = ExtResource("9_tth6t")
+metadata/_custom_type_script = "uid://btkhvepucbdjp"
 
 [node name="Temple" type="Sprite2D" parent="Gym" unique_id=1588085384]
 position = Vector2(-1, -10)
 texture = ExtResource("7_sgtpi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gym" unique_id=1749317410]
-position = Vector2(10.75, 5)
+position = Vector2(15.25, 5)
 shape = SubResource("RectangleShape2D_2elun")
 
-[node name="Stoa" type="Area2D" parent="." unique_id=1935313966]
+[node name="Stoa" type="Area2D" parent="." unique_id=810644478]
 position = Vector2(752, 571)
 collision_layer = 4
-script = ExtResource("9_wtks4")
+script = ExtResource("6_2elun")
+dungeon_resource = ExtResource("10_wtks4")
+metadata/_custom_type_script = "uid://btkhvepucbdjp"
 
 [node name="StoaSprite" type="Sprite2D" parent="Stoa" unique_id=934540514]
 position = Vector2(39, -35)

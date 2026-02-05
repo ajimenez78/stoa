@@ -5,18 +5,26 @@ const SPEED = 100.0
 var cardinal_direction := Vector2.DOWN
 var direction := Vector2.ZERO
 var state := "idle"
+var dungeon_entered = false
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 func _process(delta: float) -> void:
+	if !LevelManager.in_dungeon():
+		if dungeon_entered: dungeon_entered = false
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-	direction.y = Input.get_action_strength("down") - Input.get_action_strength("up")
-	
-	velocity = direction * SPEED
-	
+		# Get the input direction and handle the movement/deceleration.
+		# As good practice, you should replace UI actions with custom gameplay actions.
+		direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+		direction.y = Input.get_action_strength("down") - Input.get_action_strength("up")
+		
+		velocity = direction * SPEED
+	else:
+		if !dungeon_entered:
+			direction = -direction
+			velocity = Vector2.ZERO
+			dungeon_entered = true
+		
 	if setState() || setDirection():
 		updateAnimation()
 
