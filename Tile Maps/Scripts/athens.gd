@@ -1,14 +1,11 @@
-class_name athens extends Node2D
+class_name athens extends StoaLevelMap
 
 @onready var tile_map_dual: TileMapDual = $TileMapDual
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	super._ready()
 	LevelManager.change_tilemap_bounds(get_tile_map_bounds())
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func get_tile_map_bounds() -> Array[Vector2]:
 	var map_rectangle = tile_map_dual.get_used_rect()
