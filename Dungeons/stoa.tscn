@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dfqxe0yefv4cx" path="res://Dungeons/Scripts/dungeon.gd" id="1_k15pv"]
 [ext_resource type="Texture2D" uid="uid://b8rvcnb3mh5hu" path="res://Dungeons/Sprites/stoa.png" id="1_l4dqh"]
+[ext_resource type="Texture2D" uid="uid://cjk3vsdthk711" path="res://Dungeons/Sprites/temperance.png" id="3_3ncpv"]
+[ext_resource type="Texture2D" uid="uid://bscwebm5j14yk" path="res://Dungeons/Sprites/justice.png" id="4_n567r"]
 
 [node name="Stoa" type="Node2D" unique_id=1541629889]
 script = ExtResource("1_k15pv")
@@ -9,3 +11,70 @@ metadata/_custom_type_script = "uid://dfqxe0yefv4cx"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1624108220]
 texture = ExtResource("1_l4dqh")
+
+[node name="MentorMessage" type="Node2D" parent="." unique_id=885655700]
+
+[node name="ColorRect" type="ColorRect" parent="MentorMessage" unique_id=1806546046]
+offset_left = -504.0
+offset_top = -484.0
+offset_right = 512.0
+offset_bottom = -234.0
+color = Color(1, 1, 1, 0.5882353)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MentorMessage" unique_id=1652294879]
+offset_left = -471.0
+offset_top = -473.0
+offset_right = 488.0
+offset_bottom = -228.0
+bbcode_enabled = true
+text = "[color=black][b][font_size=24]Mensaje del Mentor[/font_size][/b]
+
+[font_size=20]Bienvenido, buscador de sabiduría. Has dado el primer paso en un viaje que no tiene fin, pues el camino del estoicismo es el camino de toda una vida. Aquí aprenderás que la felicidad no depende de las circunstancias externas, sino de tu carácter interno.
+
+Recuerda siempre: [i]\"No son las cosas las que nos perturban, sino las opiniones que tenemos de ellas.\"[/i] Tu práctica diaria te llevará hacia la serenidad y la virtud.[/font_size][/color]"
+
+[node name="Templanza" type="Node2D" parent="." unique_id=286716482]
+
+[node name="ColorRect" type="ColorRect" parent="Templanza" unique_id=2133514221]
+offset_left = 204.0
+offset_top = 337.0
+offset_right = 675.0
+offset_bottom = 479.0
+color = Color(1, 1, 1, 0.47058824)
+
+[node name="Temperance" type="Sprite2D" parent="Templanza" unique_id=1804592595]
+position = Vector2(107.999985, 414)
+scale = Vector2(0.215, 0.217)
+texture = ExtResource("3_3ncpv")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Templanza" unique_id=87079035]
+offset_left = 222.0
+offset_top = 352.0
+offset_right = 664.0
+offset_bottom = 492.0
+bbcode_enabled = true
+text = "[color=black][b][font_size=22]Templanza[/font_size][/b]
+[font_size=18]El autocontrol y la moderación. La disciplina para resistir los excesos y mantener el equilibrio en todas las cosas.[/font_size][/color]"
+
+[node name="Justicia" type="Node2D" parent="." unique_id=1191638199]
+
+[node name="ColorRect" type="ColorRect" parent="Justicia" unique_id=1797149195]
+offset_left = -569.0
+offset_top = 341.0
+offset_right = -98.0
+offset_bottom = 483.0
+color = Color(1, 1, 1, 0.47058824)
+
+[node name="Justice" type="Sprite2D" parent="Justicia" unique_id=1618300305]
+position = Vector2(-667, 414)
+scale = Vector2(0.215, 0.217)
+texture = ExtResource("4_n567r")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Justicia" unique_id=198514872]
+offset_left = -553.0
+offset_top = 352.0
+offset_right = -111.0
+offset_bottom = 492.0
+bbcode_enabled = true
+text = "[color=black][b][font_size=22]Justicia[/font_size][/b]
+[font_size=18]Tratar a los demás con equidad y bondad. Cumplir con nuestras obligaciones sociales y contribuir al bien común.[/font_size][/color]"
