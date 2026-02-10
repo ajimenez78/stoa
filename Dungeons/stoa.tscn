@@ -4,77 +4,105 @@
 [ext_resource type="Texture2D" uid="uid://b8rvcnb3mh5hu" path="res://Dungeons/Sprites/stoa.png" id="1_l4dqh"]
 [ext_resource type="Texture2D" uid="uid://cjk3vsdthk711" path="res://Dungeons/Sprites/temperance.png" id="3_3ncpv"]
 [ext_resource type="Texture2D" uid="uid://bscwebm5j14yk" path="res://Dungeons/Sprites/justice.png" id="4_n567r"]
+[ext_resource type="FontFile" uid="uid://db2wpsf0pky2f" path="res://Assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="5_font"]
 
 [node name="Stoa" type="Node2D" unique_id=1541629889]
 script = ExtResource("1_k15pv")
 metadata/_custom_type_script = "uid://dfqxe0yefv4cx"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1624108220]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1409220434]
+
+[node name="Sprite2D" type="Sprite2D" parent="UI" unique_id=1624108220]
+position = Vector2(640, 360.50006)
+scale = Vector2(0.8385416, 0.7080079)
 texture = ExtResource("1_l4dqh")
 
-[node name="MentorMessage" type="Node2D" parent="." unique_id=885655700]
+[node name="MentorMessage" type="Control" parent="UI" unique_id=885655700]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="ColorRect" type="ColorRect" parent="MentorMessage" unique_id=1806546046]
-offset_left = -504.0
-offset_top = -484.0
-offset_right = 512.0
-offset_bottom = -234.0
+[node name="ColorRect" type="ColorRect" parent="UI/MentorMessage" unique_id=1806546046]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 31.0
+offset_right = 1214.0
+offset_bottom = 214.0
 color = Color(1, 1, 1, 0.5882353)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MentorMessage" unique_id=1652294879]
-offset_left = -471.0
-offset_top = -473.0
-offset_right = 488.0
-offset_bottom = -228.0
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/MentorMessage" unique_id=1652294879]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 40.0
+offset_right = 1213.0
+offset_bottom = 211.0
+theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
-text = "[color=black][b][font_size=24]Mensaje del Mentor[/font_size][/b]
+text = "[color=black][b][font_size=20]Mensaje del Mentor[/font_size][/b]
 
-[font_size=20]Bienvenido, buscador de sabiduría. Has dado el primer paso en un viaje que no tiene fin, pues el camino del estoicismo es el camino de toda una vida. Aquí aprenderás que la felicidad no depende de las circunstancias externas, sino de tu carácter interno.
+[font_size=16]Bienvenido, buscador de sabiduría. Has dado el primer paso en un viaje que no tiene fin, pues el camino del estoicismo es el camino de toda una vida. Aquí aprenderás que la felicidad no depende de las circunstancias externas, sino de tu carácter interno.
 
 Recuerda siempre: [i]\"No son las cosas las que nos perturban, sino las opiniones que tenemos de ellas.\"[/i] Tu práctica diaria te llevará hacia la serenidad y la virtud.[/font_size][/color]"
 
-[node name="Templanza" type="Node2D" parent="." unique_id=286716482]
+[node name="Templanza" type="Control" parent="UI" unique_id=286716482]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="ColorRect" type="ColorRect" parent="Templanza" unique_id=2133514221]
-offset_left = 204.0
-offset_top = 337.0
-offset_right = 675.0
-offset_bottom = 479.0
+[node name="ColorRect" type="ColorRect" parent="UI/Templanza" unique_id=2133514221]
+layout_mode = 0
+offset_left = 822.0
+offset_top = 577.0
+offset_right = 1244.0
+offset_bottom = 706.0
 color = Color(1, 1, 1, 0.47058824)
 
-[node name="Temperance" type="Sprite2D" parent="Templanza" unique_id=1804592595]
-position = Vector2(107.999985, 414)
-scale = Vector2(0.215, 0.217)
+[node name="Temperance" type="Sprite2D" parent="UI/Templanza" unique_id=1804592595]
+position = Vector2(752, 649)
+scale = Vector2(0.144, 0.144)
 texture = ExtResource("3_3ncpv")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Templanza" unique_id=87079035]
-offset_left = 222.0
-offset_top = 352.0
-offset_right = 664.0
-offset_bottom = 492.0
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Templanza" unique_id=87079035]
+layout_mode = 0
+offset_left = 838.0
+offset_top = 580.0
+offset_right = 1253.0
+offset_bottom = 696.0
+theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
-text = "[color=black][b][font_size=22]Templanza[/font_size][/b]
-[font_size=18]El autocontrol y la moderación. La disciplina para resistir los excesos y mantener el equilibrio en todas las cosas.[/font_size][/color]"
+text = "[color=black][b][font_size=20]Templanza[/font_size][/b]
 
-[node name="Justicia" type="Node2D" parent="." unique_id=1191638199]
+[font_size=16]El autocontrol y la moderación. La disciplina para resistir los excesos y mantener el equilibrio en todas las cosas.[/font_size][/color]"
 
-[node name="ColorRect" type="ColorRect" parent="Justicia" unique_id=1797149195]
-offset_left = -569.0
-offset_top = 341.0
-offset_right = -98.0
-offset_bottom = 483.0
+[node name="Justicia" type="Control" parent="UI" unique_id=1191638199]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="UI/Justicia" unique_id=1797149195]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 583.0
+offset_right = 558.0
+offset_bottom = 707.0
 color = Color(1, 1, 1, 0.47058824)
 
-[node name="Justice" type="Sprite2D" parent="Justicia" unique_id=1618300305]
-position = Vector2(-667, 414)
-scale = Vector2(0.215, 0.217)
+[node name="Justice" type="Sprite2D" parent="UI/Justicia" unique_id=1618300305]
+position = Vector2(73, 649)
+scale = Vector2(0.144, 0.144)
 texture = ExtResource("4_n567r")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Justicia" unique_id=198514872]
-offset_left = -553.0
-offset_top = 352.0
-offset_right = -111.0
-offset_bottom = 492.0
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Justicia" unique_id=198514872]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 590.0
+offset_right = 554.0
+offset_bottom = 702.0
+theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
-text = "[color=black][b][font_size=22]Justicia[/font_size][/b]
-[font_size=18]Tratar a los demás con equidad y bondad. Cumplir con nuestras obligaciones sociales y contribuir al bien común.[/font_size][/color]"
+text = "[color=black][b][font_size=20]Justicia[/font_size][/b]
+
+[font_size=16]Tratar a los demás con equidad y bondad. Cumplir con nuestras obligaciones sociales y contribuir al bien común.[/font_size][/color]"
