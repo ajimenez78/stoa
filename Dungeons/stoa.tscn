@@ -7,6 +7,8 @@
 [ext_resource type="FontFile" uid="uid://db2wpsf0pky2f" path="res://Assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="5_font"]
 [ext_resource type="Texture2D" uid="uid://ccq05rdr4gmij" path="res://Dungeons/Sprites/prudence.png" id="6_ungmm"]
 [ext_resource type="Texture2D" uid="uid://bimu53urammpv" path="res://Dungeons/Sprites/fortitude.png" id="7_0rqnr"]
+[ext_resource type="Texture2D" uid="uid://bovs1tb6ht286" path="res://Dungeons/Sprites/arrow-right.png" id="8_3ysre"]
+[ext_resource type="Texture2D" uid="uid://po55uwqupi3i" path="res://Dungeons/Sprites/arrow-left.png" id="9_v2hqn"]
 
 [node name="Stoa" type="Node2D" unique_id=1541629889 node_paths=PackedStringArray("quote_rich_text_label", "author_rich_text_label")]
 script = ExtResource("1_0rqnr")
@@ -198,31 +200,31 @@ offset_bottom = 233.0
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="UI/SabiduríaEstoica" unique_id=217705282]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.55
 offset_left = 129.0
-offset_top = 43.0
+offset_top = 34.0
 offset_right = 1094.0
-offset_bottom = 204.0
+offset_bottom = 199.0
 color = Color(1, 1, 1, 0.5882353)
-metadata/_edit_use_anchors_ = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI/SabiduríaEstoica" unique_id=1988986055]
 layout_mode = 0
 offset_left = 147.0
-offset_top = 54.0
+offset_top = 45.0
 offset_right = 1064.0
-offset_bottom = 101.0
+offset_bottom = 92.0
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
 text = "[color=black][b][font_size=20]Sabiduría estoica[/font_size][/b][/color]"
-metadata/_edit_use_anchors_ = true
 
 [node name="QuoteRichTextLabel" type="RichTextLabel" parent="UI/SabiduríaEstoica" unique_id=1506160342]
 layout_mode = 0
 offset_left = 147.0
-offset_top = 102.0
+offset_top = 93.0
 offset_right = 1077.0
-offset_bottom = 173.0
+offset_bottom = 164.0
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
 text = "[font_size=16][i][color=black]\"No podemos controlar lo que nos sucede, pero sí cómo respondemos a ello\"[/color][/i][/font_size]
@@ -231,10 +233,28 @@ text = "[font_size=16][i][color=black]\"No podemos controlar lo que nos sucede, 
 [node name="AuthorRichTextLabel" type="RichTextLabel" parent="UI/SabiduríaEstoica" unique_id=1256535762]
 layout_mode = 0
 offset_left = 155.0
-offset_top = 156.0
+offset_top = 147.0
 offset_right = 1075.0
-offset_bottom = 189.0
+offset_bottom = 180.0
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
 text = "[font_size=16][color=brown]- Epicteto[/color][/font_size]
 "
+
+[node name="NextButton" type="TextureButton" parent="UI/SabiduríaEstoica" unique_id=1618702249]
+layout_mode = 0
+offset_left = 1058.0
+offset_top = 182.0
+offset_right = 1090.0
+offset_bottom = 214.0
+texture_normal = ExtResource("8_3ysre")
+stretch_mode = 0
+
+[node name="PreviousButton" type="TextureButton" parent="UI/SabiduríaEstoica" unique_id=1159163432]
+layout_mode = 0
+offset_left = 1016.0
+offset_top = 182.0
+offset_right = 1048.0
+offset_bottom = 214.0
+texture_normal = ExtResource("9_v2hqn")
+stretch_mode = 0
