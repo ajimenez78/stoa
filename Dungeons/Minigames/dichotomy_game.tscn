@@ -1,0 +1,170 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://Dungeons/Minigames/dichotomy_game.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://Dungeons/Minigames/drop_zone.tscn" id="2_zone"]
+[ext_resource type="FontFile" uid="uid://db2wpsf0pky2f" path="res://Assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="3_font"]
+
+[sub_resource type="FontVariation" id="FontBold"]
+base_font = ExtResource("3_font")
+variation_opentype = {
+2003265652: 700
+}
+
+[sub_resource type="FontVariation" id="FontSemiBold"]
+base_font = ExtResource("3_font")
+variation_opentype = {
+2003265652: 620
+}
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[sub_resource type="StyleBoxFlat" id="ReplayNormal"]
+content_margin_left = 22.0
+content_margin_top = 9.0
+content_margin_right = 22.0
+content_margin_bottom = 9.0
+bg_color = Color(0.5451, 0.45098, 0.33333, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="ReplayHover"]
+content_margin_left = 22.0
+content_margin_top = 9.0
+content_margin_right = 22.0
+content_margin_bottom = 9.0
+bg_color = Color(0.42745, 0.35294, 0.25882, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="DichotomyGame" type="Control" node_paths=PackedStringArray("board", "controllable_zone", "uncontrollable_zone", "feedback_label", "remaining_label", "situation_list", "result_panel", "result_score_label", "result_text_label", "replay_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_script")
+board = NodePath("Board")
+controllable_zone = NodePath("Board/Zones/ControllableZone")
+uncontrollable_zone = NodePath("Board/Zones/UncontrollableZone")
+feedback_label = NodePath("Board/FeedbackLabel")
+remaining_label = NodePath("Board/RemainingLabel")
+situation_list = NodePath("Board/SituationScroll/SituationList")
+result_panel = NodePath("Result")
+result_score_label = NodePath("Result/ScoreLabel")
+result_text_label = NodePath("Result/TextLabel")
+replay_button = NodePath("Result/ReplayButton")
+
+[node name="Board" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="HelpLabel" type="Label" parent="Board"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.85)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 13
+text = "Arrastra cada situación a la zona que le corresponda."
+autowrap_mode = 3
+
+[node name="Zones" type="HBoxContainer" parent="Board"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ControllableZone" parent="Board/Zones" instance=ExtResource("2_zone")]
+layout_mode = 2
+size_flags_horizontal = 3
+title = "Bajo mi control"
+highlight_color = Color(0.15294, 0.68235, 0.37647, 1)
+
+[node name="UncontrollableZone" parent="Board/Zones" instance=ExtResource("2_zone")]
+layout_mode = 2
+size_flags_horizontal = 3
+title = "Fuera de mi control"
+highlight_color = Color(0.90588, 0.29804, 0.23529, 1)
+
+[node name="FeedbackLabel" type="Label" parent="Board"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.15294, 0.68235, 0.37647, 1)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="RemainingLabel" type="Label" parent="Board"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.78)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 12
+text = "Te quedan 5 de 5 situaciones"
+
+[node name="SituationScroll" type="ScrollContainer" parent="Board"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="SituationList" type="VBoxContainer" parent="Board/SituationScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="Result" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Heading" type="Label" parent="Result"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
+theme_override_fonts/font = SubResource("FontBold")
+theme_override_font_sizes/font_size = 22
+text = "Ejercicio completado"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="Result"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
+theme_override_fonts/font = SubResource("FontBold")
+theme_override_font_sizes/font_size = 18
+text = "0 de 5 aciertos"
+horizontal_alignment = 1
+
+[node name="TextLabel" type="Label" parent="Result"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.85)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 13
+theme_override_constants/line_spacing = 4
+text = "Resultado del ejercicio"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ReplayButton" type="Button" parent="Result"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_hover_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/focus = SubResource("Empty")
+theme_override_styles/normal = SubResource("ReplayNormal")
+theme_override_styles/hover = SubResource("ReplayHover")
+theme_override_styles/pressed = SubResource("ReplayHover")
+text = "Jugar de nuevo"

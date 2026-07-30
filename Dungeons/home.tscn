@@ -1,11 +1,531 @@
-[gd_scene format=3 uid="uid://0jtxxhadjsk"]
+[gd_scene load_steps=18 format=3 uid="uid://0jtxxhadjsk"]
 
-[ext_resource type="Script" uid="uid://dfqxe0yefv4cx" path="res://Dungeons/Scripts/dungeon.gd" id="1_is51a"]
-[ext_resource type="Texture2D" uid="uid://d3di3pbvu31us" path="res://Dungeons/Sprites/home.png" id="1_vm7jl"]
+[ext_resource type="Script" path="res://Dungeons/home.gd" id="1_home"]
+[ext_resource type="Texture2D" uid="uid://d3di3pbvu31us" path="res://Dungeons/Sprites/home.png" id="2_bg"]
+[ext_resource type="FontFile" uid="uid://db2wpsf0pky2f" path="res://Assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="3_font"]
 
-[node name="Home" type="Node2D" unique_id=1476653598]
-script = ExtResource("1_is51a")
-metadata/_custom_type_script = "uid://dfqxe0yefv4cx"
+[sub_resource type="FontVariation" id="FontBold"]
+base_font = ExtResource("3_font")
+variation_opentype = {
+2003265652: 700
+}
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1624108220]
-texture = ExtResource("1_vm7jl")
+[sub_resource type="FontVariation" id="FontSemiBold"]
+base_font = ExtResource("3_font")
+variation_opentype = {
+2003265652: 620
+}
+
+[sub_resource type="StyleBoxFlat" id="PanelCard"]
+bg_color = Color(0.96078, 0.96078, 0.94118, 0.62)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.83137, 0.77255, 0.72549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="BadgeBrown"]
+bg_color = Color(0.5451, 0.45098, 0.33333, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="BadgeGreen"]
+bg_color = Color(0.15294, 0.68235, 0.37647, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="BadgeBlue"]
+bg_color = Color(0.2902, 0.56471, 0.88627, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="ButtonGroup" id="TabsGroup"]
+
+[sub_resource type="StyleBoxFlat" id="TabActive"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 8.0
+bg_color = Color(0.5451, 0.45098, 0.33333, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="TabInactive"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 8.0
+bg_color = Color(0.96078, 0.96078, 0.94118, 0.55)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5451, 0.45098, 0.33333, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="WritePanel"]
+bg_color = Color(1, 1, 1, 0.55)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.83137, 0.77255, 0.72549, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[sub_resource type="StyleBoxFlat" id="SaveNormal"]
+content_margin_left = 22.0
+content_margin_top = 9.0
+content_margin_right = 22.0
+content_margin_bottom = 9.0
+bg_color = Color(0.5451, 0.45098, 0.33333, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="SaveHover"]
+content_margin_left = 22.0
+content_margin_top = 9.0
+content_margin_right = 22.0
+content_margin_bottom = 9.0
+bg_color = Color(0.42745, 0.35294, 0.25882, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="SaveDisabled"]
+content_margin_left = 22.0
+content_margin_top = 9.0
+content_margin_right = 22.0
+content_margin_bottom = 9.0
+bg_color = Color(0.5451, 0.45098, 0.33333, 0.4)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Home" type="Node2D" node_paths=PackedStringArray("entries_value_label", "streak_value_label", "practices_value_label", "new_entry_tab", "history_tab", "new_entry_panel", "prompt_grid", "question_label", "entry_text_edit", "char_count_label", "save_button", "toast_label", "history_panel", "history_list", "empty_history")]
+script = ExtResource("1_home")
+entries_value_label = NodePath("UI/Layout/Column/Stats/EntriesCard/Margin/Row/Badge/Value")
+streak_value_label = NodePath("UI/Layout/Column/Stats/StreakCard/Margin/Row/Badge/Value")
+practices_value_label = NodePath("UI/Layout/Column/Stats/PracticesCard/Margin/Row/Badge/Value")
+new_entry_tab = NodePath("UI/Layout/Column/Tabs/NewEntryTab")
+history_tab = NodePath("UI/Layout/Column/Tabs/HistoryTab")
+new_entry_panel = NodePath("UI/Layout/Column/Content/Margin/NewEntry")
+prompt_grid = NodePath("UI/Layout/Column/Content/Margin/NewEntry/PromptGrid")
+question_label = NodePath("UI/Layout/Column/Content/Margin/NewEntry/WritePanel/Margin/Column/QuestionLabel")
+entry_text_edit = NodePath("UI/Layout/Column/Content/Margin/NewEntry/WritePanel/Margin/Column/EntryTextEdit")
+char_count_label = NodePath("UI/Layout/Column/Content/Margin/NewEntry/Footer/CharCountLabel")
+save_button = NodePath("UI/Layout/Column/Content/Margin/NewEntry/Footer/SaveButton")
+toast_label = NodePath("UI/Layout/Column/Content/Margin/NewEntry/Footer/ToastLabel")
+history_panel = NodePath("UI/Layout/Column/Content/Margin/History")
+history_list = NodePath("UI/Layout/Column/Content/Margin/History/HistoryScroll/HistoryList")
+empty_history = NodePath("UI/Layout/Column/Content/Margin/History/HistoryScroll/EmptyHistory")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Background" type="Sprite2D" parent="UI"]
+position = Vector2(640, 360)
+scale = Vector2(0.8385416, 0.7080079)
+texture = ExtResource("2_bg")
+
+[node name="Vignette" type="ColorRect" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.3)
+
+[node name="Layout" type="MarginContainer" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 14
+
+[node name="Column" type="VBoxContainer" parent="UI/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Hero" type="VBoxContainer" parent="UI/Layout/Column"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="UI/Layout/Column/Hero"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_fonts/font = SubResource("FontBold")
+theme_override_font_sizes/font_size = 30
+text = "Tu Hogar Estoico"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="UI/Layout/Column/Hero"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 0.85)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 14
+text = "Un espacio para la reflexión y el crecimiento personal"
+horizontal_alignment = 1
+
+[node name="Stats" type="HBoxContainer" parent="UI/Layout/Column"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EntriesCard" type="PanelContainer" parent="UI/Layout/Column/Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("PanelCard")
+
+[node name="Margin" type="MarginContainer" parent="UI/Layout/Column/Stats/EntriesCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="Row" type="HBoxContainer" parent="UI/Layout/Column/Stats/EntriesCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Badge" type="Panel" parent="UI/Layout/Column/Stats/EntriesCard/Margin/Row"]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("BadgeBrown")
+
+[node name="Value" type="Label" parent="UI/Layout/Column/Stats/EntriesCard/Margin/Row/Badge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_fonts/font = SubResource("FontBold")
+theme_override_font_sizes/font_size = 17
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Caption" type="Label" parent="UI/Layout/Column/Stats/EntriesCard/Margin/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.82)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 13
+text = "Entradas totales"
+
+[node name="StreakCard" type="PanelContainer" parent="UI/Layout/Column/Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("PanelCard")
+
+[node name="Margin" type="MarginContainer" parent="UI/Layout/Column/Stats/StreakCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="Row" type="HBoxContainer" parent="UI/Layout/Column/Stats/StreakCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Badge" type="Panel" parent="UI/Layout/Column/Stats/StreakCard/Margin/Row"]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("BadgeGreen")
+
+[node name="Value" type="Label" parent="UI/Layout/Column/Stats/StreakCard/Margin/Row/Badge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_fonts/font = SubResource("FontBold")
+theme_override_font_sizes/font_size = 17
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Caption" type="Label" parent="UI/Layout/Column/Stats/StreakCard/Margin/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.82)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 13
+text = "Racha actual (días)"
+
+[node name="PracticesCard" type="PanelContainer" parent="UI/Layout/Column/Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("PanelCard")
+
+[node name="Margin" type="MarginContainer" parent="UI/Layout/Column/Stats/PracticesCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="Row" type="HBoxContainer" parent="UI/Layout/Column/Stats/PracticesCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Badge" type="Panel" parent="UI/Layout/Column/Stats/PracticesCard/Margin/Row"]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("BadgeBlue")
+
+[node name="Value" type="Label" parent="UI/Layout/Column/Stats/PracticesCard/Margin/Row/Badge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_fonts/font = SubResource("FontBold")
+theme_override_font_sizes/font_size = 17
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Caption" type="Label" parent="UI/Layout/Column/Stats/PracticesCard/Margin/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.82)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 13
+text = "Prácticas completadas"
+
+[node name="Tabs" type="HBoxContainer" parent="UI/Layout/Column"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NewEntryTab" type="Button" parent="UI/Layout/Column/Tabs"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
+theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
+theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/focus = SubResource("Empty")
+theme_override_styles/normal = SubResource("TabInactive")
+theme_override_styles/hover = SubResource("TabInactive")
+theme_override_styles/pressed = SubResource("TabActive")
+theme_override_styles/hover_pressed = SubResource("TabActive")
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("TabsGroup")
+text = "Nueva Entrada"
+
+[node name="HistoryTab" type="Button" parent="UI/Layout/Column/Tabs"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
+theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
+theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/focus = SubResource("Empty")
+theme_override_styles/normal = SubResource("TabInactive")
+theme_override_styles/hover = SubResource("TabInactive")
+theme_override_styles/pressed = SubResource("TabActive")
+theme_override_styles/hover_pressed = SubResource("TabActive")
+toggle_mode = true
+button_group = SubResource("TabsGroup")
+text = "Historial"
+
+[node name="Content" type="PanelContainer" parent="UI/Layout/Column"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("PanelCard")
+
+[node name="Margin" type="MarginContainer" parent="UI/Layout/Column/Content"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="NewEntry" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Heading" type="Label" parent="UI/Layout/Column/Content/Margin/NewEntry"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
+theme_override_fonts/font = SubResource("FontBold")
+theme_override_font_sizes/font_size = 22
+text = "Diario Estoico"
+
+[node name="ChooseLabel" type="Label" parent="UI/Layout/Column/Content/Margin/NewEntry"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.85)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 14
+text = "Elige una reflexión guiada:"
+
+[node name="PromptGrid" type="GridContainer" parent="UI/Layout/Column/Content/Margin/NewEntry"]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="WritePanel" type="PanelContainer" parent="UI/Layout/Column/Content/Margin/NewEntry"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("WritePanel")
+
+[node name="Margin" type="MarginContainer" parent="UI/Layout/Column/Content/Margin/NewEntry/WritePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="Column" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/NewEntry/WritePanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="QuestionLabel" type="Label" parent="UI/Layout/Column/Content/Margin/NewEntry/WritePanel/Margin/Column"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 16
+text = "¿Qué podría salir mal hoy? ¿Cómo te prepararías?"
+autowrap_mode = 3
+
+[node name="EntryTextEdit" type="TextEdit" parent="UI/Layout/Column/Content/Margin/NewEntry/WritePanel/Margin/Column"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
+theme_override_colors/font_placeholder_color = Color(0.10196, 0.10196, 0.10196, 0.4)
+theme_override_colors/caret_color = Color(0.5451, 0.45098, 0.33333, 1)
+theme_override_colors/selection_color = Color(0.5451, 0.45098, 0.33333, 0.3)
+theme_override_colors/current_line_color = Color(0, 0, 0, 0)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 15
+theme_override_constants/line_spacing = 5
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+placeholder_text = "Escribe tus reflexiones aquí..."
+wrap_mode = 1
+
+[node name="Footer" type="HBoxContainer" parent="UI/Layout/Column/Content/Margin/NewEntry"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="CharCountLabel" type="Label" parent="UI/Layout/Column/Content/Margin/NewEntry/Footer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.78)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 12
+text = "0 caracteres"
+
+[node name="ToastLabel" type="Label" parent="UI/Layout/Column/Content/Margin/NewEntry/Footer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.15294, 0.68235, 0.37647, 1)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+
+[node name="SaveButton" type="Button" parent="UI/Layout/Column/Content/Margin/NewEntry/Footer"]
+layout_mode = 2
+disabled = true
+theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_hover_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_disabled_color = Color(0.96078, 0.96078, 0.94118, 0.6)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/focus = SubResource("Empty")
+theme_override_styles/normal = SubResource("SaveNormal")
+theme_override_styles/hover = SubResource("SaveHover")
+theme_override_styles/pressed = SubResource("SaveHover")
+theme_override_styles/disabled = SubResource("SaveDisabled")
+text = "Guardar Entrada"
+
+[node name="History" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Heading" type="Label" parent="UI/Layout/Column/Content/Margin/History"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
+theme_override_fonts/font = SubResource("FontBold")
+theme_override_font_sizes/font_size = 22
+text = "Historial de Reflexiones"
+
+[node name="HistoryScroll" type="ScrollContainer" parent="UI/Layout/Column/Content/Margin/History"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="HistoryList" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/History/HistoryScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="EmptyHistory" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/History/HistoryScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Title" type="Label" parent="UI/Layout/Column/Content/Margin/History/HistoryScroll/EmptyHistory"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.78)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 16
+text = "Aún no has escrito ninguna entrada en tu diario."
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="UI/Layout/Column/Content/Margin/History/HistoryScroll/EmptyHistory"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.68)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 13
+text = "Comienza tu práctica de reflexión diaria hoy."
+horizontal_alignment = 1

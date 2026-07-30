@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://Dungeons/UI/virtue_meter.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://db2wpsf0pky2f" path="res://Assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="2_font"]
+
+[sub_resource type="FontVariation" id="FontSemiBold"]
+base_font = ExtResource("2_font")
+variation_opentype = {
+2003265652: 620
+}
+
+[sub_resource type="StyleBoxFlat" id="Dot"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="BarBackground"]
+bg_color = Color(0.83137, 0.77255, 0.72549, 0.55)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="BarFill"]
+bg_color = Color(0.5451, 0.45098, 0.33333, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="VirtueMeter" type="VBoxContainer" node_paths=PackedStringArray("dot", "name_label", "rank_label", "bar")]
+offset_right = 260.0
+offset_bottom = 40.0
+theme_override_constants/separation = 4
+script = ExtResource("1_script")
+dot = NodePath("Header/Dot")
+name_label = NodePath("Header/NameLabel")
+rank_label = NodePath("Header/RankLabel")
+bar = NodePath("Bar")
+
+[node name="Header" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Dot" type="Panel" parent="Header"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("Dot")
+
+[node name="NameLabel" type="Label" parent="Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 14
+text = "Sabiduría"
+
+[node name="RankLabel" type="Label" parent="Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.78)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "Aprendiz · 0/100"
+horizontal_alignment = 2
+
+[node name="Bar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme_override_styles/background = SubResource("BarBackground")
+theme_override_styles/fill = SubResource("BarFill")
+value = 0.0
+show_percentage = false

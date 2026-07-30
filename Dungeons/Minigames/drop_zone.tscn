@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Dungeons/Minigames/drop_zone.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://db2wpsf0pky2f" path="res://Assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="2_font"]
+
+[sub_resource type="FontVariation" id="FontSemiBold"]
+base_font = ExtResource("2_font")
+variation_opentype = {
+2003265652: 620
+}
+
+[sub_resource type="StyleBoxFlat" id="ZonePanel"]
+bg_color = Color(1, 1, 1, 0.28)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.83137, 0.77255, 0.72549, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="DropZone" type="PanelContainer" node_paths=PackedStringArray("title_label")]
+custom_minimum_size = Vector2(0, 84)
+offset_right = 270.0
+offset_bottom = 84.0
+theme_override_styles/panel = SubResource("ZonePanel")
+script = ExtResource("1_script")
+title_label = NodePath("Margin/Column/TitleLabel")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="Column" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="Margin/Column"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 16
+text = "Zona"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HintLabel" type="Label" parent="Margin/Column"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.6)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 11
+text = "Arrastra las situaciones aquí"
+horizontal_alignment = 1
+autowrap_mode = 3
