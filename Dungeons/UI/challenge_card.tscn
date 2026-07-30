@@ -1,0 +1,178 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://Dungeons/UI/challenge_card.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://db2wpsf0pky2f" path="res://Assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="2_font"]
+
+[sub_resource type="FontVariation" id="FontBold"]
+base_font = ExtResource("2_font")
+variation_opentype = {
+2003265652: 700
+}
+
+[sub_resource type="FontVariation" id="FontSemiBold"]
+base_font = ExtResource("2_font")
+variation_opentype = {
+2003265652: 620
+}
+
+[sub_resource type="StyleBoxFlat" id="ChallengePanel"]
+bg_color = Color(1, 1, 1, 0.55)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.83137, 0.77255, 0.72549, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="BarBackground"]
+bg_color = Color(0.83137, 0.77255, 0.72549, 0.55)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="BarFill"]
+bg_color = Color(0.5451, 0.45098, 0.33333, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="RegisterNormal"]
+content_margin_left = 18.0
+content_margin_top = 8.0
+content_margin_right = 18.0
+content_margin_bottom = 8.0
+bg_color = Color(0.5451, 0.45098, 0.33333, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="RegisterHover"]
+content_margin_left = 18.0
+content_margin_top = 8.0
+content_margin_right = 18.0
+content_margin_bottom = 8.0
+bg_color = Color(0.42745, 0.35294, 0.25882, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="RegisterDisabled"]
+content_margin_left = 18.0
+content_margin_top = 8.0
+content_margin_right = 18.0
+content_margin_bottom = 8.0
+bg_color = Color(0.5451, 0.45098, 0.33333, 0.35)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[node name="ChallengeCard" type="PanelContainer" node_paths=PackedStringArray("title_label", "reward_label", "description_label", "action_label", "progress_bar", "progress_label", "register_button")]
+offset_right = 560.0
+offset_bottom = 170.0
+theme_override_styles/panel = SubResource("ChallengePanel")
+script = ExtResource("1_script")
+title_label = NodePath("Margin/Text/Header/TitleLabel")
+reward_label = NodePath("Margin/Text/Header/RewardLabel")
+description_label = NodePath("Margin/Text/DescriptionLabel")
+action_label = NodePath("Margin/Text/ActionLabel")
+progress_bar = NodePath("Margin/Text/ProgressRow/ProgressBar")
+progress_label = NodePath("Margin/Text/ProgressRow/ProgressLabel")
+register_button = NodePath("Margin/Text/RegisterButton")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="Text" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="Header" type="HBoxContainer" parent="Margin/Text"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="Margin/Text/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
+theme_override_fonts/font = SubResource("FontBold")
+theme_override_font_sizes/font_size = 17
+text = "Título del reto"
+autowrap_mode = 3
+
+[node name="RewardLabel" type="Label" parent="Margin/Text/Header"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 13
+text = "+25 Justicia"
+horizontal_alignment = 2
+
+[node name="DescriptionLabel" type="Label" parent="Margin/Text"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.85)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+theme_override_constants/line_spacing = 4
+text = "Descripción del reto semanal"
+autowrap_mode = 3
+
+[node name="ActionLabel" type="Label" parent="Margin/Text"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.72)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 12
+text = "Cada día: acción del reto"
+autowrap_mode = 3
+
+[node name="ProgressRow" type="HBoxContainer" parent="Margin/Text"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ProgressBar" type="ProgressBar" parent="Margin/Text/ProgressRow"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("BarBackground")
+theme_override_styles/fill = SubResource("BarFill")
+value = 0.0
+show_percentage = false
+
+[node name="ProgressLabel" type="Label" parent="Margin/Text/ProgressRow"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.78)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 12
+text = "0 de 7 días"
+
+[node name="RegisterButton" type="Button" parent="Margin/Text"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_hover_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_disabled_color = Color(0.96078, 0.96078, 0.94118, 0.72)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/focus = SubResource("Empty")
+theme_override_styles/normal = SubResource("RegisterNormal")
+theme_override_styles/hover = SubResource("RegisterHover")
+theme_override_styles/pressed = SubResource("RegisterHover")
+theme_override_styles/disabled = SubResource("RegisterDisabled")
+text = "Apuntar el día de hoy"

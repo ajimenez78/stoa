@@ -1,0 +1,256 @@
+{
+	"minigames": [
+		{
+			"id": "dicotomia_control",
+			"title": "Dicotomía del Control",
+			"description": "Separa lo que depende de ti de lo que no, la primera lección de Epicteto",
+			"format": "5 situaciones",
+			"virtues": ["wisdom", "temperance"],
+			"scene": "res://Dungeons/Minigames/dichotomy_game.tscn"
+		}
+	],
+	"daily_practices": [
+		{
+			"id": "meditacion_matutina",
+			"title": "Meditación Matutina",
+			"description": "Comienza el día con claridad mental y propósito",
+			"duration": "5-10 minutos",
+			"virtue": "wisdom",
+			"points": 8,
+			"instructions": [
+				"Encuentra un lugar tranquilo donde sentarte",
+				"Cierra los ojos y respira profundamente 3 veces",
+				"Reflexiona: ¿qué desafíos puedo enfrentar hoy?",
+				"Recuerda: solo controlo mis respuestas, no los eventos",
+				"Establece una intención para el día"
+			]
+		},
+		{
+			"id": "premeditatio_malorum",
+			"title": "Premeditatio Malorum",
+			"description": "Visualiza los obstáculos para estar preparado",
+			"duration": "10 minutos",
+			"virtue": "temperance",
+			"points": 10,
+			"instructions": [
+				"Piensa en una situación importante que enfrentarás hoy",
+				"Imagina qué podría salir mal",
+				"Visualiza cómo responderías con calma y sabiduría",
+				"Acepta que algunos resultados están fuera de tu control",
+				"Siente gratitud por estar preparado"
+			]
+		},
+		{
+			"id": "examen_vespertino",
+			"title": "Examen Vespertino",
+			"description": "Reflexiona sobre tu día antes de dormir",
+			"duration": "10-15 minutos",
+			"virtue": "wisdom",
+			"points": 10,
+			"instructions": [
+				"Revisa mentalmente tu día desde que despertaste",
+				"¿En qué momentos actuaste según tus valores?",
+				"¿Cuándo reaccionaste impulsivamente?",
+				"¿Qué aprendiste hoy?",
+				"¿Qué harías diferente mañana?"
+			]
+		},
+		{
+			"id": "gratitud",
+			"title": "Práctica de Gratitud",
+			"description": "Reconoce las bendiciones presentes en tu vida",
+			"duration": "5 minutos",
+			"virtue": "justice",
+			"points": 8,
+			"instructions": [
+				"Enumera 3 cosas por las que estás agradecido hoy",
+				"Incluye cosas pequeñas y cotidianas",
+				"Siente genuinamente el aprecio por cada una",
+				"Reconoce que todo es temporal y precioso",
+				"Escribe tus reflexiones en tu diario"
+			]
+		},
+		{
+			"id": "memento_mori",
+			"title": "Memento Mori",
+			"description": "Recuerda tu mortalidad para vivir plenamente",
+			"duration": "5 minutos",
+			"virtue": "wisdom",
+			"points": 8,
+			"instructions": [
+				"Reflexiona: «un día, este será mi último día»",
+				"¿Estoy viviendo de acuerdo a mis valores?",
+				"¿Qué es realmente importante?",
+				"¿Estoy perdiendo tiempo en cosas triviales?",
+				"Renueva tu compromiso con lo que importa"
+			]
+		},
+		{
+			"id": "visualizacion_negativa",
+			"title": "Visualización Negativa",
+			"description": "Aprecia lo que tienes imaginando su pérdida",
+			"duration": "10 minutos",
+			"virtue": "temperance",
+			"points": 10,
+			"instructions": [
+				"Piensa en algo o alguien importante para ti",
+				"Imagina temporalmente que lo has perdido",
+				"Siente la ausencia y el vacío",
+				"Ahora regresa al presente",
+				"Aprecia profundamente lo que tienes ahora"
+			]
+		},
+		{
+			"id": "perspectiva_cosmica",
+			"title": "Ejercicio de Perspectiva",
+			"description": "Observa tus problemas desde una vista cósmica",
+			"duration": "10 minutos",
+			"virtue": "wisdom",
+			"points": 10,
+			"instructions": [
+				"Piensa en un problema que te preocupa",
+				"Imagina verlo desde el espacio, mirando la Tierra",
+				"¿Qué tan grande es realmente este problema?",
+				"¿Importará en 5 años? ¿Y en 100?",
+				"Mantén la perspectiva sin minimizar tus sentimientos"
+			]
+		},
+		{
+			"id": "desapego",
+			"title": "Práctica de Desapego",
+			"description": "Suelta el control de lo que no puedes cambiar",
+			"duration": "10 minutos",
+			"virtue": "temperance",
+			"points": 10,
+			"instructions": [
+				"Identifica algo que te causa ansiedad",
+				"Pregúntate: ¿está bajo mi control?",
+				"Si no lo está, practica soltar mentalmente",
+				"Respira profundamente y di: «lo acepto como es»",
+				"Enfoca tu energía en lo que sí puedes controlar"
+			]
+		},
+		{
+			"id": "bondad_anonima",
+			"title": "Acto de Bondad Anónimo",
+			"description": "Practica la virtud sin buscar reconocimiento",
+			"duration": "Variable",
+			"virtue": "justice",
+			"points": 12,
+			"instructions": [
+				"Elige un acto de bondad pequeño pero significativo",
+				"Hazlo sin que nadie sepa que fuiste tú",
+				"No busques agradecimiento ni reconocimiento",
+				"Observa cómo te sientes al dar sin esperar",
+				"Reflexiona sobre la virtud por sí misma"
+			]
+		},
+		{
+			"id": "confronta_un_miedo",
+			"title": "Confronta un Miedo Pequeño",
+			"description": "Desarrolla coraje enfrentando incomodidades",
+			"duration": "Variable",
+			"virtue": "courage",
+			"points": 12,
+			"instructions": [
+				"Identifica algo que te incomoda pero es seguro",
+				"Puede ser hablar con un extraño o probar algo nuevo",
+				"Hazlo conscientemente, observando tu resistencia",
+				"Nota que sobrevives y creces",
+				"Celebra tu valentía, sin importar el resultado"
+			]
+		},
+		{
+			"id": "voz_propia",
+			"title": "Habla con Franqueza",
+			"description": "Di lo que piensas con respeto y sin adornos",
+			"duration": "Variable",
+			"virtue": "courage",
+			"points": 10,
+			"instructions": [
+				"Recuerda una opinión que hoy callarías por comodidad",
+				"Elige el momento y las palabras con cuidado",
+				"Exprésala sin agresividad y sin pedir perdón por pensarla",
+				"Escucha la respuesta sin necesidad de tener razón",
+				"Observa si temías al hecho o al juicio de los demás"
+			]
+		},
+		{
+			"id": "incomodidad_voluntaria",
+			"title": "Incomodidad Voluntaria",
+			"description": "Entrena la privación elegida, como enseñaba Musonio Rufo",
+			"duration": "Variable",
+			"virtue": "courage",
+			"points": 10,
+			"instructions": [
+				"Elige una comodidad de la que prescindirás hoy",
+				"Puede ser el agua caliente, el postre o el ascensor",
+				"Cúmplelo sin anunciarlo ni buscar mérito",
+				"Observa la diferencia entre incomodidad y daño real",
+				"Reconoce que puedes perder cosas y seguir en pie"
+			]
+		}
+	],
+	"weekly_challenges": [
+		{
+			"id": "semana_gratitud",
+			"title": "Semana de la Gratitud",
+			"description": "Reconocer lo recibido es el antídoto estoico contra la queja y la avidez.",
+			"daily_action": "Anota cada día tres cosas por las que estás agradecido, sin repetir ninguna.",
+			"virtue": "justice",
+			"points": 25,
+			"target_days": 7,
+			"required_level": 1
+		},
+		{
+			"id": "semana_memento_mori",
+			"title": "Semana del Memento Mori",
+			"description": "Tener presente la propia muerte ordena las prioridades y disuelve lo trivial.",
+			"daily_action": "Dedica cinco minutos al día a recordar que tu tiempo es finito y decide una cosa que no aplazarás.",
+			"virtue": "wisdom",
+			"points": 25,
+			"target_days": 5,
+			"required_level": 1
+		},
+		{
+			"id": "semana_visualizacion_negativa",
+			"title": "Semana de la Visualización Negativa",
+			"description": "Imaginar la pérdida de lo que amas te enseña a apreciarlo mientras lo tienes.",
+			"daily_action": "Elige cada día algo o alguien distinto e imagina, brevemente, la vida sin ello.",
+			"virtue": "temperance",
+			"points": 25,
+			"target_days": 4,
+			"required_level": 2
+		},
+		{
+			"id": "semana_sin_queja",
+			"title": "Ayuno de Queja",
+			"description": "La queja delega en el exterior una responsabilidad que siempre fue tuya.",
+			"daily_action": "Pasa el día sin quejarte en voz alta; si te sorprendes quejándote, reformúlalo como algo que sí puedes hacer.",
+			"virtue": "temperance",
+			"points": 30,
+			"target_days": 6,
+			"required_level": 3
+		},
+		{
+			"id": "semana_zona_incomoda",
+			"title": "Semana de la Incomodidad",
+			"description": "El coraje no se razona: se ejercita en pequeñas dosis voluntarias.",
+			"daily_action": "Haz cada día una cosa que te incomode y no te dañe, y anota qué temías de verdad.",
+			"virtue": "courage",
+			"points": 30,
+			"target_days": 4,
+			"required_level": 3
+		},
+		{
+			"id": "semana_servicio_silencioso",
+			"title": "Servicio Silencioso",
+			"description": "Somos partes de un mismo cuerpo: servir a otros es servir a la propia naturaleza.",
+			"daily_action": "Ayuda a alguien cada día sin que llegue a saber que fuiste tú.",
+			"virtue": "justice",
+			"points": 35,
+			"target_days": 5,
+			"required_level": 5
+		}
+	]
+}

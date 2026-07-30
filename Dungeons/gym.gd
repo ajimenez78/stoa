@@ -1,0 +1,365 @@
+extends Dungeon
+
+const MISSIONS_DATABASE_PATH := "res://Dungeons/gym_missions.json"
+
+const MISSION_CARD_SCENE := preload("res://Dungeons/UI/mission_card.tscn")
+const CHALLENGE_CARD_SCENE := preload("res://Dungeons/UI/challenge_card.tscn")
+const VIRTUE_METER_SCENE := preload("res://Dungeons/UI/virtue_meter.tscn")
+
+const PRACTICE_META_TEMPLATE := "Duración: %s · Cultiva %s (+%d puntos)"
+const PRACTICE_DONE_MESSAGE := "Práctica completada. Has ganado %d puntos de %s."
+const PRACTICE_REPEATED_MESSAGE := "Ya la completaste hoy. Vuelve mañana."
+const CHALLENGE_DAY_MESSAGE := "Día apuntado. Mantén el reto hasta el final."
+const CHALLENGE_DONE_MESSAGE := "Reto conseguido. Has ganado %d puntos de %s."
+const MINIGAME_REWARD_MESSAGE := "%s. Has ganado %s."
+const MINIGAME_REPLAYED_MESSAGE := "%s. Hoy ya habías ganado sus puntos."
+const MINIGAME_NO_REWARD_MESSAGE := "%s. Vuelve a intentarlo cuando quieras."
+const LEVEL_TEMPLATE := "Nivel %d"
+const LEVEL_HINT_TEMPLATE := "%d puntos para el nivel %d"
+const LEVEL_SUGGESTION_TEMPLATE := "%d puntos para el nivel %d · el mentor te sugiere cultivar %s"
+const LEVEL_MAXED_HINT := "Has llevado las cuatro virtudes a su plenitud. Ahora toca sostenerlas."
+
+@export_group("Progreso")
+@export var level_label: Label
+@export var level_bar: ProgressBar
+@export var level_hint_label: Label
+@export var virtue_grid: GridContainer
+
+@export_group("Pestañas")
+@export var practices_tab: Button
+@export var challenges_tab: Button
+@export var minigames_tab: Button
+
+@export_group("Prácticas diarias")
+@export var practices_panel: Control
+@export var practice_list: Control
+@export var practice_grid: GridContainer
+@export var practice_detail: Control
+@export var back_button: Button
+@export var detail_title_label: Label
+@export var detail_description_label: Label
+@export var detail_meta_label: Label
+@export var detail_steps_label: RichTextLabel
+@export var complete_button: Button
+
+@export_group("Retos semanales")
+@export var challenges_panel: Control
+@export var challenge_list: VBoxContainer
+
+@export_group("Mini-juegos")
+@export var minigames_panel: Control
+@export var minigame_list: Control
+@export var minigame_grid: GridContainer
+@export var minigame_play: Control
+@export var minigame_back_button: Button
+@export var minigame_title_label: Label
+@export var minigame_host: Container
+
+@export_group("Avisos")
+@export var toast_label: Label
+
+var _progress: Dictionary
+var _missions: Dictionary
+var _selected_practice: Dictionary
+var _suggested_virtue: String
+var _toast_tween: Tween
+
+func _ready() -> void:
+	_progress = ProgressStore.load_progress()
+	_missions = _load_missions()
+
+	practices_tab.pressed.connect(_show_practices)
+	challenges_tab.pressed.connect(_show_challenges)
+	minigames_tab.pressed.connect(_show_minigames)
+	back_button.pressed.connect(_show_practice_list)
+	minigame_back_button.pressed.connect(_show_minigame_list)
+	complete_button.pressed.connect(_on_complete_pressed)
+
+	toast_label.modulate.a = 0.0
+	_build_virtue_meters()
+	_refresh()
+	_show_practices()
+	_show_practice_list()
+	_show_minigame_list()
+
+# Lee la base de datos de misiones del gimnasio: prácticas diarias, retos
+# semanales y mini-juegos.
+func _load_missions() -> Dictionary:
+	var empty := {"daily_practices": [], "weekly_challenges": [], "minigames": []}
+
+	var file := FileAccess.open(MISSIONS_DATABASE_PATH, FileAccess.READ)
+	if file == null:
+		push_error("No se pudo abrir la base de datos de misiones: %s" % MISSIONS_DATABASE_PATH)
+		return empty
+
+	var content := file.get_as_text()
+	file.close()
+
+	var missions: Variant = JSON.parse_string(content)
+	if not (missions is Dictionary):
+		push_error("La base de datos de misiones está mal formada: %s" % MISSIONS_DATABASE_PATH)
+		return empty
+
+	for key: String in empty:
+		if not (missions.get(key) is Array):
+			push_error("Falta la lista «%s» en %s" % [key, MISSIONS_DATABASE_PATH])
+			missions[key] = []
+
+	return missions
+
+# Crea una barra por virtud, en el orden en que están declaradas; sus valores se
+# actualizan en cada refresco.
+func _build_virtue_meters() -> void:
+	for virtue: String in Virtues.DATA:
+		var meter: VirtueMeter = VIRTUE_METER_SCENE.instantiate()
+		virtue_grid.add_child(meter)
+		meter.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+# Vuelve a pintar todo lo que depende del progreso guardado.
+func _refresh() -> void:
+	_suggested_virtue = _find_suggested_virtue()
+	_refresh_level()
+	_refresh_virtue_meters()
+	_rebuild_practice_cards()
+	_rebuild_challenge_cards()
+	_rebuild_minigame_cards()
+
+func _refresh_level() -> void:
+	var level := ProgressStore.level(_progress)
+	var missing := ProgressStore.points_to_next_level(_progress)
+
+	level_label.text = LEVEL_TEMPLATE % level
+	level_bar.max_value = ProgressStore.POINTS_PER_LEVEL
+	level_bar.value = ProgressStore.POINTS_PER_LEVEL - missing
+
+	if _is_fully_cultivated():
+		level_hint_label.text = LEVEL_MAXED_HINT
+	elif _suggested_virtue.is_empty():
+		level_hint_label.text = LEVEL_HINT_TEMPLATE % [missing, level + 1]
+	else:
+		level_hint_label.text = LEVEL_SUGGESTION_TEMPLATE % [
+			missing, level + 1, Virtues.display_name(_suggested_virtue),
+		]
+
+# Virtud que el mentor sugiere cultivar: la más descuidada, y solo cuando hay
+# desequilibrio real entre las cuatro.
+func _find_suggested_virtue() -> String:
+	var virtues: Dictionary = _progress["virtues"]
+	var weakest := ProgressStore.weakest_virtue(_progress)
+	for virtue: String in virtues:
+		if int(virtues[virtue]) > int(virtues[weakest]):
+			return weakest
+	return ""
+
+func _refresh_virtue_meters() -> void:
+	var virtues: Dictionary = _progress["virtues"]
+	var index := 0
+	for virtue: String in Virtues.DATA:
+		var meter := virtue_grid.get_child(index) as VirtueMeter
+		meter.setup(virtue, int(virtues[virtue]))
+		index += 1
+
+# Rehace las tarjetas de prácticas, señalando las ya hechas hoy y la que cultiva
+# la virtud más descuidada.
+func _rebuild_practice_cards() -> void:
+	for child in practice_grid.get_children():
+		practice_grid.remove_child(child)
+		child.queue_free()
+
+	for practice: Dictionary in _missions["daily_practices"]:
+		var card: MissionCard = MISSION_CARD_SCENE.instantiate()
+		practice_grid.add_child(card)
+		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		card.setup_practice(
+			practice,
+			ProgressStore.is_practice_done_today(_progress, str(practice["id"])),
+			str(practice["virtue"]) == _suggested_virtue,
+		)
+		card.pressed.connect(_show_practice_detail.bind(practice))
+
+# Rehace las tarjetas de retos con el progreso de la semana en curso. Los retos
+# por encima del nivel del aprendiz se muestran bloqueados.
+func _rebuild_challenge_cards() -> void:
+	for child in challenge_list.get_children():
+		challenge_list.remove_child(child)
+		child.queue_free()
+
+	var level := ProgressStore.level(_progress)
+	for challenge: Dictionary in _missions["weekly_challenges"]:
+		var card: ChallengeCard = CHALLENGE_CARD_SCENE.instantiate()
+		challenge_list.add_child(card)
+		card.setup(
+			challenge,
+			ProgressStore.challenge_state(_progress, str(challenge["id"])),
+			level >= int(challenge.get("required_level", 1)),
+		)
+		card.day_registered.connect(_on_challenge_day_registered)
+
+# Rehace las tarjetas de los mini-juegos declarados en la base de datos.
+func _rebuild_minigame_cards() -> void:
+	for child in minigame_grid.get_children():
+		minigame_grid.remove_child(child)
+		child.queue_free()
+
+	for minigame: Dictionary in _missions["minigames"]:
+		var card: MissionCard = MISSION_CARD_SCENE.instantiate()
+		minigame_grid.add_child(card)
+		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		card.setup_minigame(
+			minigame,
+			ProgressStore.is_minigame_rewarded_today(_progress, str(minigame["id"])),
+		)
+		card.pressed.connect(_open_minigame.bind(minigame))
+
+# Carga la escena de un mini-juego, la muestra en la pestaña y arranca una
+# partida.
+func _open_minigame(minigame: Dictionary) -> void:
+	_clear_minigame()
+
+	var scene: PackedScene = load(str(minigame["scene"]))
+	if scene == null:
+		push_error("No se pudo cargar el mini-juego: %s" % minigame.get("scene", ""))
+		return
+
+	var game: Minigame = scene.instantiate()
+	minigame_host.add_child(game)
+	game.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	game.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	game.finished.connect(_on_minigame_finished.bind(minigame))
+	game.start()
+
+	minigame_title_label.text = str(minigame["title"])
+	minigame_list.visible = false
+	minigame_play.visible = true
+
+# Anota el resultado de la partida. El mini-juego que lo emite llega como último
+# argumento, atado al conectar la señal.
+func _on_minigame_finished(result: Dictionary, minigame: Dictionary) -> void:
+	var minigame_id := str(minigame["id"])
+	var rewards: Dictionary = result["rewards"]
+	var summary := str(result["summary"])
+	var already_rewarded := ProgressStore.is_minigame_rewarded_today(_progress, minigame_id)
+
+	_progress = ProgressStore.register_minigame_result(minigame_id, rewards)
+	_refresh()
+
+	if rewards.is_empty():
+		_show_toast(MINIGAME_NO_REWARD_MESSAGE % summary)
+	elif already_rewarded:
+		_show_toast(MINIGAME_REPLAYED_MESSAGE % summary)
+	else:
+		_show_toast(MINIGAME_REWARD_MESSAGE % [summary, _format_rewards(rewards)])
+
+# Los puntos ganados, como "Sabiduría +20 · Templanza +12".
+func _format_rewards(rewards: Dictionary) -> String:
+	var parts: PackedStringArray = []
+	for virtue: String in rewards:
+		parts.append("%s +%d" % [Virtues.display_name(virtue), int(rewards[virtue])])
+	return " · ".join(parts)
+
+# Descarta la partida en curso, si hay alguna.
+func _clear_minigame() -> void:
+	for child in minigame_host.get_children():
+		minigame_host.remove_child(child)
+		child.queue_free()
+
+# Muestra las instrucciones de una práctica y el botón para darla por hecha.
+func _show_practice_detail(practice: Dictionary) -> void:
+	_selected_practice = practice
+
+	detail_title_label.text = str(practice["title"])
+	detail_description_label.text = str(practice["description"])
+	detail_meta_label.text = PRACTICE_META_TEMPLATE % [
+		practice["duration"],
+		Virtues.display_name(str(practice["virtue"])),
+		int(practice["points"]),
+	]
+	detail_steps_label.text = _format_instructions(practice["instructions"])
+
+	var done_today := ProgressStore.is_practice_done_today(_progress, str(practice["id"]))
+	complete_button.disabled = done_today
+	complete_button.text = "Ya completada hoy" if done_today else "Marcar como completada"
+
+	practice_list.visible = false
+	practice_detail.visible = true
+
+# Numera los pasos de una práctica como una lista ordenada en BBCode.
+func _format_instructions(instructions: Array) -> String:
+	var steps: PackedStringArray = []
+	for index: int in instructions.size():
+		steps.append("[b]%d.[/b]  %s" % [index + 1, instructions[index]])
+	return "\n".join(steps)
+
+func _on_complete_pressed() -> void:
+	var practice_id := str(_selected_practice["id"])
+	var virtue := str(_selected_practice["virtue"])
+	var points := int(_selected_practice["points"])
+
+	if ProgressStore.is_practice_done_today(_progress, practice_id):
+		_show_toast(PRACTICE_REPEATED_MESSAGE)
+		return
+
+	_progress = ProgressStore.complete_practice(practice_id, virtue, points)
+	_refresh()
+	_show_practice_list()
+	_show_toast(PRACTICE_DONE_MESSAGE % [points, Virtues.display_name(virtue)])
+
+# Apunta el día de hoy en un reto y avisa si con ello queda conseguido.
+func _on_challenge_day_registered(challenge: Dictionary) -> void:
+	var challenge_id := str(challenge["id"])
+	var target_days := int(challenge["target_days"])
+	var days_before: int = (ProgressStore.challenge_state(_progress, challenge_id)["days"] as Array).size()
+
+	_progress = ProgressStore.register_challenge_day(challenge)
+	var days_now: int = (ProgressStore.challenge_state(_progress, challenge_id)["days"] as Array).size()
+	_refresh()
+
+	if days_before < target_days and days_now >= target_days:
+		_show_toast(CHALLENGE_DONE_MESSAGE % [
+			int(challenge["points"]), Virtues.display_name(str(challenge["virtue"])),
+		])
+	else:
+		_show_toast(CHALLENGE_DAY_MESSAGE)
+
+func _show_practices() -> void:
+	practices_tab.button_pressed = true
+	_show_panel(practices_panel)
+
+func _show_challenges() -> void:
+	challenges_tab.button_pressed = true
+	_show_panel(challenges_panel)
+
+func _show_minigames() -> void:
+	minigames_tab.button_pressed = true
+	_show_panel(minigames_panel)
+
+# Deja visible solo el contenido de la pestaña elegida.
+func _show_panel(panel: Control) -> void:
+	practices_panel.visible = panel == practices_panel
+	challenges_panel.visible = panel == challenges_panel
+	minigames_panel.visible = panel == minigames_panel
+
+func _show_practice_list() -> void:
+	practice_detail.visible = false
+	practice_list.visible = true
+
+# Vuelve al catálogo de mini-juegos y abandona la partida en curso.
+func _show_minigame_list() -> void:
+	_clear_minigame()
+	minigame_play.visible = false
+	minigame_list.visible = true
+
+# ¿Están las cuatro virtudes en su tope? Entonces ya no hay ninguna que sugerir.
+func _is_fully_cultivated() -> bool:
+	return ProgressStore.total_virtue_points(_progress) >= Virtues.DATA.size() * Virtues.MAX_POINTS
+
+# Muestra un aviso que se desvanece tras unos segundos.
+func _show_toast(message: String) -> void:
+	toast_label.text = message
+	toast_label.modulate.a = 1.0
+
+	if _toast_tween and _toast_tween.is_valid():
+		_toast_tween.kill()
+	_toast_tween = create_tween()
+	_toast_tween.tween_interval(2.5)
+	_toast_tween.tween_property(toast_label, "modulate:a", 0.0, 0.6)

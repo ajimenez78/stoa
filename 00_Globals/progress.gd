@@ -1,5 +1,6 @@
 # Almacén del progreso del aprendiz: entradas del diario estoico, puntos de
-# virtud, racha de visitas y el borrador de la entrada en curso.
+# virtud, prácticas del gimnasio, retos semanales, racha de visitas y el
+# borrador de la entrada en curso.
 # Se persiste como JSON en user:// para que funcione en Android, iOS y web.
 class_name ProgressStore extends RefCounted
 
@@ -11,6 +12,9 @@ const DEFAULT_VIRTUES := {
 	"courage": 0,
 	"temperance": 0,
 }
+
+# Puntos de virtud (sumando las cuatro) necesarios para subir de nivel.
+const POINTS_PER_LEVEL := 30
 
 # Devuelve el progreso guardado, completado con los valores por omisión.
 static func load_progress() -> Dictionary:
@@ -55,12 +59,145 @@ static func add_journal_entry(prompt: String, content: String, virtue: String, p
 		"virtue": virtue,
 	})
 
-	var virtues: Dictionary = progress["virtues"]
-	if virtues.has(virtue):
-		virtues[virtue] = mini(int(virtues[virtue]) + points, MAX_VIRTUE_POINTS)
+	_add_virtue_points(progress, virtue, points)
 
 	save_progress(progress)
 	return progress
+
+# Marca una práctica diaria del gimnasio como hecha hoy y suma sus puntos de
+# virtud. Una misma práctica solo puntúa una vez al día.
+static func complete_practice(practice_id: String, virtue: String, points: int) -> Dictionary:
+	var progress := load_progress()
+	if is_practice_done_today(progress, practice_id):
+		return progress
+
+	var practices: Array = progress["completed_practices"]
+	practices.insert(0, {
+		"id": practice_id,
+		"date": Time.get_date_string_from_system(),
+		"virtue": virtue,
+	})
+	_add_virtue_points(progress, virtue, points)
+
+	save_progress(progress)
+	return progress
+
+# ¿Se ha hecho ya hoy esta práctica diaria?
+static func is_practice_done_today(progress: Dictionary, practice_id: String) -> bool:
+	var today := Time.get_date_string_from_system()
+	for practice: Variant in progress["completed_practices"]:
+		if not (practice is Dictionary):
+			continue
+		if str(practice.get("id", "")) == practice_id and str(practice.get("date", "")) == today:
+			return true
+	return false
+
+# Anota una partida de un mini-juego. Los puntos solo se entregan la primera vez
+# de cada día, para que rejugarlo sea práctica y no una forma de acumular.
+static func register_minigame_result(minigame_id: String, rewards: Dictionary) -> Dictionary:
+	var progress := load_progress()
+	var today := Time.get_date_string_from_system()
+	var minigames: Dictionary = progress["minigames"]
+	var state: Dictionary = minigames.get(minigame_id, {})
+
+	if str(state.get("last_reward", "")) != today:
+		for virtue: String in rewards:
+			_add_virtue_points(progress, virtue, int(rewards[virtue]))
+		state["last_reward"] = today
+
+	state["plays"] = int(state.get("plays", 0)) + 1
+	minigames[minigame_id] = state
+
+	save_progress(progress)
+	return progress
+
+# ¿Ha puntuado ya hoy este mini-juego?
+static func is_minigame_rewarded_today(progress: Dictionary, minigame_id: String) -> bool:
+	var minigames: Dictionary = progress["minigames"]
+	if not (minigames.get(minigame_id) is Dictionary):
+		return false
+	return str(minigames[minigame_id].get("last_reward", "")) == Time.get_date_string_from_system()
+
+# Apunta el día de hoy en un reto semanal. Al alcanzar los días exigidos, el
+# reto queda completado y entrega su recompensa una única vez por semana.
+static func register_challenge_day(challenge: Dictionary) -> Dictionary:
+	var progress := load_progress()
+	var challenge_id := str(challenge["id"])
+	var state := challenge_state(progress, challenge_id)
+	var today := Time.get_date_string_from_system()
+
+	if state["done_today"]:
+		return progress
+
+	var days: Array = state["days"]
+	days.append(today)
+
+	var completed: bool = days.size() >= int(challenge["target_days"])
+	if completed and not state["rewarded"]:
+		_add_virtue_points(progress, str(challenge["virtue"]), int(challenge["points"]))
+
+	var challenges: Dictionary = progress["weekly_challenges"]
+	challenges[challenge_id] = {
+		"week": current_week_start(),
+		"days": days,
+		"rewarded": completed or state["rewarded"],
+	}
+
+	save_progress(progress)
+	return progress
+
+# Estado de un reto en la semana en curso: días ya apuntados, si hoy está
+# apuntado y si la recompensa ya se entregó. El progreso de semanas anteriores
+# se descarta, porque cada semana el reto empieza de cero.
+static func challenge_state(progress: Dictionary, challenge_id: String) -> Dictionary:
+	var empty := {"days": [], "done_today": false, "rewarded": false}
+
+	var challenges: Dictionary = progress["weekly_challenges"]
+	if not (challenges.get(challenge_id) is Dictionary):
+		return empty
+
+	var state: Dictionary = challenges[challenge_id]
+	if str(state.get("week", "")) != current_week_start():
+		return empty
+
+	var days: Array = state["days"] if state.get("days") is Array else []
+	return {
+		"days": days,
+		"done_today": days.has(Time.get_date_string_from_system()),
+		"rewarded": bool(state.get("rewarded", false)),
+	}
+
+# Nivel del aprendiz, según el total de puntos de virtud acumulados.
+static func level(progress: Dictionary) -> int:
+	return total_virtue_points(progress) / POINTS_PER_LEVEL + 1
+
+# Puntos que faltan para alcanzar el nivel siguiente.
+static func points_to_next_level(progress: Dictionary) -> int:
+	return POINTS_PER_LEVEL - total_virtue_points(progress) % POINTS_PER_LEVEL
+
+static func total_virtue_points(progress: Dictionary) -> int:
+	var total := 0
+	for points: Variant in (progress["virtues"] as Dictionary).values():
+		total += int(points)
+	return total
+
+# Virtud con menos puntos, la que el mentor sugiere cultivar para que el
+# desarrollo del carácter se mantenga equilibrado.
+static func weakest_virtue(progress: Dictionary) -> String:
+	var virtues: Dictionary = progress["virtues"]
+	var weakest := ""
+	for virtue: String in virtues:
+		if weakest.is_empty() or int(virtues[virtue]) < int(virtues[weakest]):
+			weakest = virtue
+	return weakest
+
+# Lunes de la semana en curso, en formato "AAAA-MM-DD". Identifica la semana a
+# la que pertenece el progreso de los retos.
+static func current_week_start() -> String:
+	# Time cuenta los días desde el domingo (0); la semana empieza en lunes.
+	var days_since_monday := (int(Time.get_datetime_dict_from_system()["weekday"]) + 6) % 7
+	var today := Time.get_unix_time_from_datetime_string(Time.get_date_string_from_system())
+	return Time.get_date_string_from_unix_time(int(today) - days_since_monday * 86400)
 
 # Actualiza la racha de días consecutivos con visita al hogar.
 static func register_visit() -> Dictionary:
@@ -90,11 +227,19 @@ static func save_draft(prompt_id: String, content: String) -> void:
 	progress["draft"] = {"prompt_id": prompt_id, "content": content}
 	save_progress(progress)
 
+# Suma puntos a una virtud sin pasar de su tope.
+static func _add_virtue_points(progress: Dictionary, virtue: String, points: int) -> void:
+	var virtues: Dictionary = progress["virtues"]
+	if virtues.has(virtue):
+		virtues[virtue] = mini(int(virtues[virtue]) + points, MAX_VIRTUE_POINTS)
+
 static func _default_progress() -> Dictionary:
 	return {
 		"journal_entries": [],
 		"virtues": DEFAULT_VIRTUES.duplicate(),
 		"completed_practices": [],
+		"weekly_challenges": {},
+		"minigames": {},
 		"current_streak": 0,
 		"last_visit": "",
 		"draft": {"prompt_id": "", "content": ""},
@@ -113,6 +258,12 @@ static func _merge_defaults(data: Dictionary) -> Dictionary:
 
 	if not (progress["journal_entries"] is Array):
 		progress["journal_entries"] = []
+	if not (progress["completed_practices"] is Array):
+		progress["completed_practices"] = []
+	if not (progress["weekly_challenges"] is Dictionary):
+		progress["weekly_challenges"] = {}
+	if not (progress["minigames"] is Dictionary):
+		progress["minigames"] = {}
 	if not (progress["draft"] is Dictionary):
 		progress["draft"] = {"prompt_id": "", "content": ""}
 

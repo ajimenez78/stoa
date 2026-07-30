@@ -1,0 +1,77 @@
+[
+	{
+		"text": "El tráfico está muy congestionado y llegarás tarde al trabajo",
+		"controllable": false,
+		"explanation": "No puedes controlar el tráfico, pero sí tu respuesta: salir más temprano la próxima vez, mantener la calma, o avisar con anticipación."
+	},
+	{
+		"text": "Tu actitud y esfuerzo en el trabajo",
+		"controllable": true,
+		"explanation": "Tu actitud, dedicación y el esfuerzo que pones en tus tareas están completamente bajo tu control."
+	},
+	{
+		"text": "Las opiniones que otros tienen sobre ti",
+		"controllable": false,
+		"explanation": "No puedes controlar lo que otros piensan de ti. Solo puedes controlar tus acciones y ser fiel a tus valores."
+	},
+	{
+		"text": "Cómo reaccionas ante una crítica",
+		"controllable": true,
+		"explanation": "Aunque no controlas la crítica, sí controlas cómo la interpretas y respondes: con apertura, defensividad o indiferencia."
+	},
+	{
+		"text": "El clima del día de mañana",
+		"controllable": false,
+		"explanation": "El clima es completamente externo a ti. Solo puedes prepararte adecuadamente para él."
+	},
+	{
+		"text": "Tus pensamientos y juicios sobre una situación",
+		"controllable": true,
+		"explanation": "Tienes el poder de examinar y cambiar tus pensamientos. Puedes elegir cómo interpretar los eventos."
+	},
+	{
+		"text": "Que tu equipo gane o pierda un partido",
+		"controllable": false,
+		"explanation": "El resultado del juego no depende de ti. Solo puedes controlar tu apoyo y cómo reaccionas al resultado."
+	},
+	{
+		"text": "Cuánto tiempo dedicas a tu desarrollo personal cada día",
+		"controllable": true,
+		"explanation": "Tú decides cómo usar tu tiempo. Puedes priorizar tu crecimiento personal estableciendo rutinas diarias."
+	},
+	{
+		"text": "La economía del país",
+		"controllable": false,
+		"explanation": "Los factores macroeconómicos están fuera de tu control individual. Puedes adaptarte, pero no controlarlos."
+	},
+	{
+		"text": "Tus hábitos alimenticios y de ejercicio",
+		"controllable": true,
+		"explanation": "Tienes control total sobre qué comes, cuánto comes y si haces ejercicio regularmente."
+	},
+	{
+		"text": "Que llueva el día de tu evento al aire libre",
+		"controllable": false,
+		"explanation": "No puedes controlar el clima, pero sí puedes tener un plan alternativo y aceptar lo que venga."
+	},
+	{
+		"text": "Las palabras que eliges usar en una conversación",
+		"controllable": true,
+		"explanation": "Tienes completo control sobre lo que dices y cómo lo expresas. Puedes elegir ser amable, honesto y claro."
+	},
+	{
+		"text": "El comportamiento de tus hijos o familiares",
+		"controllable": false,
+		"explanation": "Otras personas, incluso familiares cercanos, tienen su propia voluntad. Puedes influir, pero no controlar."
+	},
+	{
+		"text": "Tu respuesta emocional inicial ante una noticia",
+		"controllable": true,
+		"explanation": "Aunque las emociones surgen automáticamente, puedes observarlas, cuestionarlas y elegir cómo actuar después."
+	},
+	{
+		"text": "Que te despidan del trabajo",
+		"controllable": false,
+		"explanation": "Las decisiones empresariales están fuera de tu control. Puedes controlar tu desempeño, pero no las decisiones finales de otros."
+	}
+]
