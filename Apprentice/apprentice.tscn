@@ -231,12 +231,15 @@ script = ExtResource("42_auy62")
 [node name="TouchControls" type="CanvasLayer" parent="." unique_id=1200026466]
 
 [node name="VirtualJoystick" type="VirtualJoystick" parent="TouchControls" unique_id=1200026465]
+anchor_left = 1.0
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 40.0
+offset_left = -260.0
 offset_top = -260.0
-offset_right = 260.0
+offset_right = -40.0
 offset_bottom = -40.0
+grow_horizontal = 0
 grow_vertical = 0
 joystick_size = 140.0
 tip_size = 64.0
