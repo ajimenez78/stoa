@@ -228,11 +228,18 @@ shape = SubResource("CircleShape2D_dm7fg")
 zoom = Vector2(2.5, 2.5)
 script = ExtResource("42_auy62")
 
-[node name="VirtualJoystick" type="VirtualJoystick" parent="Camera2D" unique_id=1200026465]
-offset_left = 152.0
-offset_top = 62.0
-offset_right = 192.0
-offset_bottom = 102.0
+[node name="TouchControls" type="CanvasLayer" parent="." unique_id=1200026466]
+
+[node name="VirtualJoystick" type="VirtualJoystick" parent="TouchControls" unique_id=1200026465]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -260.0
+offset_right = 260.0
+offset_bottom = -40.0
+grow_vertical = 0
+joystick_size = 140.0
+tip_size = 64.0
 action_left = &"left"
 action_right = &"right"
 action_up = &"up"

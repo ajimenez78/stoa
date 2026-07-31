@@ -38,7 +38,7 @@ project/assembly_name="Stoa"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/TileMapDual/plugin.cfg", "res://addons/virtual_joystick_DX/plugin.cfg")
+enabled=PackedStringArray("res://addons/TileMapDual/plugin.cfg")
 
 [input]
 
