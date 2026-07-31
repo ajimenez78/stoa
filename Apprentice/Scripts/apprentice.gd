@@ -1,6 +1,9 @@
 class_name Apprentice extends CharacterBody2D
 
 const SPEED = 100.0
+# Ventaja del eje que ya manda al comparar magnitudes, para que las diagonales
+# del joystick no hagan parpadear la animación entre lateral y vertical.
+const DIRECTION_BIAS = 1.2
 
 var cardinal_direction := Vector2.DOWN
 var direction := Vector2.ZERO
@@ -26,7 +29,11 @@ func _process(delta: float) -> void:
 			velocity = Vector2.ZERO
 			dungeon_entered = true
 		
-	if setState() || setDirection():
+	# Sin cortocircuito: al empezar a andar cambian estado y dirección a la vez,
+	# y saltarse setDirection() dejaba un frame con la animación del cardinal viejo.
+	var state_changed := setState()
+	var direction_changed := setDirection()
+	if state_changed || direction_changed:
 		updateAnimation()
 
 func _physics_process(delta: float) -> void:
@@ -36,12 +43,21 @@ func setDirection() -> bool:
 	var new_dir := cardinal_direction
 	if direction == Vector2.ZERO:
 		return false
-	
-	if direction.y == 0:
+
+	# Con el joystick virtual casi nunca hay un eje exactamente a cero, así que
+	# la animación la decide el eje de mayor magnitud, no la simple presencia
+	# de componente vertical.
+	var horizontal: bool
+	if cardinal_direction == Vector2.LEFT || cardinal_direction == Vector2.RIGHT:
+		horizontal = absf(direction.x) * DIRECTION_BIAS >= absf(direction.y)
+	else:
+		horizontal = absf(direction.x) >= absf(direction.y) * DIRECTION_BIAS
+
+	if horizontal:
 		new_dir = Vector2.LEFT if direction.x < 0 else Vector2.RIGHT
 	else:
 		new_dir = Vector2.UP if direction.y < 0 else Vector2.DOWN
-		
+
 	if new_dir == cardinal_direction:
 		return false
 	
