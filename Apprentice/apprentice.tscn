@@ -58,7 +58,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("4_eflca")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_east",
 "speed": 5.0
 }, {
@@ -75,7 +75,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_y48ac")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_north",
 "speed": 5.0
 }, {
@@ -92,7 +92,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("4_e4bmf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_south",
 "speed": 5.0
 }, {
@@ -109,7 +109,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("16_30lsc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_west",
 "speed": 5.0
 }, {
@@ -132,7 +132,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_soou6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_east",
 "speed": 5.0
 }, {
@@ -155,7 +155,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("16_n5l2f")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_north",
 "speed": 5.0
 }, {
@@ -178,7 +178,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_5yw2t")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_south",
 "speed": 5.0
 }, {
@@ -201,7 +201,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("40_7kaui")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_west",
 "speed": 5.0
 }]
@@ -227,3 +227,13 @@ shape = SubResource("CircleShape2D_dm7fg")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1395258542]
 zoom = Vector2(2.5, 2.5)
 script = ExtResource("42_auy62")
+
+[node name="VirtualJoystick" type="VirtualJoystick" parent="Camera2D" unique_id=1200026465]
+offset_left = 152.0
+offset_top = 62.0
+offset_right = 192.0
+offset_bottom = 102.0
+action_left = &"left"
+action_right = &"right"
+action_up = &"up"
+action_down = &"down"

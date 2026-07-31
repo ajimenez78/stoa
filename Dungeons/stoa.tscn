@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://t6bxuk2dn85x"]
 
-[ext_resource type="Script" uid="uid://cemfve17fn2ac" path="res://Dungeons/stoa.gd" id="1_0rqnr"]
+[ext_resource type="Script" uid="uid://cemfve17fn2ac" path="res://Dungeons/Scripts/stoa.gd" id="1_0rqnr"]
 [ext_resource type="Texture2D" uid="uid://b8rvcnb3mh5hu" path="res://Dungeons/Sprites/stoa.png" id="1_l4dqh"]
 [ext_resource type="Texture2D" uid="uid://cjk3vsdthk711" path="res://Dungeons/Sprites/temperance.png" id="3_3ncpv"]
 [ext_resource type="Texture2D" uid="uid://bscwebm5j14yk" path="res://Dungeons/Sprites/justice.png" id="4_n567r"]
-[ext_resource type="FontFile" uid="uid://db2wpsf0pky2f" path="res://Assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="5_font"]
+[ext_resource type="FontFile" uid="uid://db2wpsf0pky2f" path="res://assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="5_font"]
 [ext_resource type="Texture2D" uid="uid://ccq05rdr4gmij" path="res://Dungeons/Sprites/prudence.png" id="6_ungmm"]
 [ext_resource type="Texture2D" uid="uid://bimu53urammpv" path="res://Dungeons/Sprites/fortitude.png" id="7_0rqnr"]
 [ext_resource type="Texture2D" uid="uid://bovs1tb6ht286" path="res://Dungeons/Sprites/arrow-right.png" id="8_3ysre"]

@@ -1,19 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://bikpbw1g4pnjo"]
+[gd_scene format=3 uid="uid://bikpbw1g4pnjo"]
 
-[ext_resource type="Script" path="res://Dungeons/gym.gd" id="1_gym"]
+[ext_resource type="Script" uid="uid://b4k2by6aovokw" path="res://Dungeons/Scripts/gym.gd" id="1_gym"]
 [ext_resource type="Texture2D" uid="uid://d3j5ksqxv6qi3" path="res://Dungeons/Sprites/gym.png" id="2_bg"]
-[ext_resource type="FontFile" uid="uid://db2wpsf0pky2f" path="res://Assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="3_font"]
+[ext_resource type="FontFile" uid="uid://db2wpsf0pky2f" path="res://assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="3_font"]
 
 [sub_resource type="FontVariation" id="FontBold"]
 base_font = ExtResource("3_font")
 variation_opentype = {
 2003265652: 700
-}
-
-[sub_resource type="FontVariation" id="FontSemiBold"]
-base_font = ExtResource("3_font")
-variation_opentype = {
-2003265652: 620
 }
 
 [sub_resource type="StyleBoxFlat" id="PanelCard"]
@@ -28,18 +22,25 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="ButtonGroup" id="TabsGroup"]
+[sub_resource type="StyleBoxFlat" id="LevelBarBackground"]
+bg_color = Color(0.83137, 0.77255, 0.72549, 0.55)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="TabActive"]
-content_margin_left = 20.0
-content_margin_top = 8.0
-content_margin_right = 20.0
-content_margin_bottom = 8.0
+[sub_resource type="StyleBoxFlat" id="LevelBarFill"]
 bg_color = Color(0.5451, 0.45098, 0.33333, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="FontVariation" id="FontSemiBold"]
+base_font = ExtResource("3_font")
+variation_opentype = {
+2003265652: 620
+}
 
 [sub_resource type="StyleBoxFlat" id="TabInactive"]
 content_margin_left = 20.0
@@ -57,6 +58,21 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
+[sub_resource type="StyleBoxFlat" id="TabActive"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 8.0
+bg_color = Color(0.5451, 0.45098, 0.33333, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[sub_resource type="ButtonGroup" id="TabsGroup"]
+
 [sub_resource type="StyleBoxFlat" id="StepsPanel"]
 bg_color = Color(1, 1, 1, 0.55)
 border_width_left = 1
@@ -68,22 +84,6 @@ corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
-
-[sub_resource type="StyleBoxFlat" id="LevelBarBackground"]
-bg_color = Color(0.83137, 0.77255, 0.72549, 0.55)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="LevelBarFill"]
-bg_color = Color(0.5451, 0.45098, 0.33333, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxEmpty" id="Empty"]
 
 [sub_resource type="StyleBoxFlat" id="ActionNormal"]
 content_margin_left = 22.0
@@ -118,7 +118,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="Gym" type="Node2D" node_paths=PackedStringArray("level_label", "level_bar", "level_hint_label", "virtue_grid", "practices_tab", "challenges_tab", "minigames_tab", "practices_panel", "practice_list", "practice_grid", "practice_detail", "back_button", "detail_title_label", "detail_description_label", "detail_meta_label", "detail_steps_label", "complete_button", "challenges_panel", "challenge_list", "minigames_panel", "minigame_list", "minigame_grid", "minigame_play", "minigame_back_button", "minigame_title_label", "minigame_host", "toast_label")]
+[node name="Gym" type="Node2D" unique_id=603651888 node_paths=PackedStringArray("level_label", "level_bar", "level_hint_label", "virtue_grid", "practices_tab", "challenges_tab", "minigames_tab", "practices_panel", "practice_list", "practice_grid", "practice_detail", "back_button", "detail_title_label", "detail_description_label", "detail_meta_label", "detail_steps_label", "complete_button", "challenges_panel", "challenge_list", "minigames_panel", "minigame_list", "minigame_grid", "minigame_play", "minigame_back_button", "minigame_title_label", "minigame_host", "toast_label")]
 script = ExtResource("1_gym")
 level_label = NodePath("UI/Layout/Column/Progress/Margin/Column/Header/LevelLabel")
 level_bar = NodePath("UI/Layout/Column/Progress/Margin/Column/LevelRow/LevelBar")
@@ -148,15 +148,14 @@ minigame_title_label = NodePath("UI/Layout/Column/Content/Margin/Minigames/Minig
 minigame_host = NodePath("UI/Layout/Column/Content/Margin/Minigames/MinigamePlay/Host")
 toast_label = NodePath("UI/Layout/Column/Tabs/ToastLabel")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1961048013]
 
-[node name="Background" type="Sprite2D" parent="UI"]
+[node name="Background" type="Sprite2D" parent="UI" unique_id=1912880631]
 position = Vector2(640, 360)
 scale = Vector2(0.8385416, 0.7080079)
 texture = ExtResource("2_bg")
 
-[node name="Vignette" type="ColorRect" parent="UI"]
-layout_mode = 3
+[node name="Vignette" type="ColorRect" parent="UI" unique_id=108108096]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -165,8 +164,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.3)
 
-[node name="Layout" type="MarginContainer" parent="UI"]
-layout_mode = 3
+[node name="Layout" type="MarginContainer" parent="UI" unique_id=945275774]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -177,15 +175,15 @@ theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 14
 
-[node name="Column" type="VBoxContainer" parent="UI/Layout"]
+[node name="Column" type="VBoxContainer" parent="UI/Layout" unique_id=1268649795]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Hero" type="VBoxContainer" parent="UI/Layout/Column"]
+[node name="Hero" type="VBoxContainer" parent="UI/Layout/Column" unique_id=1429693433]
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="Title" type="Label" parent="UI/Layout/Column/Hero"]
+[node name="Title" type="Label" parent="UI/Layout/Column/Hero" unique_id=534708047]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_fonts/font = SubResource("FontBold")
@@ -193,7 +191,7 @@ theme_override_font_sizes/font_size = 30
 text = "Gimnasio Estoico"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="UI/Layout/Column/Hero"]
+[node name="Subtitle" type="Label" parent="UI/Layout/Column/Hero" unique_id=796135600]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 0.85)
 theme_override_fonts/font = ExtResource("3_font")
@@ -201,26 +199,26 @@ theme_override_font_sizes/font_size = 14
 text = "Entrena tu carácter y fortalece tus virtudes"
 horizontal_alignment = 1
 
-[node name="Progress" type="PanelContainer" parent="UI/Layout/Column"]
+[node name="Progress" type="PanelContainer" parent="UI/Layout/Column" unique_id=1718189299]
 layout_mode = 2
 theme_override_styles/panel = SubResource("PanelCard")
 
-[node name="Margin" type="MarginContainer" parent="UI/Layout/Column/Progress"]
+[node name="Margin" type="MarginContainer" parent="UI/Layout/Column/Progress" unique_id=1075570752]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 12
 
-[node name="Column" type="VBoxContainer" parent="UI/Layout/Column/Progress/Margin"]
+[node name="Column" type="VBoxContainer" parent="UI/Layout/Column/Progress/Margin" unique_id=1698758479]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Header" type="HBoxContainer" parent="UI/Layout/Column/Progress/Margin/Column"]
+[node name="Header" type="HBoxContainer" parent="UI/Layout/Column/Progress/Margin/Column" unique_id=406667453]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Heading" type="Label" parent="UI/Layout/Column/Progress/Margin/Column/Header"]
+[node name="Heading" type="Label" parent="UI/Layout/Column/Progress/Margin/Column/Header" unique_id=18096767]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
@@ -228,7 +226,7 @@ theme_override_fonts/font = SubResource("FontBold")
 theme_override_font_sizes/font_size = 18
 text = "Tu progreso en las virtudes"
 
-[node name="LevelLabel" type="Label" parent="UI/Layout/Column/Progress/Margin/Column/Header"]
+[node name="LevelLabel" type="Label" parent="UI/Layout/Column/Progress/Margin/Column/Header" unique_id=59087818]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
 theme_override_fonts/font = SubResource("FontBold")
@@ -236,166 +234,163 @@ theme_override_font_sizes/font_size = 18
 text = "Nivel 1"
 horizontal_alignment = 2
 
-[node name="LevelRow" type="HBoxContainer" parent="UI/Layout/Column/Progress/Margin/Column"]
+[node name="LevelRow" type="HBoxContainer" parent="UI/Layout/Column/Progress/Margin/Column" unique_id=1903321438]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="LevelBar" type="ProgressBar" parent="UI/Layout/Column/Progress/Margin/Column/LevelRow"]
+[node name="LevelBar" type="ProgressBar" parent="UI/Layout/Column/Progress/Margin/Column/LevelRow" unique_id=775392242]
 custom_minimum_size = Vector2(160, 8)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_styles/background = SubResource("LevelBarBackground")
 theme_override_styles/fill = SubResource("LevelBarFill")
-value = 0.0
 show_percentage = false
 
-[node name="LevelHintLabel" type="Label" parent="UI/Layout/Column/Progress/Margin/Column/LevelRow"]
+[node name="LevelHintLabel" type="Label" parent="UI/Layout/Column/Progress/Margin/Column/LevelRow" unique_id=788261514]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.78)
 theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 12
 text = "30 puntos para el nivel 2"
 
-[node name="VirtueGrid" type="GridContainer" parent="UI/Layout/Column/Progress/Margin/Column"]
+[node name="VirtueGrid" type="GridContainer" parent="UI/Layout/Column/Progress/Margin/Column" unique_id=1927318471]
 layout_mode = 2
 theme_override_constants/h_separation = 28
 theme_override_constants/v_separation = 8
 columns = 2
 
-[node name="Tabs" type="HBoxContainer" parent="UI/Layout/Column"]
+[node name="Tabs" type="HBoxContainer" parent="UI/Layout/Column" unique_id=1455874924]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="PracticesTab" type="Button" parent="UI/Layout/Column/Tabs"]
+[node name="PracticesTab" type="Button" parent="UI/Layout/Column/Tabs" unique_id=1304044573]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
-theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
 theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 14
-theme_override_styles/focus = SubResource("Empty")
 theme_override_styles/normal = SubResource("TabInactive")
-theme_override_styles/hover = SubResource("TabInactive")
 theme_override_styles/pressed = SubResource("TabActive")
+theme_override_styles/hover = SubResource("TabInactive")
 theme_override_styles/hover_pressed = SubResource("TabActive")
+theme_override_styles/focus = SubResource("Empty")
 toggle_mode = true
 button_pressed = true
 button_group = SubResource("TabsGroup")
 text = "Prácticas Diarias"
 
-[node name="ChallengesTab" type="Button" parent="UI/Layout/Column/Tabs"]
+[node name="ChallengesTab" type="Button" parent="UI/Layout/Column/Tabs" unique_id=1161316142]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
-theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
 theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 14
-theme_override_styles/focus = SubResource("Empty")
 theme_override_styles/normal = SubResource("TabInactive")
-theme_override_styles/hover = SubResource("TabInactive")
 theme_override_styles/pressed = SubResource("TabActive")
+theme_override_styles/hover = SubResource("TabInactive")
 theme_override_styles/hover_pressed = SubResource("TabActive")
+theme_override_styles/focus = SubResource("Empty")
 toggle_mode = true
 button_group = SubResource("TabsGroup")
 text = "Retos Semanales"
 
-[node name="MinigamesTab" type="Button" parent="UI/Layout/Column/Tabs"]
+[node name="MinigamesTab" type="Button" parent="UI/Layout/Column/Tabs" unique_id=1425699952]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
-theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
 theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 14
-theme_override_styles/focus = SubResource("Empty")
 theme_override_styles/normal = SubResource("TabInactive")
-theme_override_styles/hover = SubResource("TabInactive")
 theme_override_styles/pressed = SubResource("TabActive")
+theme_override_styles/hover = SubResource("TabInactive")
 theme_override_styles/hover_pressed = SubResource("TabActive")
+theme_override_styles/focus = SubResource("Empty")
 toggle_mode = true
 button_group = SubResource("TabsGroup")
 text = "Mini-juegos"
 
-[node name="ToastLabel" type="Label" parent="UI/Layout/Column/Tabs"]
+[node name="ToastLabel" type="Label" parent="UI/Layout/Column/Tabs" unique_id=834779512]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 13
 horizontal_alignment = 2
 
-[node name="Content" type="PanelContainer" parent="UI/Layout/Column"]
+[node name="Content" type="PanelContainer" parent="UI/Layout/Column" unique_id=619782138]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("PanelCard")
 
-[node name="Margin" type="MarginContainer" parent="UI/Layout/Column/Content"]
+[node name="Margin" type="MarginContainer" parent="UI/Layout/Column/Content" unique_id=1602230558]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 16
 
-[node name="Practices" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin"]
+[node name="Practices" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin" unique_id=2125378791]
 layout_mode = 2
 
-[node name="PracticeList" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Practices"]
+[node name="PracticeList" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Practices" unique_id=1259448129]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="Heading" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeList"]
+[node name="Heading" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeList" unique_id=1562030995]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
 theme_override_fonts/font = SubResource("FontBold")
 theme_override_font_sizes/font_size = 22
 text = "Prácticas Diarias"
 
-[node name="ChooseLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeList"]
+[node name="ChooseLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeList" unique_id=1212248994]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.85)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 14
 text = "Elige un ejercicio para entrenar hoy tu carácter:"
 
-[node name="PracticeScroll" type="ScrollContainer" parent="UI/Layout/Column/Content/Margin/Practices/PracticeList"]
+[node name="PracticeScroll" type="ScrollContainer" parent="UI/Layout/Column/Content/Margin/Practices/PracticeList" unique_id=1039860821]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="PracticeGrid" type="GridContainer" parent="UI/Layout/Column/Content/Margin/Practices/PracticeList/PracticeScroll"]
+[node name="PracticeGrid" type="GridContainer" parent="UI/Layout/Column/Content/Margin/Practices/PracticeList/PracticeScroll" unique_id=775590468]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 8
 columns = 2
 
-[node name="PracticeDetail" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Practices"]
+[node name="PracticeDetail" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Practices" unique_id=569573245]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 6
 
-[node name="BackButton" type="Button" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail"]
+[node name="BackButton" type="Button" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail" unique_id=402339075]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
-theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
 theme_override_colors/font_pressed_color = Color(0.42745, 0.35294, 0.25882, 1)
+theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 13
-theme_override_styles/focus = SubResource("Empty")
 theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
 theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
 text = "← Volver a las prácticas"
 
-[node name="TitleLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail"]
+[node name="TitleLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail" unique_id=1181854047]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
 theme_override_fonts/font = SubResource("FontBold")
@@ -403,7 +398,7 @@ theme_override_font_sizes/font_size = 22
 text = "Título de la práctica"
 autowrap_mode = 3
 
-[node name="DescriptionLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail"]
+[node name="DescriptionLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail" unique_id=169019875]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.85)
 theme_override_fonts/font = ExtResource("3_font")
@@ -411,37 +406,37 @@ theme_override_font_sizes/font_size = 14
 text = "Descripción de la práctica"
 autowrap_mode = 3
 
-[node name="MetaLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail"]
+[node name="MetaLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail" unique_id=1139827904]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 12
 text = "Duración: 10 minutos · Cultiva Sabiduría (+10 puntos)"
 
-[node name="StepsPanel" type="PanelContainer" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail"]
+[node name="StepsPanel" type="PanelContainer" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail" unique_id=323397324]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StepsPanel")
 
-[node name="Margin" type="MarginContainer" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail/StepsPanel"]
+[node name="Margin" type="MarginContainer" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail/StepsPanel" unique_id=241983262]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 12
 
-[node name="Column" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail/StepsPanel/Margin"]
+[node name="Column" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail/StepsPanel/Margin" unique_id=619464278]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="Heading" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail/StepsPanel/Margin/Column"]
+[node name="Heading" type="Label" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail/StepsPanel/Margin/Column" unique_id=557257257]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 15
 text = "Instrucciones"
 
-[node name="StepsLabel" type="RichTextLabel" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail/StepsPanel/Margin/Column"]
+[node name="StepsLabel" type="RichTextLabel" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail/StepsPanel/Margin/Column" unique_id=2004729452]
 layout_mode = 2
 theme_override_colors/default_color = Color(0.10196, 0.10196, 0.10196, 0.92)
 theme_override_constants/line_separation = 5
@@ -454,40 +449,40 @@ text = "[b]1.[/b]  Primer paso de la práctica"
 fit_content = true
 scroll_active = false
 
-[node name="Spacer" type="Control" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail"]
+[node name="Spacer" type="Control" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail" unique_id=1344930278]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="CompleteButton" type="Button" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail"]
+[node name="CompleteButton" type="Button" parent="UI/Layout/Column/Content/Margin/Practices/PracticeDetail" unique_id=1746225560]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0.96078, 0.96078, 0.94118, 1)
-theme_override_colors/font_hover_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
+theme_override_colors/font_hover_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_colors/font_disabled_color = Color(0.96078, 0.96078, 0.94118, 0.6)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 14
-theme_override_styles/focus = SubResource("Empty")
 theme_override_styles/normal = SubResource("ActionNormal")
-theme_override_styles/hover = SubResource("ActionHover")
 theme_override_styles/pressed = SubResource("ActionHover")
+theme_override_styles/hover = SubResource("ActionHover")
 theme_override_styles/disabled = SubResource("ActionDisabled")
+theme_override_styles/focus = SubResource("Empty")
 text = "Marcar como completada"
 
-[node name="Challenges" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin"]
+[node name="Challenges" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin" unique_id=270661963]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Heading" type="Label" parent="UI/Layout/Column/Content/Margin/Challenges"]
+[node name="Heading" type="Label" parent="UI/Layout/Column/Content/Margin/Challenges" unique_id=367045383]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
 theme_override_fonts/font = SubResource("FontBold")
 theme_override_font_sizes/font_size = 22
 text = "Retos Semanales"
 
-[node name="HelpLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Challenges"]
+[node name="HelpLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Challenges" unique_id=607882419]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.85)
 theme_override_fonts/font = SubResource("FontSemiBold")
@@ -495,33 +490,33 @@ theme_override_font_sizes/font_size = 14
 text = "Apunta cada día que cumplas el reto. Cada lunes los retos vuelven a empezar."
 autowrap_mode = 3
 
-[node name="ChallengeScroll" type="ScrollContainer" parent="UI/Layout/Column/Content/Margin/Challenges"]
+[node name="ChallengeScroll" type="ScrollContainer" parent="UI/Layout/Column/Content/Margin/Challenges" unique_id=2085933332]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="ChallengeList" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Challenges/ChallengeScroll"]
+[node name="ChallengeList" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Challenges/ChallengeScroll" unique_id=781184452]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="Minigames" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin"]
+[node name="Minigames" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin" unique_id=969506425]
 visible = false
 layout_mode = 2
 
-[node name="MinigameList" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Minigames"]
+[node name="MinigameList" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Minigames" unique_id=2120616633]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="Heading" type="Label" parent="UI/Layout/Column/Content/Margin/Minigames/MinigameList"]
+[node name="Heading" type="Label" parent="UI/Layout/Column/Content/Margin/Minigames/MinigameList" unique_id=1775576070]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
 theme_override_fonts/font = SubResource("FontBold")
 theme_override_font_sizes/font_size = 22
 text = "Mini-juegos"
 
-[node name="HelpLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Minigames/MinigameList"]
+[node name="HelpLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Minigames/MinigameList" unique_id=1899177646]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.85)
 theme_override_fonts/font = SubResource("FontSemiBold")
@@ -529,39 +524,39 @@ theme_override_font_sizes/font_size = 14
 text = "Ejercita jugando los principios estoicos. Cada mini-juego entrega sus puntos una vez al día, pero puedes practicarlo cuantas veces quieras."
 autowrap_mode = 3
 
-[node name="MinigameScroll" type="ScrollContainer" parent="UI/Layout/Column/Content/Margin/Minigames/MinigameList"]
+[node name="MinigameScroll" type="ScrollContainer" parent="UI/Layout/Column/Content/Margin/Minigames/MinigameList" unique_id=1027057944]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="MinigameGrid" type="GridContainer" parent="UI/Layout/Column/Content/Margin/Minigames/MinigameList/MinigameScroll"]
+[node name="MinigameGrid" type="GridContainer" parent="UI/Layout/Column/Content/Margin/Minigames/MinigameList/MinigameScroll" unique_id=1644884791]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 8
 columns = 2
 
-[node name="MinigamePlay" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Minigames"]
+[node name="MinigamePlay" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Minigames" unique_id=970264760]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 6
 
-[node name="BackButton" type="Button" parent="UI/Layout/Column/Content/Margin/Minigames/MinigamePlay"]
+[node name="BackButton" type="Button" parent="UI/Layout/Column/Content/Margin/Minigames/MinigamePlay" unique_id=2055264899]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
-theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
 theme_override_colors/font_pressed_color = Color(0.42745, 0.35294, 0.25882, 1)
+theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 13
-theme_override_styles/focus = SubResource("Empty")
 theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
 theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
 text = "← Volver a los mini-juegos"
 
-[node name="TitleLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Minigames/MinigamePlay"]
+[node name="TitleLabel" type="Label" parent="UI/Layout/Column/Content/Margin/Minigames/MinigamePlay" unique_id=19481532]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 1)
 theme_override_fonts/font = SubResource("FontBold")
@@ -569,6 +564,6 @@ theme_override_font_sizes/font_size = 22
 text = "Título del mini-juego"
 autowrap_mode = 3
 
-[node name="Host" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Minigames/MinigamePlay"]
+[node name="Host" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Minigames/MinigamePlay" unique_id=765599505]
 layout_mode = 2
 size_flags_vertical = 3
