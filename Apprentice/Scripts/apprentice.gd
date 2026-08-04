@@ -12,8 +12,34 @@ var dungeon_entered = false
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var apprentice_camera: ApprenticeCamera = $Camera2D
+@onready var back_button: TextureButton = $TouchControls/TextureButton
+@onready var touch_controls: CanvasLayer = $TouchControls
+@onready var virtual_joystick: Control = $TouchControls/VirtualJoystick
+
+func _ready() -> void:
+	if touch_controls:
+		touch_controls.layer = 100
+	if back_button:
+		back_button.pressed.connect(_on_back_button_pressed)
+	_update_touch_controls()
+
+func _on_back_button_pressed() -> void:
+	if LevelManager.in_dungeon() and LevelManager.playground.current_dungeon:
+		var dungeon = LevelManager.playground.current_dungeon
+		if dungeon.has_method("_on_back_button_pressed"):
+			dungeon._on_back_button_pressed()
+
+func _update_touch_controls() -> void:
+	var in_dungeon = LevelManager.in_dungeon()
+	if back_button:
+		back_button.visible = in_dungeon
+		back_button.disabled = !in_dungeon
+	if virtual_joystick:
+		virtual_joystick.visible = !in_dungeon
 
 func _process(delta: float) -> void:
+	_update_touch_controls()
+
 	if !LevelManager.in_dungeon():
 		if dungeon_entered: dungeon_entered = false
 

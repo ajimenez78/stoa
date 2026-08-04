@@ -32,4 +32,4 @@ func exit_dungeon() -> void:
 		playground.current_dungeon = null
 
 func in_dungeon() -> bool:
-	return playground.current_dungeon != null
+	return playground != null and playground.current_dungeon != null

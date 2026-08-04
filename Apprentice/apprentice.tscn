@@ -42,6 +42,7 @@
 [ext_resource type="Texture2D" uid="uid://c74j2hvh7resk" path="res://Apprentice/Sprites/animations/walk/west/frame_004.png" id="39_i05fc"]
 [ext_resource type="Texture2D" uid="uid://buhrb7gvc725s" path="res://Apprentice/Sprites/animations/walk/west/frame_005.png" id="40_7kaui"]
 [ext_resource type="Script" uid="uid://bvahsuhpen4mq" path="res://Apprentice/Scripts/apprentice_camera.gd" id="42_auy62"]
+[ext_resource type="Texture2D" uid="uid://dwagtwujdqf67" path="res://Apprentice/Sprites/back.png" id="43_eflca"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i00ky"]
 animations = [{
@@ -231,6 +232,7 @@ script = ExtResource("42_auy62")
 [node name="TouchControls" type="CanvasLayer" parent="." unique_id=1200026466]
 
 [node name="VirtualJoystick" type="VirtualJoystick" parent="TouchControls" unique_id=1200026465]
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -247,3 +249,12 @@ action_left = &"left"
 action_right = &"right"
 action_up = &"up"
 action_down = &"down"
+
+[node name="TextureButton" type="TextureButton" parent="TouchControls" unique_id=663811658]
+offset_left = 24.0
+offset_top = 10.0
+offset_right = 126.0
+offset_bottom = 74.0
+texture_normal = ExtResource("43_eflca")
+ignore_texture_size = true
+stretch_mode = 4
