@@ -250,11 +250,10 @@ action_right = &"right"
 action_up = &"up"
 action_down = &"down"
 
-[node name="TextureButton" type="TextureButton" parent="TouchControls" unique_id=663811658]
-offset_left = 24.0
-offset_top = 10.0
-offset_right = 126.0
-offset_bottom = 74.0
-texture_normal = ExtResource("43_eflca")
-ignore_texture_size = true
-stretch_mode = 4
+[node name="BackButton" type="Button" parent="TouchControls" unique_id=1228750351]
+offset_left = 16.0
+offset_top = 13.0
+offset_right = 67.0
+offset_bottom = 65.0
+icon = ExtResource("43_eflca")
+expand_icon = true

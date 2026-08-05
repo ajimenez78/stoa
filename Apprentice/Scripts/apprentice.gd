@@ -12,7 +12,8 @@ var dungeon_entered = false
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var apprentice_camera: ApprenticeCamera = $Camera2D
-@onready var back_button: TextureButton = $TouchControls/TextureButton
+# @onready var back_button: TextureButton = $TouchControls/TextureButton
+@onready var back_button: Button = $TouchControls/BackButton
 @onready var touch_controls: CanvasLayer = $TouchControls
 @onready var virtual_joystick: Control = $TouchControls/VirtualJoystick
 
