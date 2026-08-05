@@ -196,7 +196,7 @@ static func weakest_virtue(progress: Dictionary) -> String:
 static func current_week_start() -> String:
 	# Time cuenta los días desde el domingo (0); la semana empieza en lunes.
 	var days_since_monday := (int(Time.get_datetime_dict_from_system()["weekday"]) + 6) % 7
-	var today := Time.get_unix_time_from_datetime_string(Time.get_date_string_from_system())
+	var today := Time.get_unix_time_from_system()
 	return Time.get_date_string_from_unix_time(int(today) - days_since_monday * 86400)
 
 # Actualiza la racha de días consecutivos con visita al hogar.
@@ -271,6 +271,6 @@ static func _merge_defaults(data: Dictionary) -> Dictionary:
 
 # Días completos transcurridos entre dos fechas "AAAA-MM-DD".
 static func _days_between(from_date: String, to_date: String) -> int:
-	var from_seconds := Time.get_unix_time_from_datetime_string(from_date)
-	var to_seconds := Time.get_unix_time_from_datetime_string(to_date)
+	var from_seconds := Time.get_unix_time_from_datetime_string(from_date + "T00:00:00")
+	var to_seconds := Time.get_unix_time_from_datetime_string(to_date + "T00:00:00")
 	return int(floor((to_seconds - from_seconds) / 86400.0))
