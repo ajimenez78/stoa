@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cppqhp6hwuuam" path="res://assets/bush.png" id="10_5ilbj"]
 [ext_resource type="Texture2D" uid="uid://dlbgguq0ch88p" path="res://assets/stone.png" id="10_vid5y"]
 [ext_resource type="PackedScene" uid="uid://t6bxuk2dn85x" path="res://Dungeons/stoa.tscn" id="10_wtks4"]
+[ext_resource type="AudioStream" uid="uid://bhuta1yp8kog4" path="res://assets/Returning Home.mp3" id="16_f3cif"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yc75n"]
 texture = ExtResource("2_sukj7")
@@ -603,6 +604,10 @@ texture = ExtResource("10_vid5y")
 [node name="Stone50" type="Sprite2D" parent="." unique_id=362661766]
 position = Vector2(840, 198)
 texture = ExtResource("10_vid5y")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=309751902]
+stream = ExtResource("16_f3cif")
+autoplay = true
 
 [connection signal="body_entered" from="Home" to="Home" method="_on_body_entered"]
 [connection signal="body_entered" from="Gym" to="Gym" method="_on_body_entered"]
