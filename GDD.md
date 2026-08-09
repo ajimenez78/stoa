@@ -212,13 +212,13 @@ Adaptación al Jugador:
 
 * Opciones:  
   * Pack "Mentores Clásicos" (€5-€10):  
-    * Nuevas voces (ej. Séneca o Epicteto) con diálogos y prácticas exclusivas.  
-    * Ejemplo: "Lecciones de Séneca sobre la ira" con mini-juegos de pausa reflexiva.  
+	* Nuevas voces (ej. Séneca o Epicteto) con diálogos y prácticas exclusivas.  
+	* Ejemplo: "Lecciones de Séneca sobre la ira" con mini-juegos de pausa reflexiva.  
   * Personalización estética (€2-€4):  
-    * Temas de diario (ej. Papiro antiguo, Acuarela minimalista).  
-    * Sonidos ambientales (ej. "Lluvia en la Stoa", "Bosque al amanecer").  
+	* Temas de diario (ej. Papiro antiguo, Acuarela minimalista).  
+	* Sonidos ambientales (ej. "Lluvia en la Stoa", "Bosque al amanecer").  
   * Expansiones narrativas (€8-€12):  
-    * Temporadas adicionales (ej. "El Estoicismo en tiempos de guerra" con Marco Aurelio).  
+	* Temporadas adicionales (ej. "El Estoicismo en tiempos de guerra" con Marco Aurelio).  
 * Claves de diseño:  
   * Todo el contenido premium debe ser no esencial (nadie necesita comprarlo para progresar filosóficamente).  
   * Demostrar el valor antes de comprar: Ofrecer una muestra gratuita (ej. 1 lección de Séneca).
