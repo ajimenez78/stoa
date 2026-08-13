@@ -608,6 +608,7 @@ texture = ExtResource("10_vid5y")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=309751902]
 stream = ExtResource("16_f3cif")
 autoplay = true
+parameters/looping = true
 
 [connection signal="body_entered" from="Home" to="Home" method="_on_body_entered"]
 [connection signal="body_entered" from="Gym" to="Gym" method="_on_body_entered"]

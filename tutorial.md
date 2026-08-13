@@ -11,7 +11,7 @@
 - **Gimnasio estoico**: Donde encontrarás misiones y juegos con los que subir de nivel en las distintas virtudes estoicas
 - **Stoa**: Donde encontrarás a tu mentor y consejos de los grandes estoicos clásicos, cuando necesites un poco de guía
 
-¡Empieza el día con alguna misión del gimnasio y no te olvides de cerrarlo con una entrada en el diario! Tu mentor estará siempre esperándote en la Stoa dispuesto a sostenerte con una perla de sabiduría.
+¡Empieza el día con alguna misión del gimnasio y no te olvides de cerrarlo con una entrada en el diario! Tu mentor estará siempre esperándote en la Stoa dispuesto a sostenerte con una perla de sabiduría. Así irás ganando experiencia en las distintas virtudes estoicas y subiendo de nivel.
 
 ![home](./Screenshots/home.png)
 
