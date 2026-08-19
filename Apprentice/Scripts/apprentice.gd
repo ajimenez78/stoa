@@ -10,6 +10,10 @@ var direction := Vector2.ZERO
 var state := "idle"
 var dungeon_entered = false
 
+# Navegación por toque (Estilo Stardew Valley)
+var target_position := Vector2.ZERO
+var is_moving_to_target := false
+
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var apprentice_camera: ApprenticeCamera = $Camera2D
 # @onready var back_button: TextureButton = $TouchControls/TextureButton
@@ -38,19 +42,47 @@ func _update_touch_controls() -> void:
 	if virtual_joystick:
 		virtual_joystick.visible = !in_dungeon
 
+func _unhandled_input(event: InputEvent) -> void:
+	if LevelManager.in_dungeon():
+		return
+		
+	# Capturar click o toque en la pantalla que no haya sido consumido por la UI
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			target_position = get_global_mouse_position()
+			is_moving_to_target = true
+
 func _process(delta: float) -> void:
 	_update_touch_controls()
 
 	if !LevelManager.in_dungeon():
 		if dungeon_entered: dungeon_entered = false
 
-		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
-		direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-		direction.y = Input.get_action_strength("down") - Input.get_action_strength("up")
+		# Leer controles físicos o Joystick virtual
+		var input_dir := Vector2.ZERO
+		input_dir.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+		input_dir.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 		
-		velocity = direction * SPEED
+		if input_dir.length_squared() > 0.05:
+			# Si se detecta entrada manual del joystick o teclado, se cancela el Tap-to-Move de inmediato
+			is_moving_to_target = false
+			direction = input_dir.normalized()
+			velocity = direction * SPEED
+		elif is_moving_to_target:
+			# Mover hacia la posición marcada por toque
+			var to_target := target_position - global_position
+			if to_target.length() < 4.0:
+				is_moving_to_target = false
+				direction = Vector2.ZERO
+				velocity = Vector2.ZERO
+			else:
+				direction = to_target.normalized()
+				velocity = direction * SPEED
+		else:
+			direction = Vector2.ZERO
+			velocity = Vector2.ZERO
 	else:
+		is_moving_to_target = false
 		if !dungeon_entered:
 			direction = -direction
 			velocity = Vector2.ZERO
