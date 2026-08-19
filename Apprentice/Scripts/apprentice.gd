@@ -10,8 +10,10 @@ var direction := Vector2.ZERO
 var state := "idle"
 var dungeon_entered = false
 
-# Navegación por toque (Estilo Stardew Valley)
-var target_position := Vector2.ZERO
+# Navegación inteligente por toque con AStarGrid2D (Estilo Stardew Valley)
+var astar: AStarGrid2D = null
+var path_points: Array[Vector2] = []
+var current_path_index := 0
 var is_moving_to_target := false
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -42,6 +44,154 @@ func _update_touch_controls() -> void:
 	if virtual_joystick:
 		virtual_joystick.visible = !in_dungeon
 
+func initialize_pathfinder() -> void:
+	print("--- INICIALIZANDO PATHFINDER ---")
+	if LevelManager.in_dungeon():
+		print("  Cancelado: Jugador en un dungeon")
+		return
+		
+	var playground = LevelManager.playground
+	if not playground:
+		print("  Error: No se pudo obtener la referencia de LevelManager.playground")
+		return
+	if not playground.current_level:
+		print("  Error: El playground actual no tiene un current_level cargado")
+		return
+		
+	var map = playground.current_level
+	print("  Mapa activo: ", map.name)
+	var tile_map_dual: TileMapLayer = map.get_node_or_null("TileMapDual")
+	if not tile_map_dual:
+		print("  Error: No se encontró la capa TileMapDual en el mapa activo")
+		return
+		
+	astar = AStarGrid2D.new()
+	astar.region = tile_map_dual.get_used_rect()
+	astar.cell_size = Vector2(32, 32)
+	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_AT_LEAST_ONE_WALKABLE
+	astar.update()
+	print("  Región del mapa en celdas (used_rect): ", astar.region)
+	
+	# 1. Marcar colisiones del TileMapLayer
+	var rect = tile_map_dual.get_used_rect()
+	var solid_terrain_count := 0
+	for x in range(rect.position.x, rect.end.x):
+		for y in range(rect.position.y, rect.end.y):
+			var coords = Vector2i(x, y)
+			var tile_data = tile_map_dual.get_cell_tile_data(coords)
+			if tile_data and tile_data.get_collision_polygons_count(0) > 0:
+				astar.set_point_solid(coords, true)
+				solid_terrain_count += 1
+				if coords == Vector2i(8, 0):
+					print("  >> AVISO: Celda (8, 0) marcada sólida por colisión del TileMap (terreno)!")
+	print("  Celdas de colisión del TileMap marcadas como sólidas: ", solid_terrain_count)
+				
+	# 2. Marcar obstáculos del mapa (árboles, piedras, etc. que son Sprite2D)
+	var obstacle_count := 0
+	for child in map.get_children():
+		if child == self:
+			continue
+		
+		if child is Sprite2D:
+			var cname = child.name.to_lower()
+			if "tree" in cname or "stone" in cname or "bush" in cname:
+				var local_pos = tile_map_dual.to_local(child.global_position)
+				var cell = tile_map_dual.local_to_map(local_pos)
+				astar.set_point_solid(cell, true)
+				obstacle_count += 1
+				
+				# Los árboles grandes en Stoa tienen un tronco/copa alta,
+				# podemos marcar también la celda inmediatamente encima para prevenir solapamientos.
+				if "tree" in cname:
+					var above = cell + Vector2i(0, -1)
+					astar.set_point_solid(above, true)
+					obstacle_count += 1
+	print("  Obstáculos de escena (árboles, piedras, etc.) marcados como sólidos: ", obstacle_count)
+
+	# 3. RED DE SEGURIDAD: La celda actual en la que se encuentra el jugador NUNCA debe ser sólida
+	var current_cell = tile_map_dual.local_to_map(tile_map_dual.to_local(global_position))
+	if astar.is_in_bounds(current_cell.x, current_cell.y):
+		astar.set_point_solid(current_cell, false)
+		print("  Red de seguridad: Celda de inicio del aprendiz ", current_cell, " forzada como transitable.")
+
+func _calculate_path_to(target_pos: Vector2) -> void:
+	print("--- NUEVA PETICIÓN DE RUTA ---")
+	print("  Posición inicial (global): ", global_position)
+	print("  Posición clic/toque (global): ", target_pos)
+	
+	if not astar:
+		initialize_pathfinder()
+		
+	if not astar:
+		print("  Error: El pathfinder no se pudo instanciar o inicializar.")
+		return
+		
+	var playground = LevelManager.playground
+	if not playground or not playground.current_level:
+		print("  Error: Referencia del nivel no encontrada en LevelManager.")
+		return
+		
+	var map = playground.current_level
+	var tile_map_dual: TileMapLayer = map.get_node_or_null("TileMapDual")
+	if not tile_map_dual:
+		print("  Error: El mapa activo no tiene un nodo TileMapDual.")
+		return
+		
+	var start_cell = tile_map_dual.local_to_map(tile_map_dual.to_local(global_position))
+	var end_cell = tile_map_dual.local_to_map(tile_map_dual.to_local(target_pos))
+	print("  Celda de inicio en cuadrícula: ", start_cell)
+	print("  Celda de fin en cuadrícula: ", end_cell)
+	
+	# Validar límites
+	var start_in_bounds = astar.is_in_bounds(start_cell.x, start_cell.y)
+	var end_in_bounds = astar.is_in_bounds(end_cell.x, end_cell.y)
+	print("  ¿Celda inicial dentro de límites?: ", start_in_bounds)
+	print("  ¿Celda destino dentro de límites?: ", end_in_bounds)
+	
+	if start_in_bounds and end_in_bounds:
+		print("  ¿Celda inicial es sólida?: ", astar.is_point_solid(start_cell))
+		print("  ¿Celda destino es sólida?: ", astar.is_point_solid(end_cell))
+		
+		# Si el usuario hace clic exactamente en un obstáculo (como un muro o piedra),
+		# buscamos la celda libre no sólida más cercana para guiarlo hasta allí.
+		if astar.is_point_solid(end_cell):
+			print("  La celda destino es sólida/colisionable. Buscando vecino transitable...")
+			var neighbors = [
+				Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0),
+				Vector2i(1, 1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(-1, -1)
+			]
+			var best_cell = end_cell
+			var min_dist = INF
+			for offset in neighbors:
+				var candidate = end_cell + offset
+				if astar.is_in_bounds(candidate.x, candidate.y) and not astar.is_point_solid(candidate):
+					var dist = global_position.distance_to(tile_map_dual.to_global(tile_map_dual.map_to_local(candidate)))
+					if dist < min_dist:
+						min_dist = dist
+						best_cell = candidate
+			end_cell = best_cell
+			print("  Celda de destino ajustada al vecino transitable: ", end_cell)
+			print("  ¿Nueva celda destino es sólida?: ", astar.is_point_solid(end_cell))
+			
+		var point_path = astar.get_point_path(start_cell, end_cell)
+		print("  Puntos en el camino calculado por AStar: ", point_path.size())
+		
+		if point_path.size() > 1:
+			path_points.clear()
+			for pt in point_path:
+				path_points.append(tile_map_dual.to_global(pt))
+			current_path_index = 1 # Omitimos el primer punto ya que es donde estamos parados
+			is_moving_to_target = true
+			print("  ¡Ruta establecida con éxito!")
+		else:
+			print("  Error: No se encontró ningún camino libre viable hacia el destino.")
+			path_points.clear()
+			is_moving_to_target = false
+	else:
+		print("  Error: Celda inicial o celda destino fuera de los límites utilizables de la cuadrícula.")
+		path_points.clear()
+		is_moving_to_target = false
+
 func _unhandled_input(event: InputEvent) -> void:
 	if LevelManager.in_dungeon():
 		return
@@ -49,8 +199,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	# Capturar click o toque en la pantalla que no haya sido consumido por la UI
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			target_position = get_global_mouse_position()
-			is_moving_to_target = true
+			var click_pos = get_global_mouse_position()
+			_calculate_path_to(click_pos)
 
 func _process(delta: float) -> void:
 	_update_touch_controls()
@@ -66,23 +216,40 @@ func _process(delta: float) -> void:
 		if input_dir.length_squared() > 0.05:
 			# Si se detecta entrada manual del joystick o teclado, se cancela el Tap-to-Move de inmediato
 			is_moving_to_target = false
+			path_points.clear()
 			direction = input_dir.normalized()
 			velocity = direction * SPEED
-		elif is_moving_to_target:
-			# Mover hacia la posición marcada por toque
-			var to_target := target_position - global_position
+		elif is_moving_to_target and current_path_index < path_points.size():
+			# Mover hacia el siguiente punto del camino inteligente
+			var target_pos: Vector2 = path_points[current_path_index]
+			var to_target: Vector2 = target_pos - global_position
+			
+			# Si estamos muy cerca del punto actual, avanzar al siguiente
 			if to_target.length() < 4.0:
-				is_moving_to_target = false
-				direction = Vector2.ZERO
-				velocity = Vector2.ZERO
+				current_path_index += 1
+				if current_path_index >= path_points.size():
+					# Llegamos al destino final del camino
+					is_moving_to_target = false
+					path_points.clear()
+					direction = Vector2.ZERO
+					velocity = Vector2.ZERO
+				else:
+					# Avanzar hacia el nuevo nodo del recorrido
+					target_pos = path_points[current_path_index]
+					to_target = target_pos - global_position
+					direction = to_target.normalized()
+					velocity = direction * SPEED
 			else:
 				direction = to_target.normalized()
 				velocity = direction * SPEED
 		else:
+			is_moving_to_target = false
+			path_points.clear()
 			direction = Vector2.ZERO
 			velocity = Vector2.ZERO
 	else:
 		is_moving_to_target = false
+		path_points.clear()
 		if !dungeon_entered:
 			direction = -direction
 			velocity = Vector2.ZERO
