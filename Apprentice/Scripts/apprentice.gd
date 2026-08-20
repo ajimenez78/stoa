@@ -11,17 +11,18 @@ var state := "idle"
 var dungeon_entered = false
 
 # Navegación por toque (Estilo Stardew Valley)
-var target_position := Vector2.ZERO
 var is_moving_to_target := false
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var apprentice_camera: ApprenticeCamera = $Camera2D
+@onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 # @onready var back_button: TextureButton = $TouchControls/TextureButton
 @onready var back_button: Button = $TouchControls/BackButton
 @onready var touch_controls: CanvasLayer = $TouchControls
 @onready var virtual_joystick: Control = $TouchControls/VirtualJoystick
 
 func _ready() -> void:
+	nav_agent.target_position = Vector2.ZERO
 	if touch_controls:
 		touch_controls.layer = 100
 	if back_button:
@@ -49,7 +50,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	# Capturar click o toque en la pantalla que no haya sido consumido por la UI
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			target_position = get_global_mouse_position()
+			var target_position: Vector2 = get_global_mouse_position()
+			nav_agent.target_position = target_position
+			
 			is_moving_to_target = true
 
 func _process(delta: float) -> void:
@@ -70,13 +73,15 @@ func _process(delta: float) -> void:
 			velocity = direction * SPEED
 		elif is_moving_to_target:
 			# Mover hacia la posición marcada por toque
-			var to_target := target_position - global_position
+			var to_target := nav_agent.target_position - global_position
+			var to_local_target := to_local(nav_agent.get_next_path_position())
+			
 			if to_target.length() < 4.0:
 				is_moving_to_target = false
 				direction = Vector2.ZERO
 				velocity = Vector2.ZERO
 			else:
-				direction = to_target.normalized()
+				direction = to_local_target.normalized()
 				velocity = direction * SPEED
 		else:
 			direction = Vector2.ZERO

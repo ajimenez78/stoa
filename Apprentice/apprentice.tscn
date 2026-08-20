@@ -225,6 +225,8 @@ frame_progress = 0.4922746
 position = Vector2(0, 10)
 shape = SubResource("CircleShape2D_dm7fg")
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1144592915]
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1395258542]
 zoom = Vector2(2.5, 2.5)
 script = ExtResource("42_auy62")

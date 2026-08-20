@@ -1,6 +1,6 @@
 class_name athens extends StoaLevelMap
 
-@onready var tile_map_dual: TileMapDual = $TileMapDual
+@onready var tile_map_dual: TileMapDual = $NavigationRegion2D/TileMapDual
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
