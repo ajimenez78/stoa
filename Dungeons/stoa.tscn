@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://t6bxuk2dn85x"]
+[gd_scene load_steps=11 format=3 uid="uid://t6bxuk2dn85x"]
 
 [ext_resource type="Script" uid="uid://cemfve17fn2ac" path="res://Dungeons/Scripts/stoa.gd" id="1_0rqnr"]
 [ext_resource type="Texture2D" uid="uid://b8rvcnb3mh5hu" path="res://Dungeons/Sprites/stoa.png" id="1_l4dqh"]
@@ -10,40 +10,59 @@
 [ext_resource type="Texture2D" uid="uid://bovs1tb6ht286" path="res://Dungeons/Sprites/arrow-right.png" id="8_3ysre"]
 [ext_resource type="Texture2D" uid="uid://po55uwqupi3i" path="res://Dungeons/Sprites/arrow-left.png" id="9_v2hqn"]
 
-[node name="Stoa" type="Node2D" unique_id=1541629889 node_paths=PackedStringArray("quote_rich_text_label", "author_rich_text_label")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass"]
+bg_color = Color(1, 1, 1, 0.470588)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.0784314)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[node name="Stoa" type="Node2D"]
 script = ExtResource("1_0rqnr")
-quote_rich_text_label = NodePath("UI/SabiduríaEstoica/QuoteRichTextLabel")
-author_rich_text_label = NodePath("UI/SabiduríaEstoica/AuthorRichTextLabel")
-metadata/_custom_type_script = "uid://dfqxe0yefv4cx"
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1409220434]
+[node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="UI" unique_id=1624108220]
-position = Vector2(640, 360.50006)
-scale = Vector2(0.8385416, 0.7080079)
+[node name="Background" type="TextureRect" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_l4dqh")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="MentorMessage" type="Control" parent="UI" unique_id=885655700]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-metadata/_edit_use_anchors_ = true
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
 
-[node name="ColorRect" type="ColorRect" parent="UI/MentorMessage" unique_id=1806546046]
-layout_mode = 0
-offset_left = 65.0
-offset_top = 31.0
-offset_right = 1214.0
-offset_bottom = 214.0
-color = Color(1, 1, 1, 0.5882353)
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/MentorMessage" unique_id=1652294879]
-layout_mode = 0
-offset_left = 91.0
-offset_top = 40.0
-offset_right = 1213.0
-offset_bottom = 211.0
+[node name="MentorMessage" type="PanelContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/VBoxContainer/MentorMessage"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="MentorRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/MentorMessage/MarginContainer"]
+layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
 text = "[color=black][b][font_size=20]Mensaje del Mentor[/font_size][/b]
@@ -51,210 +70,214 @@ text = "[color=black][b][font_size=20]Mensaje del Mentor[/font_size][/b]
 [font_size=16]Bienvenido, buscador de sabiduría. Has dado el primer paso en un viaje que no tiene fin, pues el camino del estoicismo es el camino de toda una vida. Aquí aprenderás que la felicidad no depende de las circunstancias externas, sino de tu carácter interno.
 
 Recuerda siempre: [i]\"No son las cosas las que nos perturban, sino las opiniones que tenemos de ellas.\"[/i] Tu práctica diaria te llevará hacia la serenidad y la virtud.[/font_size][/color]"
+fit_content = true
+autowrap_mode = 1
 
-[node name="Templanza" type="Control" parent="UI" unique_id=286716482]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-metadata/_edit_use_anchors_ = true
+[node name="VirtuesGrid" type="GridContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+columns = 2
 
-[node name="ColorRect" type="ColorRect" parent="UI/Templanza" unique_id=2133514221]
-layout_mode = 0
-offset_left = 822.0
-offset_top = 577.0
-offset_right = 1244.0
-offset_bottom = 706.0
-color = Color(1, 1, 1, 0.47058824)
-metadata/_edit_use_anchors_ = true
+[node name="Templanza" type="PanelContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="Temperance" type="Sprite2D" parent="UI/Templanza" unique_id=1804592595]
-position = Vector2(752, 649)
-scale = Vector2(0.144, 0.144)
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Templanza"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Templanza/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Templanza/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 texture = ExtResource("3_3ncpv")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Templanza" unique_id=87079035]
-layout_mode = 0
-offset_left = 838.0
-offset_top = 580.0
-offset_right = 1253.0
-offset_bottom = 696.0
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Templanza/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
-text = "[color=black][b][font_size=20]Templanza[/font_size][/b]
+text = "[color=black][b][font_size=18]Templanza[/font_size][/b]
 
-[font_size=16]El autocontrol y la moderación. La disciplina para resistir los excesos y mantener el equilibrio en todas las cosas.[/font_size][/color]"
-metadata/_edit_use_anchors_ = true
+[font_size=14]El autocontrol y la moderación. La disciplina para resistir los excesos y mantener el equilibrio en todas las cosas.[/font_size][/color]"
+fit_content = true
+autowrap_mode = 1
 
-[node name="Justicia" type="Control" parent="UI" unique_id=1191638199]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-metadata/_edit_use_anchors_ = true
+[node name="Justicia" type="PanelContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="ColorRect" type="ColorRect" parent="UI/Justicia" unique_id=1797149195]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 583.0
-offset_right = 558.0
-offset_bottom = 707.0
-color = Color(1, 1, 1, 0.47058824)
-metadata/_edit_use_anchors_ = true
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Justicia"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
-[node name="Justice" type="Sprite2D" parent="UI/Justicia" unique_id=1618300305]
-position = Vector2(73, 649)
-scale = Vector2(0.144, 0.144)
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Justicia/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Justicia/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 texture = ExtResource("4_n567r")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Justicia" unique_id=198514872]
-layout_mode = 0
-offset_left = 160.0
-offset_top = 590.0
-offset_right = 554.0
-offset_bottom = 702.0
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Justicia/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
-text = "[color=black][b][font_size=20]Justicia[/font_size][/b]
+text = "[color=black][b][font_size=18]Justicia[/font_size][/b]
 
-[font_size=16]Tratar a los demás con equidad y bondad. Cumplir con nuestras obligaciones sociales y contribuir al bien común.[/font_size][/color]"
-metadata/_edit_use_anchors_ = true
+[font_size=14]Tratar a los demás con equidad y bondad. Cumplir con nuestras obligaciones sociales y contribuir al bien común.[/font_size][/color]"
+fit_content = true
+autowrap_mode = 1
 
-[node name="Sabiduría" type="Control" parent="UI" unique_id=43079617]
-layout_mode = 3
-anchors_preset = 0
-offset_top = -152.0
-offset_right = 40.0
-offset_bottom = -112.0
-metadata/_edit_use_anchors_ = true
+[node name="Sabiduría" type="PanelContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="ColorRect" type="ColorRect" parent="UI/Sabiduría" unique_id=1481267721]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 583.0
-offset_right = 558.0
-offset_bottom = 707.0
-color = Color(1, 1, 1, 0.47058824)
-metadata/_edit_use_anchors_ = true
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Sabiduría"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
-[node name="Prudence" type="Sprite2D" parent="UI/Sabiduría" unique_id=144328528]
-position = Vector2(73, 649)
-scale = Vector2(0.144, 0.144)
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Sabiduría/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Sabiduría/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 texture = ExtResource("6_ungmm")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Sabiduría" unique_id=869535159]
-layout_mode = 0
-offset_left = 160.0
-offset_top = 590.0
-offset_right = 554.0
-offset_bottom = 702.0
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Sabiduría/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
-text = "[color=black][b][font_size=20]Sabiduría[/font_size][/b]
+text = "[color=black][b][font_size=18]Sabiduría[/font_size][/b]
 
-[font_size=16]El conocimiento aplicado con discernimiento. La capacidad de ver las cosas como realmente son y actuar en consecuencia.[/font_size][/color]"
-metadata/_edit_use_anchors_ = true
+[font_size=14]El conocimiento aplicado con discernimiento. La capacidad de ver las cosas como realmente son y actuar en consecuencia.[/font_size][/color]"
+fit_content = true
+autowrap_mode = 1
 
-[node name="Coraje" type="Control" parent="UI" unique_id=1731843741]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 672.0
-offset_top = -152.0
-offset_right = 712.0
-offset_bottom = -112.0
-metadata/_edit_use_anchors_ = true
+[node name="Coraje" type="PanelContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="ColorRect" type="ColorRect" parent="UI/Coraje" unique_id=1298478045]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 583.0
-offset_right = 558.0
-offset_bottom = 707.0
-color = Color(1, 1, 1, 0.47058824)
-metadata/_edit_use_anchors_ = true
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Coraje"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
-[node name="Fortitude" type="Sprite2D" parent="UI/Coraje" unique_id=398960143]
-position = Vector2(73, 649)
-scale = Vector2(0.144, 0.144)
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Coraje/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Coraje/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 texture = ExtResource("7_0rqnr")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/Coraje" unique_id=1373150088]
-layout_mode = 0
-offset_left = 160.0
-offset_top = 590.0
-offset_right = 554.0
-offset_bottom = 702.0
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/VirtuesGrid/Coraje/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
-text = "[color=black][b][font_size=20]Coraje[/font_size][/b]
+text = "[color=black][b][font_size=18]Coraje[/font_size][/b]
 
-[font_size=16]La fortaleza para enfrentar el miedo y la adversidad. No es la ausencia de miedo, sino actuar correctamente a pesar de él.[/font_size][/color]"
-metadata/_edit_use_anchors_ = true
+[font_size=14]La fortaleza para enfrentar el miedo y la adversidad. No es la ausencia de miedo, sino actuar correctamente a pesar de él.[/font_size][/color]"
+fit_content = true
+autowrap_mode = 1
 
-[node name="SabiduríaEstoica" type="Control" parent="UI" unique_id=1763154507]
-layout_mode = 3
-anchors_preset = 0
-offset_top = 193.0
-offset_right = 40.0
-offset_bottom = 233.0
-metadata/_edit_use_anchors_ = true
+[node name="SabiduríaEstoica" type="PanelContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="ColorRect" type="ColorRect" parent="UI/SabiduríaEstoica" unique_id=217705282]
-layout_mode = 1
-anchors_preset = -1
-anchor_bottom = 0.55
-offset_left = 129.0
-offset_top = 34.0
-offset_right = 1094.0
-offset_bottom = 199.0
-color = Color(1, 1, 1, 0.5882353)
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/SabiduríaEstoica" unique_id=1988986055]
-layout_mode = 0
-offset_left = 147.0
-offset_top = 45.0
-offset_right = 1064.0
-offset_bottom = 92.0
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer"]
+layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
-text = "[color=black][b][font_size=20]Sabiduría estoica[/font_size][/b][/color]"
+text = "[color=black][b][font_size=18]Sabiduría estoica[/font_size][/b][/color]"
+fit_content = true
+autowrap_mode = 1
 
-[node name="QuoteRichTextLabel" type="RichTextLabel" parent="UI/SabiduríaEstoica" unique_id=1506160342]
-layout_mode = 0
-offset_left = 147.0
-offset_top = 93.0
-offset_right = 1077.0
-offset_bottom = 164.0
+[node name="QuoteRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer" unique_name_in_owner=true]
+layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
-text = "[font_size=16][i][color=black]\"No podemos controlar lo que nos sucede, pero sí cómo respondemos a ello\"[/color][/i][/font_size]
-"
+text = "[font_size=15][i][color=black]\"No podemos controlar lo que nos sucede, pero sí cómo respondemos a ello\"[/color][/i][/font_size]"
+fit_content = true
+autowrap_mode = 1
 
-[node name="AuthorRichTextLabel" type="RichTextLabel" parent="UI/SabiduríaEstoica" unique_id=1256535762]
-layout_mode = 0
-offset_left = 155.0
-offset_top = 147.0
-offset_right = 1075.0
-offset_bottom = 180.0
+[node name="BottomRow" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="AuthorRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow" unique_name_in_owner=true]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
-text = "[font_size=16][color=brown]- Epicteto[/color][/font_size]
-"
+text = "[font_size=14][color=brown]- Epicteto[/color][/font_size]"
+fit_content = true
+autowrap_mode = 1
 
-[node name="NextButton" type="TextureButton" parent="UI/SabiduríaEstoica" unique_id=1618702249]
-layout_mode = 0
-offset_left = 1058.0
-offset_top = 182.0
-offset_right = 1090.0
-offset_bottom = 214.0
-texture_normal = ExtResource("8_3ysre")
-stretch_mode = 0
+[node name="ButtonsHBox" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow"]
+layout_mode = 2
+theme_override_constants/separation = 16
 
-[node name="PreviousButton" type="TextureButton" parent="UI/SabiduríaEstoica" unique_id=1159163432]
-layout_mode = 0
-offset_left = 1016.0
-offset_top = 182.0
-offset_right = 1048.0
-offset_bottom = 214.0
+[node name="PreviousButton" type="TextureButton" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow/ButtonsHBox" unique_name_in_owner=true]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 texture_normal = ExtResource("9_v2hqn")
-stretch_mode = 0
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="NextButton" type="TextureButton" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow/ButtonsHBox" unique_name_in_owner=true]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture_normal = ExtResource("8_3ysre")
+ignore_texture_size = true
+stretch_mode = 5

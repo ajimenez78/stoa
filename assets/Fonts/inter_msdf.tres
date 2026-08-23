@@ -1,6 +1,6 @@
 [gd_resource type="FontFile" load_steps=2 format=3]
 
-[ext_resource type="FontFile" uid="uid://dhnr3exayiiv0" path="res://Assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="1"]
+[ext_resource type="FontFile" uid="uid://dhnr3exayiiv0" path="res://assets/Fonts/Inter-VariableFont_opsz,wght.ttf" id="1"]
 
 [resource]
 fallbacks = Array[Font]([ExtResource("1")])

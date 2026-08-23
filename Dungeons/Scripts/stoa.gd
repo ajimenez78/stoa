@@ -4,11 +4,11 @@ const QUOTE_STRING_TEMPLATE =  "[font_size=16][i][color=black]%s[/color][/i][/fo
 const AUTHOR_STRING_TEMPLATE =  "[font_size=16][color=brown]- %s[/color][/font_size]"
 const QUOTES_DATABASE_PATH = "res://Dungeons/quotes.json"
 
-@export var quote_rich_text_label: RichTextLabel
-@export var author_rich_text_label: RichTextLabel
+@onready var quote_rich_text_label: RichTextLabel = %QuoteRichTextLabel
+@onready var author_rich_text_label: RichTextLabel = %AuthorRichTextLabel
 
-@onready var previous_button: TextureButton = $UI/SabiduríaEstoica/PreviousButton
-@onready var next_button: TextureButton = $UI/SabiduríaEstoica/NextButton
+@onready var previous_button: TextureButton = %PreviousButton
+@onready var next_button: TextureButton = %NextButton
 
 # History of quotes shown, with a pointer to the currently displayed one.
 var _history: Array[Dictionary] = []

@@ -12,6 +12,9 @@ var dungeon_entered = false
 
 # Navegación por toque (Estilo Stardew Valley)
 var is_moving_to_target := false
+var _last_positions: Array[Vector2] = []
+const STUCK_FRAME_COUNT = 10
+const STUCK_THRESHOLD = 0.2
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var apprentice_camera: ApprenticeCamera = $Camera2D
@@ -69,6 +72,7 @@ func _process(delta: float) -> void:
 		if input_dir.length_squared() > 0.05:
 			# Si se detecta entrada manual del joystick o teclado, se cancela el Tap-to-Move de inmediato
 			is_moving_to_target = false
+			_last_positions.clear()
 			direction = input_dir.normalized()
 			velocity = direction * SPEED
 		elif is_moving_to_target:
@@ -76,21 +80,45 @@ func _process(delta: float) -> void:
 			var to_target := nav_agent.target_position - global_position
 			var to_local_target := to_local(nav_agent.get_next_path_position())
 			
-			if to_target.length() < 4.0:
+			# Registrar posición para detectar bloqueos contra paredes/obstáculos
+			_last_positions.append(global_position)
+			if _last_positions.size() > STUCK_FRAME_COUNT:
+				_last_positions.pop_front()
+			
+			var is_stuck := false
+			if _last_positions.size() == STUCK_FRAME_COUNT:
+				var min_x := _last_positions[0].x
+				var max_x := _last_positions[0].x
+				var min_y := _last_positions[0].y
+				var max_y := _last_positions[0].y
+				for pos in _last_positions:
+					min_x = min(min_x, pos.x)
+					max_x = max(max_x, pos.x)
+					min_y = min(min_y, pos.y)
+					max_y = max(max_y, pos.y)
+				if (max_x - min_x) < STUCK_THRESHOLD and (max_y - min_y) < STUCK_THRESHOLD:
+					is_stuck = true
+			
+			if to_target.length() < 4.0 or nav_agent.is_navigation_finished() or is_stuck:
 				is_moving_to_target = false
+				_last_positions.clear()
 				direction = Vector2.ZERO
 				velocity = Vector2.ZERO
 			else:
 				direction = to_local_target.normalized()
-				velocity = direction * SPEED
+				# Escalar la velocidad para prevenir sobretiros (overshoot) y evitar temblores por desfase
+				var target_speed: float = min(SPEED, to_target.length() / delta)
+				velocity = direction * target_speed
 		else:
+			_last_positions.clear()
 			direction = Vector2.ZERO
 			velocity = Vector2.ZERO
 	else:
 		is_moving_to_target = false
+		_last_positions.clear()
+		velocity = Vector2.ZERO
 		if !dungeon_entered:
 			direction = -direction
-			velocity = Vector2.ZERO
 			dungeon_entered = true
 		
 	# Sin cortocircuito: al empezar a andar cambian estado y dirección a la vez,
@@ -101,6 +129,11 @@ func _process(delta: float) -> void:
 		updateAnimation()
 
 func _physics_process(delta: float) -> void:
+	if LevelManager.in_dungeon():
+		velocity = Vector2.ZERO
+		is_moving_to_target = false
+		_last_positions.clear()
+		nav_agent.target_position = global_position
 	move_and_slide()
 
 func setDirection() -> bool:

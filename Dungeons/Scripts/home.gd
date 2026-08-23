@@ -38,28 +38,24 @@ const MONTH_NAMES := [
 const PROMPT_CARD_SCENE := preload("res://Dungeons/UI/prompt_card.tscn")
 const ENTRY_CARD_SCENE := preload("res://Dungeons/UI/journal_entry_card.tscn")
 
-@export_group("Estadísticas")
-@export var entries_value_label: Label
-@export var streak_value_label: Label
-@export var practices_value_label: Label
+@onready var entries_value_label: Label = %EntriesValueLabel
+@onready var streak_value_label: Label = %StreakValueLabel
+@onready var practices_value_label: Label = %PracticesValueLabel
 
-@export_group("Pestañas")
-@export var new_entry_tab: Button
-@export var history_tab: Button
+@onready var new_entry_tab: Button = %NewEntryTab
+@onready var history_tab: Button = %HistoryTab
 
-@export_group("Nueva entrada")
-@export var new_entry_panel: Control
-@export var prompt_grid: GridContainer
-@export var question_label: Label
-@export var entry_text_edit: TextEdit
-@export var char_count_label: Label
-@export var save_button: Button
-@export var toast_label: Label
+@onready var new_entry_panel: Control = %NewEntry
+@onready var prompt_grid: GridContainer = %PromptGrid
+@onready var question_label: Label = %QuestionLabel
+@onready var entry_text_edit: TextEdit = %EntryTextEdit
+@onready var char_count_label: Label = %CharCountLabel
+@onready var save_button: Button = %SaveButton
+@onready var toast_label: Label = %ToastLabel
 
-@export_group("Historial")
-@export var history_panel: Control
-@export var history_list: VBoxContainer
-@export var empty_history: Control
+@onready var history_panel: Control = %History
+@onready var history_list: VBoxContainer = %HistoryList
+@onready var empty_history: Control = %EmptyHistory
 
 var _progress: Dictionary
 var _selected_prompt: Dictionary = PROMPTS[0]
