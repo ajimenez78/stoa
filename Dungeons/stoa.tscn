@@ -243,7 +243,8 @@ text = "[color=black][b][font_size=18]Sabiduría estoica[/font_size][/b][/color]
 fit_content = true
 autowrap_mode = 1
 
-[node name="QuoteRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer" unique_name_in_owner=true]
+[node name="QuoteRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
@@ -255,7 +256,8 @@ autowrap_mode = 1
 layout_mode = 2
 alignment = 1
 
-[node name="AuthorRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow" unique_name_in_owner=true]
+[node name="AuthorRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("5_font")
@@ -268,14 +270,16 @@ autowrap_mode = 1
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="PreviousButton" type="TextureButton" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow/ButtonsHBox" unique_name_in_owner=true]
+[node name="PreviousButton" type="TextureButton" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow/ButtonsHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture_normal = ExtResource("9_v2hqn")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="NextButton" type="TextureButton" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow/ButtonsHBox" unique_name_in_owner=true]
+[node name="NextButton" type="TextureButton" parent="UI/MarginContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow/ButtonsHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture_normal = ExtResource("8_3ysre")
