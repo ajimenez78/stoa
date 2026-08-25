@@ -11,8 +11,10 @@ const QUOTES_DATABASE_PATH = "res://Dungeons/quotes.json"
 @onready var virtues_grid: GridContainer = %VirtuesGrid
 @onready var font_decrease_button: Button = %FontDecreaseButton
 @onready var font_increase_button: Button = %FontIncreaseButton
+@onready var font_size_label: Label = %FontSizeLabel
+@onready var scroll_container: ScrollContainer = %ScrollContainer
 
-const FONT_SCALES: Array[float] = [0.85, 1.0, 1.2, 1.4, 1.6]
+const FONT_SCALES: Array[float] = [0.85, 1.0, 1.2, 1.4, 1.6, 1.8, 2]
 var _current_scale_index: int = 1
 var _original_texts: Dictionary = {}
 
@@ -29,6 +31,10 @@ func _ready() -> void:
 	if font_increase_button:
 		font_increase_button.pressed.connect(_on_font_increase_pressed)
 
+	# Configure non-button control nodes to ignore touch events so drag gestures pass to ScrollContainer
+	if scroll_container:
+		_configure_scroll_pass_through(scroll_container)
+
 	# Cache original BBCode texts for static labels
 	for label in find_children("*", "RichTextLabel"):
 		_original_texts[label] = label.text
@@ -36,6 +42,12 @@ func _ready() -> void:
 	_update_responsive_layout()
 	get_viewport().size_changed.connect(_update_responsive_layout)
 	_on_next_pressed()
+
+func _configure_scroll_pass_through(node: Node) -> void:
+	for child in node.get_children():
+		if child is Control and not (child is BaseButton):
+			(child as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_configure_scroll_pass_through(child)
 
 func _on_font_decrease_pressed() -> void:
 	if _current_scale_index > 0:
@@ -53,6 +65,9 @@ func _apply_font_scale() -> void:
 		font_decrease_button.disabled = _current_scale_index <= 0
 	if font_increase_button:
 		font_increase_button.disabled = _current_scale_index >= FONT_SCALES.size() - 1
+
+	if font_size_label:
+		font_size_label.add_theme_font_size_override("font_size", int(round(14 * scale_factor)))
 
 	for label in _original_texts.keys():
 		if is_instance_valid(label) and label != quote_rich_text_label and label != author_rich_text_label:

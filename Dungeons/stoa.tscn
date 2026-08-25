@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://t6bxuk2dn85x"]
+[gd_scene format=3 uid="uid://t6bxuk2dn85x"]
 
 [ext_resource type="Script" uid="uid://cemfve17fn2ac" path="res://Dungeons/Scripts/stoa.gd" id="1_0rqnr"]
 [ext_resource type="Texture2D" uid="uid://b8rvcnb3mh5hu" path="res://Dungeons/Sprites/stoa.png" id="1_l4dqh"]
@@ -11,7 +11,12 @@
 [ext_resource type="Texture2D" uid="uid://po55uwqupi3i" path="res://Dungeons/Sprites/arrow-left.png" id="9_v2hqn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass"]
-bg_color = Color(1, 1, 1, 0.470588)
+bg_color = Color(1, 1, 1, 0.78)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.6)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
@@ -27,15 +32,15 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
-bg_color = Color(1, 1, 1, 0.85)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.85, 0.85, 0.85, 0.5)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
-bg_color = Color(0.85, 0.85, 0.85, 0.5)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(1, 1, 1, 0.85)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -48,12 +53,13 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="Stoa" type="Node2D"]
+[node name="Stoa" type="Node2D" unique_id=614856667]
 script = ExtResource("1_0rqnr")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1112691675]
 
-[node name="Background" type="TextureRect" parent="UI"]
+[node name="Background" type="TextureRect" parent="UI" unique_id=1248296507]
+self_modulate = Color(0.88, 0.88, 0.88, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -63,95 +69,95 @@ texture = ExtResource("1_l4dqh")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=1864910610]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 80
+theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/MarginContainer" unique_id=1243005480]
+unique_name_in_owner = true
 layout_mode = 2
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/ScrollContainer" unique_id=1635960218]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 20
 
-[node name="TopControlsPanel" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="TopControlsPanel" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer" unique_id=257605285]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/TopControlsPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/TopControlsPanel" unique_id=1242672758]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 8
 
-[node name="TopControlsHBox" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/TopControlsPanel/MarginContainer"]
+[node name="TopControlsHBox" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/TopControlsPanel/MarginContainer" unique_id=789748839]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="FontSizeLabel" type="Label" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/TopControlsPanel/MarginContainer/TopControlsHBox"]
+[node name="FontSizeLabel" type="Label" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/TopControlsPanel/MarginContainer/TopControlsHBox" unique_id=2085318231]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 0.85)
-theme_override_fonts/font = ExtResource("5_font")
-theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Tamaño de letra:"
 vertical_alignment = 1
 
-[node name="FontDecreaseButton" type="Button" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/TopControlsPanel/MarginContainer/TopControlsHBox"]
+[node name="FontDecreaseButton" type="Button" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/TopControlsPanel/MarginContainer/TopControlsHBox" unique_id=25868261]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 32)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 0.3)
 theme_override_fonts/font = ExtResource("5_font")
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
 text = " A- "
 
-[node name="FontIncreaseButton" type="Button" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/TopControlsPanel/MarginContainer/TopControlsHBox"]
+[node name="FontIncreaseButton" type="Button" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/TopControlsPanel/MarginContainer/TopControlsHBox" unique_id=863265202]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 32)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 0.3)
 theme_override_fonts/font = ExtResource("5_font")
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
 text = " A+ "
 
-[node name="MentorMessage" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="MentorMessage" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer" unique_id=276698848]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/MentorMessage"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/MentorMessage" unique_id=75662927]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="MentorRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/MentorMessage/MarginContainer"]
+[node name="MentorRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/MentorMessage/MarginContainer" unique_id=58101441]
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
@@ -161,9 +167,8 @@ text = "[color=black][b][font_size=24]Mensaje del Mentor[/font_size][/b]
 
 Recuerda siempre: [i]\"No son las cosas las que nos perturban, sino las opiniones que tenemos de ellas.\"[/i] Tu práctica diaria te llevará hacia la serenidad y la virtud.[/font_size][/color]"
 fit_content = true
-autowrap_mode = 1
 
-[node name="VirtuesGrid" type="GridContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="VirtuesGrid" type="GridContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer" unique_id=706250517]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -171,31 +176,31 @@ theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 16
 columns = 2
 
-[node name="Templanza" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid"]
+[node name="Templanza" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid" unique_id=905716836]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Templanza"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Templanza" unique_id=764725429]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Templanza/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Templanza/MarginContainer" unique_id=473306849]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Templanza/MarginContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Templanza/MarginContainer/HBoxContainer" unique_id=1549207642]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("3_3ncpv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Templanza/MarginContainer/HBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Templanza/MarginContainer/HBoxContainer" unique_id=320259800]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("5_font")
@@ -204,33 +209,32 @@ text = "[color=black][b][font_size=20]Templanza[/font_size][/b]
 
 [font_size=16]El autocontrol y la moderación. La disciplina para resistir los excesos y mantener el equilibrio en todas las cosas.[/font_size][/color]"
 fit_content = true
-autowrap_mode = 1
 
-[node name="Justicia" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid"]
+[node name="Justicia" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid" unique_id=675536770]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Justicia"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Justicia" unique_id=448828361]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Justicia/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Justicia/MarginContainer" unique_id=1162790991]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Justicia/MarginContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Justicia/MarginContainer/HBoxContainer" unique_id=137169670]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("4_n567r")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Justicia/MarginContainer/HBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Justicia/MarginContainer/HBoxContainer" unique_id=2134011515]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("5_font")
@@ -239,33 +243,32 @@ text = "[color=black][b][font_size=20]Justicia[/font_size][/b]
 
 [font_size=16]Tratar a los demás con equidad y bondad. Cumplir con nuestras obligaciones sociales y contribuir al bien común.[/font_size][/color]"
 fit_content = true
-autowrap_mode = 1
 
-[node name="Sabiduría" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid"]
+[node name="Sabiduría" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid" unique_id=1438283073]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Sabiduría"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Sabiduría" unique_id=1780715308]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Sabiduría/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Sabiduría/MarginContainer" unique_id=543224203]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Sabiduría/MarginContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Sabiduría/MarginContainer/HBoxContainer" unique_id=1995188109]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("6_ungmm")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Sabiduría/MarginContainer/HBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Sabiduría/MarginContainer/HBoxContainer" unique_id=493652448]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("5_font")
@@ -274,33 +277,32 @@ text = "[color=black][b][font_size=20]Sabiduría[/font_size][/b]
 
 [font_size=16]El conocimiento aplicado con discernimiento. La capacidad de ver las cosas como realmente son y actuar en consecuencia.[/font_size][/color]"
 fit_content = true
-autowrap_mode = 1
 
-[node name="Coraje" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid"]
+[node name="Coraje" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid" unique_id=1885159719]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Coraje"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Coraje" unique_id=60174109]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Coraje/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Coraje/MarginContainer" unique_id=644040930]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Coraje/MarginContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Coraje/MarginContainer/HBoxContainer" unique_id=1001429507]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("7_0rqnr")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Coraje/MarginContainer/HBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/VirtuesGrid/Coraje/MarginContainer/HBoxContainer" unique_id=1979701131]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("5_font")
@@ -309,45 +311,42 @@ text = "[color=black][b][font_size=20]Coraje[/font_size][/b]
 
 [font_size=16]La fortaleza para enfrentar el miedo y la adversidad. No es la ausencia de miedo, sino actuar correctamente a pesar de él.[/font_size][/color]"
 fit_content = true
-autowrap_mode = 1
 
-[node name="SabiduríaEstoica" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="SabiduríaEstoica" type="PanelContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer" unique_id=935574351]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica" unique_id=857236906]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer" unique_id=1395423161]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="TitleRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer"]
+[node name="TitleRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer" unique_id=247827980]
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
 text = "[color=black][b][font_size=22]Sabiduría estoica[/font_size][/b][/color]"
 fit_content = true
-autowrap_mode = 1
 
-[node name="QuoteRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer"]
+[node name="QuoteRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer" unique_id=1245985800]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
 text = "[font_size=18][i][color=black]\"No podemos controlar lo que nos sucede, pero sí cómo respondemos a ello\"[/color][/i][/font_size]"
 fit_content = true
-autowrap_mode = 1
 
-[node name="BottomRow" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer"]
+[node name="BottomRow" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer" unique_id=1016651775]
 layout_mode = 2
 alignment = 1
 
-[node name="AuthorRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow"]
+[node name="AuthorRichTextLabel" type="RichTextLabel" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow" unique_id=1549314746]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -355,13 +354,12 @@ theme_override_fonts/normal_font = ExtResource("5_font")
 bbcode_enabled = true
 text = "[font_size=17][color=brown]- Epicteto[/color][/font_size]"
 fit_content = true
-autowrap_mode = 1
 
-[node name="ButtonsHBox" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow"]
+[node name="ButtonsHBox" type="HBoxContainer" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow" unique_id=1490381591]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="PreviousButton" type="TextureButton" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow/ButtonsHBox"]
+[node name="PreviousButton" type="TextureButton" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow/ButtonsHBox" unique_id=1700754290]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
@@ -369,7 +367,7 @@ texture_normal = ExtResource("9_v2hqn")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="NextButton" type="TextureButton" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow/ButtonsHBox"]
+[node name="NextButton" type="TextureButton" parent="UI/MarginContainer/ScrollContainer/VBoxContainer/SabiduríaEstoica/MarginContainer/VBoxContainer/BottomRow/ButtonsHBox" unique_id=1161661153]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
