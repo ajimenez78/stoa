@@ -1,14 +1,20 @@
 extends Dungeon
 
-const QUOTE_STRING_TEMPLATE =  "[font_size=16][i][color=black]%s[/color][/i][/font_size]"
-const AUTHOR_STRING_TEMPLATE =  "[font_size=16][color=brown]- %s[/color][/font_size]"
+const QUOTE_STRING_TEMPLATE =  "[font_size=18][i][color=black]%s[/color][/i][/font_size]"
+const AUTHOR_STRING_TEMPLATE =  "[font_size=17][color=brown]- %s[/color][/font_size]"
 const QUOTES_DATABASE_PATH = "res://Dungeons/quotes.json"
 
 @onready var quote_rich_text_label: RichTextLabel = %QuoteRichTextLabel
 @onready var author_rich_text_label: RichTextLabel = %AuthorRichTextLabel
-
 @onready var previous_button: TextureButton = %PreviousButton
 @onready var next_button: TextureButton = %NextButton
+@onready var virtues_grid: GridContainer = %VirtuesGrid
+@onready var font_decrease_button: Button = %FontDecreaseButton
+@onready var font_increase_button: Button = %FontIncreaseButton
+
+const FONT_SCALES: Array[float] = [0.85, 1.0, 1.2, 1.4, 1.6]
+var _current_scale_index: int = 1
+var _original_texts: Dictionary = {}
 
 # History of quotes shown, with a pointer to the currently displayed one.
 var _history: Array[Dictionary] = []
@@ -18,7 +24,65 @@ var _current_index: int = -1
 func _ready() -> void:
 	next_button.pressed.connect(_on_next_pressed)
 	previous_button.pressed.connect(_on_previous_pressed)
+	if font_decrease_button:
+		font_decrease_button.pressed.connect(_on_font_decrease_pressed)
+	if font_increase_button:
+		font_increase_button.pressed.connect(_on_font_increase_pressed)
+
+	# Cache original BBCode texts for static labels
+	for label in find_children("*", "RichTextLabel"):
+		_original_texts[label] = label.text
+
+	_update_responsive_layout()
+	get_viewport().size_changed.connect(_update_responsive_layout)
 	_on_next_pressed()
+
+func _on_font_decrease_pressed() -> void:
+	if _current_scale_index > 0:
+		_current_scale_index -= 1
+		_apply_font_scale()
+
+func _on_font_increase_pressed() -> void:
+	if _current_scale_index < FONT_SCALES.size() - 1:
+		_current_scale_index += 1
+		_apply_font_scale()
+
+func _apply_font_scale() -> void:
+	var scale_factor := FONT_SCALES[_current_scale_index]
+	if font_decrease_button:
+		font_decrease_button.disabled = _current_scale_index <= 0
+	if font_increase_button:
+		font_increase_button.disabled = _current_scale_index >= FONT_SCALES.size() - 1
+
+	for label in _original_texts.keys():
+		if is_instance_valid(label) and label != quote_rich_text_label and label != author_rich_text_label:
+			label.text = _scale_bbcode(_original_texts[label], scale_factor)
+
+	_display_current_quote()
+
+func _scale_bbcode(text: String, scale_factor: float) -> String:
+	if scale_factor == 1.0:
+		return text
+	var regex := RegEx.new()
+	regex.compile("\\[font_size=(\\d+)\\]")
+	var result := text
+	var matches := regex.search_all(text)
+	for i in range(matches.size() - 1, -1, -1):
+		var m := matches[i]
+		var orig_size := m.get_string(1).to_int()
+		var new_size := int(round(orig_size * scale_factor))
+		var start := m.get_start(1)
+		var end := m.get_end(1)
+		result = result.substr(0, start) + str(new_size) + result.substr(end)
+	return result
+
+func _update_responsive_layout() -> void:
+	if virtues_grid:
+		var vp_width := get_viewport().get_visible_rect().size.x
+		if vp_width < 600:
+			virtues_grid.columns = 1
+		else:
+			virtues_grid.columns = 2
 
 # Shows the next quote: moves forward in history, or picks a new random one
 # when already at the most recent entry.
@@ -39,8 +103,11 @@ func _on_previous_pressed() -> void:
 # Renders the quote at the current history index and updates button state.
 func _display_current_quote() -> void:
 	var quote := _history[_current_index]
-	quote_rich_text_label.text = QUOTE_STRING_TEMPLATE % quote.get("quote", "")
-	author_rich_text_label.text = AUTHOR_STRING_TEMPLATE % quote.get("author", "")
+	var scale_factor := FONT_SCALES[_current_scale_index]
+	var raw_quote := QUOTE_STRING_TEMPLATE % quote.get("quote", "")
+	var raw_author := AUTHOR_STRING_TEMPLATE % quote.get("author", "")
+	quote_rich_text_label.text = _scale_bbcode(raw_quote, scale_factor)
+	author_rich_text_label.text = _scale_bbcode(raw_author, scale_factor)
 	previous_button.disabled = _current_index <= 0
 
 # Loads the quotes database and returns a random entry as a Dictionary.
