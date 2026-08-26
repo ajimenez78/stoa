@@ -62,10 +62,13 @@ const ENTRY_CARD_SCENE := preload("res://Dungeons/UI/journal_entry_card.tscn")
 @onready var font_size_label: Label = %FontSizeLabel
 @onready var scroll_container: ScrollContainer = %ScrollContainer
 @onready var stats_container: BoxContainer = %Stats
+@onready var layout: MarginContainer = %Layout
 
 const FONT_SCALES: Array[float] = [0.85, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
 var _current_scale_index: int = 1
 var _base_font_sizes: Dictionary = {}
+var _is_text_editing: bool = false
+var _last_kb_height: int = 0
 
 var _progress: Dictionary
 var _selected_prompt: Dictionary = PROMPTS[0]
@@ -73,11 +76,14 @@ var _prompt_group := ButtonGroup.new()
 var _toast_tween: Tween
 
 func _ready() -> void:
+	_init_font_scale_index()
 	_progress = ProgressStore.register_visit()
 
 	new_entry_tab.pressed.connect(_show_new_entry)
 	history_tab.pressed.connect(_show_history)
 	entry_text_edit.text_changed.connect(_update_writing_state)
+	entry_text_edit.focus_entered.connect(_on_text_edit_focus_entered)
+	entry_text_edit.focus_exited.connect(_on_text_edit_focus_exited)
 	save_button.pressed.connect(_on_save_pressed)
 
 	if font_decrease_button:
@@ -100,6 +106,51 @@ func _ready() -> void:
 	_update_responsive_layout()
 	get_viewport().size_changed.connect(_update_responsive_layout)
 
+func _init_font_scale_index() -> void:
+	var is_mobile_screen: bool = OS.has_feature("mobile") or get_viewport_rect().size.x < 600
+	if is_mobile_screen:
+		_current_scale_index = 3
+	else:
+		_current_scale_index = 1
+
+func _process(_delta: float) -> void:
+	if _is_text_editing:
+		_check_virtual_keyboard()
+
+func _on_text_edit_focus_entered() -> void:
+	_is_text_editing = true
+	_check_virtual_keyboard()
+	_scroll_to_editor()
+
+func _on_text_edit_focus_exited() -> void:
+	_is_text_editing = false
+	_reset_keyboard_padding()
+
+func _check_virtual_keyboard() -> void:
+	if not DisplayServer.has_feature(DisplayServer.FEATURE_VIRTUAL_KEYBOARD):
+		return
+	var kb_height := DisplayServer.virtual_keyboard_get_height()
+	if kb_height != _last_kb_height:
+		_last_kb_height = kb_height
+		if kb_height > 0:
+			var window_size := DisplayServer.window_get_size()
+			var scale_y: float = get_viewport_rect().size.y / float(max(1, window_size.y))
+			var adjusted_kb_height := int(round(kb_height * scale_y))
+			if layout:
+				layout.add_theme_constant_override("margin_bottom", 24 + adjusted_kb_height)
+			_scroll_to_editor()
+		else:
+			_reset_keyboard_padding()
+
+func _reset_keyboard_padding() -> void:
+	_last_kb_height = 0
+	if layout:
+		layout.add_theme_constant_override("margin_bottom", 24)
+
+func _scroll_to_editor() -> void:
+	if scroll_container and entry_text_edit:
+		scroll_container.ensure_control_visible(entry_text_edit)
+
 func _cache_base_font_sizes(node: Node) -> void:
 	for child in node.get_children():
 		if child is Control and child != font_decrease_button and child != font_increase_button:
@@ -109,15 +160,18 @@ func _cache_base_font_sizes(node: Node) -> void:
 		_cache_base_font_sizes(child)
 
 func _configure_scroll_pass_through(node: Node) -> void:
+	if node is Control and not (node is TextEdit) and not (node is ScrollContainer):
+		if node is BaseButton:
+			(node as Control).mouse_filter = Control.MOUSE_FILTER_PASS
+		else:
+			(node as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for child in node.get_children():
-		if child is Control and not (child is BaseButton) and not (child is TextEdit):
-			(child as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_configure_scroll_pass_through(child)
 
 func _update_responsive_layout() -> void:
 	var viewport_width := get_viewport_rect().size.x
 	if prompt_grid:
-		prompt_grid.columns = 1 if viewport_width < 600 else 2
+		prompt_grid.columns = 1
 	if stats_container:
 		stats_container.vertical = (viewport_width < 600)
 
@@ -144,6 +198,11 @@ func _apply_font_scale() -> void:
 			var scaled_size := int(round(base_size * scale_factor))
 			(control as Control).add_theme_font_size_override("font_size", scaled_size)
 
+	if prompt_grid:
+		for card in prompt_grid.get_children():
+			if card is Control:
+				(card as Control).custom_minimum_size.y = int(round(90 * scale_factor))
+
 # Guarda la reflexión a medio escribir al salir del hogar.
 func _exit_tree() -> void:
 	ProgressStore.save_draft(_selected_prompt.get("id", ""), entry_text_edit.text)
@@ -158,6 +217,7 @@ func _build_prompt_cards() -> void:
 		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		card.pressed.connect(_on_prompt_pressed.bind(card))
 		_cache_base_font_sizes(card)
+		_configure_scroll_pass_through(card)
 	_apply_font_scale()
 
 # Recupera la reflexión y el texto que quedaron sin guardar.
@@ -201,6 +261,10 @@ func _on_save_pressed() -> void:
 		VIRTUE_POINTS_PER_ENTRY,
 	)
 	entry_text_edit.text = ""
+	entry_text_edit.release_focus()
+	_reset_keyboard_padding()
+	if scroll_container:
+		scroll_container.scroll_vertical = 0
 	ProgressStore.save_draft("", "")
 
 	_update_writing_state()
@@ -234,6 +298,7 @@ func _rebuild_history() -> void:
 			str(entry.get("content", "")),
 		)
 		_cache_base_font_sizes(card)
+		_configure_scroll_pass_through(card)
 	_apply_font_scale()
 
 func _show_new_entry() -> void:

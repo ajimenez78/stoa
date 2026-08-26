@@ -24,6 +24,7 @@ var _current_index: int = -1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_init_font_scale_index()
 	next_button.pressed.connect(_on_next_pressed)
 	previous_button.pressed.connect(_on_previous_pressed)
 	if font_decrease_button:
@@ -43,10 +44,20 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(_update_responsive_layout)
 	_on_next_pressed()
 
+func _init_font_scale_index() -> void:
+	var is_mobile_screen: bool = OS.has_feature("mobile") or get_viewport_rect().size.x < 600
+	if is_mobile_screen:
+		_current_scale_index = 3
+	else:
+		_current_scale_index = 1
+
 func _configure_scroll_pass_through(node: Node) -> void:
+	if node is Control and not (node is ScrollContainer):
+		if node is BaseButton:
+			(node as Control).mouse_filter = Control.MOUSE_FILTER_PASS
+		else:
+			(node as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for child in node.get_children():
-		if child is Control and not (child is BaseButton):
-			(child as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_configure_scroll_pass_through(child)
 
 func _on_font_decrease_pressed() -> void:

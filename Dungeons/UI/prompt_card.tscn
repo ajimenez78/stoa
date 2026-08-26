@@ -10,7 +10,7 @@ variation_opentype = {
 }
 
 [sub_resource type="StyleBoxFlat" id="CardNormal"]
-bg_color = Color(1, 1, 1, 0.32)
+bg_color = Color(1, 1, 1, 0.75)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -22,7 +22,7 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="CardHover"]
-bg_color = Color(1, 1, 1, 0.48)
+bg_color = Color(1, 1, 1, 0.88)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -34,7 +34,7 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="CardSelected"]
-bg_color = Color(0.90196, 0.87451, 0.83137, 0.55)
+bg_color = Color(0.90196, 0.87451, 0.83137, 0.85)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -48,9 +48,9 @@ corner_radius_bottom_left = 6
 [sub_resource type="StyleBoxEmpty" id="CardFocus"]
 
 [node name="PromptCard" type="Button" node_paths=PackedStringArray("question_label", "description_label")]
-custom_minimum_size = Vector2(0, 74)
+custom_minimum_size = Vector2(0, 90)
 offset_right = 560.0
-offset_bottom = 74.0
+offset_bottom = 90.0
 focus_mode = 1
 theme_override_styles/focus = SubResource("CardFocus")
 theme_override_styles/normal = SubResource("CardNormal")
