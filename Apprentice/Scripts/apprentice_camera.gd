@@ -7,7 +7,7 @@ func _ready() -> void:
 	update_limits(LevelManager.current_tilemap_bounds)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func update_limits(bounds: Array[Vector2]) -> void:

@@ -7,6 +7,7 @@ class_name Minigame extends Control
 
 # Resultado de una partida. `rewards` lleva los puntos ganados por virtud
 # ({"wisdom": 20, ...}) y `summary` una línea con el resultado para el aviso.
+@warning_ignore("unused_signal")
 signal finished(result: Dictionary)
 
 # Prepara una partida nueva.

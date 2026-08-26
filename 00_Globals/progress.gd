@@ -169,7 +169,7 @@ static func challenge_state(progress: Dictionary, challenge_id: String) -> Dicti
 
 # Nivel del aprendiz, según el total de puntos de virtud acumulados.
 static func level(progress: Dictionary) -> int:
-	return total_virtue_points(progress) / POINTS_PER_LEVEL + 1
+	return int(float(total_virtue_points(progress)) / POINTS_PER_LEVEL) + 1
 
 # Puntos que faltan para alcanzar el nivel siguiente.
 static func points_to_next_level(progress: Dictionary) -> int:

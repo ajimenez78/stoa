@@ -322,7 +322,7 @@ theme_override_font_sizes/font_size = 14
 text = "Un espacio para la reflexión y el crecimiento personal"
 horizontal_alignment = 1
 
-[node name="Stats" type="HBoxContainer" parent="UI/Layout/ScrollContainer/Column" unique_id=2127073641]
+[node name="Stats" type="BoxContainer" parent="UI/Layout/ScrollContainer/Column" unique_id=2127073641]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 10

@@ -128,7 +128,7 @@ func _process(delta: float) -> void:
 	if state_changed || direction_changed:
 		updateAnimation()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if LevelManager.in_dungeon():
 		velocity = Vector2.ZERO
 		is_moving_to_target = false

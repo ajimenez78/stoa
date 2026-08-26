@@ -54,7 +54,7 @@ func _fill(new_mission: Dictionary, meta: String) -> void:
 	meta_label.text = meta
 	status_label.visible = false
 
-func _set_status(text: String, color: Color) -> void:
+func _set_status(status_text: String, color: Color) -> void:
 	status_label.visible = true
-	status_label.text = text
+	status_label.text = status_text
 	status_label.add_theme_color_override("font_color", color)
