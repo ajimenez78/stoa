@@ -57,6 +57,16 @@ const ENTRY_CARD_SCENE := preload("res://Dungeons/UI/journal_entry_card.tscn")
 @onready var history_list: VBoxContainer = %HistoryList
 @onready var empty_history: Control = %EmptyHistory
 
+@onready var font_decrease_button: Button = %FontDecreaseButton
+@onready var font_increase_button: Button = %FontIncreaseButton
+@onready var font_size_label: Label = %FontSizeLabel
+@onready var scroll_container: ScrollContainer = %ScrollContainer
+@onready var stats_container: BoxContainer = %Stats
+
+const FONT_SCALES: Array[float] = [0.85, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
+var _current_scale_index: int = 1
+var _base_font_sizes: Dictionary = {}
+
 var _progress: Dictionary
 var _selected_prompt: Dictionary = PROMPTS[0]
 var _prompt_group := ButtonGroup.new()
@@ -70,12 +80,69 @@ func _ready() -> void:
 	entry_text_edit.text_changed.connect(_update_writing_state)
 	save_button.pressed.connect(_on_save_pressed)
 
+	if font_decrease_button:
+		font_decrease_button.pressed.connect(_on_font_decrease_pressed)
+	if font_increase_button:
+		font_increase_button.pressed.connect(_on_font_increase_pressed)
+
+	if scroll_container:
+		_configure_scroll_pass_through(scroll_container)
+
+	_cache_base_font_sizes(self)
+
 	toast_label.modulate.a = 0.0
 	_build_prompt_cards()
 	_restore_draft()
 	_refresh_stats()
 	_rebuild_history()
 	_show_new_entry()
+
+	_update_responsive_layout()
+	get_viewport().size_changed.connect(_update_responsive_layout)
+
+func _cache_base_font_sizes(node: Node) -> void:
+	for child in node.get_children():
+		if child is Control and child != font_decrease_button and child != font_increase_button:
+			var base_size: int = child.get_theme_font_size("font_size")
+			if base_size > 0:
+				_base_font_sizes[child] = base_size
+		_cache_base_font_sizes(child)
+
+func _configure_scroll_pass_through(node: Node) -> void:
+	for child in node.get_children():
+		if child is Control and not (child is BaseButton) and not (child is TextEdit):
+			(child as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_configure_scroll_pass_through(child)
+
+func _update_responsive_layout() -> void:
+	var viewport_width := get_viewport_rect().size.x
+	if prompt_grid:
+		prompt_grid.columns = 1 if viewport_width < 600 else 2
+	if stats_container:
+		stats_container.vertical = (viewport_width < 600)
+
+func _on_font_decrease_pressed() -> void:
+	if _current_scale_index > 0:
+		_current_scale_index -= 1
+		_apply_font_scale()
+
+func _on_font_increase_pressed() -> void:
+	if _current_scale_index < FONT_SCALES.size() - 1:
+		_current_scale_index += 1
+		_apply_font_scale()
+
+func _apply_font_scale() -> void:
+	var scale_factor := FONT_SCALES[_current_scale_index]
+	if font_decrease_button:
+		font_decrease_button.disabled = _current_scale_index <= 0
+	if font_increase_button:
+		font_increase_button.disabled = _current_scale_index >= FONT_SCALES.size() - 1
+
+	for control in _base_font_sizes.keys():
+		if is_instance_valid(control):
+			var base_size: int = _base_font_sizes[control]
+			var scaled_size := int(round(base_size * scale_factor))
+			(control as Control).add_theme_font_size_override("font_size", scaled_size)
 
 # Guarda la reflexión a medio escribir al salir del hogar.
 func _exit_tree() -> void:
@@ -90,6 +157,8 @@ func _build_prompt_cards() -> void:
 		card.button_group = _prompt_group
 		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		card.pressed.connect(_on_prompt_pressed.bind(card))
+		_cache_base_font_sizes(card)
+	_apply_font_scale()
 
 # Recupera la reflexión y el texto que quedaron sin guardar.
 func _restore_draft() -> void:
@@ -164,6 +233,8 @@ func _rebuild_history() -> void:
 			_format_date(str(entry.get("date", ""))),
 			str(entry.get("content", "")),
 		)
+		_cache_base_font_sizes(card)
+	_apply_font_scale()
 
 func _show_new_entry() -> void:
 	new_entry_tab.button_pressed = true
