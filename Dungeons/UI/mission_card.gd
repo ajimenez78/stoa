@@ -15,6 +15,14 @@ const BROWN := Color(0.5451, 0.45098, 0.33333)
 @export var status_label: Label
 
 var mission: Dictionary
+var _last_scale_factor: float = 1.0
+
+func _ready() -> void:
+	resized.connect(_on_resized)
+
+func _on_resized() -> void:
+	if is_inside_tree():
+		update_adaptive_minimum_size(_last_scale_factor)
 
 # Práctica diaria: muestra su duración y la virtud que cultiva. `suggested`
 # marca la práctica que cultiva la virtud más descuidada.
@@ -33,6 +41,7 @@ func setup_practice(practice: Dictionary, done_today: bool, suggested: bool) -> 
 	# Una práctica ya hecha se atenúa; el mini-juego, no, porque se puede seguir
 	# jugando aunque ya haya puntuado.
 	modulate.a = 0.75 if done_today else 1.0
+	update_adaptive_minimum_size()
 
 # Mini-juego: muestra su formato y las virtudes que ejercita.
 func setup_minigame(minigame: Dictionary, rewarded_today: bool) -> void:
@@ -46,6 +55,7 @@ func setup_minigame(minigame: Dictionary, rewarded_today: bool) -> void:
 
 	if rewarded_today:
 		_set_status(REWARDED_TEXT, BROWN)
+	update_adaptive_minimum_size()
 
 func _fill(new_mission: Dictionary, meta: String) -> void:
 	mission = new_mission
@@ -58,3 +68,15 @@ func _set_status(status_text: String, color: Color) -> void:
 	status_label.visible = true
 	status_label.text = status_text
 	status_label.add_theme_color_override("font_color", color)
+
+func update_adaptive_minimum_size(scale_factor: float = 1.0) -> void:
+	_last_scale_factor = scale_factor
+	var base_min_h := int(round(60 * scale_factor))
+	if is_inside_tree() and size.x > 50 and has_node("Margin"):
+		var margin := $Margin as MarginContainer
+		if margin:
+			custom_minimum_size.y = 0
+			var content_min_h := int(margin.get_combined_minimum_size().y)
+			custom_minimum_size.y = max(base_min_h, content_min_h)
+	else:
+		custom_minimum_size.y = base_min_h

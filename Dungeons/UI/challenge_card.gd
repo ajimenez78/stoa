@@ -18,9 +18,15 @@ const LOCKED_TEXT := "Se desbloquea en el nivel %d"
 @export var register_button: Button
 
 var challenge: Dictionary
+var _last_scale_factor: float = 1.0
 
 func _ready() -> void:
 	register_button.pressed.connect(_on_register_pressed)
+	resized.connect(_on_resized)
+
+func _on_resized() -> void:
+	if is_inside_tree():
+		update_adaptive_minimum_size(_last_scale_factor)
 
 # Rellena la tarjeta con un reto y su estado en la semana en curso. `unlocked`
 # indica si el nivel del aprendiz alcanza el exigido por el reto.
@@ -60,6 +66,19 @@ func setup(new_challenge: Dictionary, state: Dictionary, unlocked: bool) -> void
 		register_button.text = REGISTER_TEXT
 
 	modulate.a = 0.7 if not unlocked else 1.0
+	update_adaptive_minimum_size()
+
+func update_adaptive_minimum_size(scale_factor: float = 1.0) -> void:
+	_last_scale_factor = scale_factor
+	var base_min_h := int(round(72 * scale_factor))
+	if is_inside_tree() and size.x > 50 and has_node("Margin"):
+		var margin := $Margin as MarginContainer
+		if margin:
+			custom_minimum_size.y = 0
+			var content_min_h := int(margin.get_combined_minimum_size().y)
+			custom_minimum_size.y = max(base_min_h, content_min_h)
+	else:
+		custom_minimum_size.y = base_min_h
 
 func _on_register_pressed() -> void:
 	day_registered.emit(challenge)

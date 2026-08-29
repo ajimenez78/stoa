@@ -77,8 +77,9 @@ corner_radius_bottom_left = 6
 [sub_resource type="StyleBoxEmpty" id="Empty"]
 
 [node name="ChallengeCard" type="PanelContainer" node_paths=PackedStringArray("title_label", "reward_label", "description_label", "action_label", "progress_bar", "progress_label", "register_button")]
+custom_minimum_size = Vector2(0, 72)
 offset_right = 560.0
-offset_bottom = 170.0
+offset_bottom = 72.0
 theme_override_styles/panel = SubResource("ChallengePanel")
 script = ExtResource("1_script")
 title_label = NodePath("Margin/Text/Header/TitleLabel")

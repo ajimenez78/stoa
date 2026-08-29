@@ -118,6 +118,49 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass"]
+bg_color = Color(1, 1, 1, 0.78)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.83137, 0.77255, 0.72549, 0.6)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.0784314)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(1, 1, 1, 0.65)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.85, 0.85, 0.85, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(1, 1, 1, 0.85)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_disabled"]
+bg_color = Color(1, 1, 1, 0.2)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="Gym" type="Node2D" unique_id=603651888 node_paths=PackedStringArray("level_label", "level_bar", "level_hint_label", "virtue_grid", "practices_tab", "challenges_tab", "minigames_tab", "practices_panel", "practice_list", "practice_grid", "practice_detail", "back_button", "detail_title_label", "detail_description_label", "detail_meta_label", "detail_steps_label", "complete_button", "challenges_panel", "challenge_list", "minigames_panel", "minigame_list", "minigame_grid", "minigame_play", "minigame_back_button", "minigame_title_label", "minigame_host", "toast_label")]
 script = ExtResource("1_gym")
 level_label = NodePath("UI/Layout/Column/Progress/Margin/Column/Header/LevelLabel")
@@ -178,6 +221,63 @@ theme_override_constants/margin_bottom = 14
 [node name="Column" type="VBoxContainer" parent="UI/Layout" unique_id=1268649795]
 layout_mode = 2
 theme_override_constants/separation = 10
+
+[node name="TopControlsPanel" type="PanelContainer" parent="UI/Layout/Column" unique_id=983259006]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Layout/Column/TopControlsPanel" unique_id=119632835]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="TopControlsHBox" type="HBoxContainer" parent="UI/Layout/Column/TopControlsPanel/MarginContainer" unique_id=192349794]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="FontSizeLabel" type="Label" parent="UI/Layout/Column/TopControlsPanel/MarginContainer/TopControlsHBox" unique_id=563325428]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0.85)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 14
+text = "Tamaño de letra:"
+vertical_alignment = 1
+
+[node name="FontDecreaseButton" type="Button" parent="UI/Layout/Column/TopControlsPanel/MarginContainer/TopControlsHBox" unique_id=1546729540]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 0.3)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
+text = " A- "
+
+[node name="FontIncreaseButton" type="Button" parent="UI/Layout/Column/TopControlsPanel/MarginContainer/TopControlsHBox" unique_id=771634236]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 0.3)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
+text = " A+ "
 
 [node name="Hero" type="VBoxContainer" parent="UI/Layout/Column" unique_id=1429693433]
 layout_mode = 2
@@ -368,7 +468,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 8
-columns = 2
+columns = 1
 
 [node name="PracticeDetail" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Practices" unique_id=569573245]
 visible = false
@@ -534,7 +634,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 8
-columns = 2
+columns = 1
 
 [node name="MinigamePlay" type="VBoxContainer" parent="UI/Layout/Column/Content/Margin/Minigames" unique_id=970264760]
 visible = false

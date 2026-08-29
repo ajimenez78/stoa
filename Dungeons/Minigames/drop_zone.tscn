@@ -10,7 +10,7 @@ variation_opentype = {
 }
 
 [sub_resource type="StyleBoxFlat" id="ZonePanel"]
-bg_color = Color(1, 1, 1, 0.28)
+bg_color = Color(0.96078, 0.94118, 0.90196, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -22,9 +22,9 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [node name="DropZone" type="PanelContainer" node_paths=PackedStringArray("title_label")]
-custom_minimum_size = Vector2(0, 84)
+custom_minimum_size = Vector2(0, 48)
 offset_right = 270.0
-offset_bottom = 84.0
+offset_bottom = 48.0
 theme_override_styles/panel = SubResource("ZonePanel")
 script = ExtResource("1_script")
 title_label = NodePath("Margin/Column/TitleLabel")

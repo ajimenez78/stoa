@@ -11,6 +11,7 @@ signal item_dropped(item: Control)
 
 var _idle_style: StyleBox
 var _active_style: StyleBox
+var _last_scale_factor: float = 1.0
 
 func _ready() -> void:
 	title_label.text = title
@@ -20,6 +21,24 @@ func _ready() -> void:
 	active.border_color = highlight_color
 	active.bg_color = Color(highlight_color, 0.12)
 	_active_style = active
+	resized.connect(_on_resized)
+	update_adaptive_minimum_size()
+
+func _on_resized() -> void:
+	if is_inside_tree():
+		update_adaptive_minimum_size(_last_scale_factor)
+
+func update_adaptive_minimum_size(scale_factor: float = 1.0) -> void:
+	_last_scale_factor = scale_factor
+	var base_min_h := int(round(48 * scale_factor))
+	if is_inside_tree() and size.x > 50 and has_node("Margin"):
+		var margin := $Margin as MarginContainer
+		if margin:
+			custom_minimum_size.y = 0
+			var content_min_h := int(margin.get_combined_minimum_size().y)
+			custom_minimum_size.y = max(base_min_h, content_min_h)
+	else:
+		custom_minimum_size.y = base_min_h
 
 # Godot avisa a todos los controles cuando empieza y termina un arrastre.
 func _notification(what: int) -> void:

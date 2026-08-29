@@ -200,7 +200,9 @@ func _apply_font_scale() -> void:
 
 	if prompt_grid:
 		for card in prompt_grid.get_children():
-			if card is Control:
+			if card.has_method("update_adaptive_minimum_size"):
+				card.update_adaptive_minimum_size(scale_factor)
+			elif card is Control:
 				(card as Control).custom_minimum_size.y = int(round(90 * scale_factor))
 
 # Guarda la reflexión a medio escribir al salir del hogar.
@@ -218,7 +220,7 @@ func _build_prompt_cards() -> void:
 		card.pressed.connect(_on_prompt_pressed.bind(card))
 		_cache_base_font_sizes(card)
 		_configure_scroll_pass_through(card)
-	_apply_font_scale()
+	call_deferred("_apply_font_scale")
 
 # Recupera la reflexión y el texto que quedaron sin guardar.
 func _restore_draft() -> void:

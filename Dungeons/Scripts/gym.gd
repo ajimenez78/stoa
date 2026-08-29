@@ -19,6 +19,13 @@ const LEVEL_HINT_TEMPLATE := "%d puntos para el nivel %d"
 const LEVEL_SUGGESTION_TEMPLATE := "%d puntos para el nivel %d · el mentor te sugiere cultivar %s"
 const LEVEL_MAXED_HINT := "Has llevado las cuatro virtudes a su plenitud. Ahora toca sostenerlas."
 
+const FONT_SCALES: Array[float] = [0.85, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
+
+@export_group("Tamaño de Fuente")
+@export var font_decrease_button: Button
+@export var font_increase_button: Button
+@export var font_scale_label: Label
+
 @export_group("Progreso")
 @export var level_label: Label
 @export var level_bar: ProgressBar
@@ -63,10 +70,25 @@ var _missions: Dictionary
 var _selected_practice: Dictionary
 var _suggested_virtue: String
 var _toast_tween: Tween
+var _current_scale_index := 1
+var _base_font_sizes: Dictionary = {}
 
 func _ready() -> void:
+	_init_font_scale_index()
 	_progress = ProgressStore.load_progress()
 	_missions = _load_missions()
+
+	if font_decrease_button == null and has_node("%FontDecreaseButton"):
+		font_decrease_button = %FontDecreaseButton as Button
+	if font_increase_button == null and has_node("%FontIncreaseButton"):
+		font_increase_button = %FontIncreaseButton as Button
+	if font_scale_label == null and has_node("%FontSizeLabel"):
+		font_scale_label = %FontSizeLabel as Label
+
+	if font_decrease_button:
+		font_decrease_button.pressed.connect(_on_font_decrease_pressed)
+	if font_increase_button:
+		font_increase_button.pressed.connect(_on_font_increase_pressed)
 
 	practices_tab.pressed.connect(_show_practices)
 	challenges_tab.pressed.connect(_show_challenges)
@@ -81,6 +103,87 @@ func _ready() -> void:
 	_show_practices()
 	_show_practice_list()
 	_show_minigame_list()
+
+	_cache_base_font_sizes(self)
+	_configure_scroll_pass_through(self)
+	_update_responsive_layout()
+	call_deferred("_apply_font_scale")
+
+	get_viewport().size_changed.connect(_update_responsive_layout)
+
+func _init_font_scale_index() -> void:
+	var is_mobile := OS.has_feature("mobile") or DisplayServer.is_touchscreen_available()
+	var is_small_screen := get_viewport_rect().size.x < 600
+	if is_mobile or is_small_screen:
+		_current_scale_index = 3
+	else:
+		_current_scale_index = 1
+
+func _update_responsive_layout() -> void:
+	if virtue_grid:
+		virtue_grid.columns = 2
+	if practice_grid:
+		practice_grid.columns = 1
+	if minigame_grid:
+		minigame_grid.columns = 1
+
+func _on_font_decrease_pressed() -> void:
+	if _current_scale_index > 0:
+		_current_scale_index -= 1
+		_apply_font_scale()
+
+func _on_font_increase_pressed() -> void:
+	if _current_scale_index < FONT_SCALES.size() - 1:
+		_current_scale_index += 1
+		_apply_font_scale()
+
+func _apply_font_scale() -> void:
+	var scale_factor := FONT_SCALES[_current_scale_index]
+	if font_decrease_button:
+		font_decrease_button.disabled = _current_scale_index <= 0
+	if font_increase_button:
+		font_increase_button.disabled = _current_scale_index >= FONT_SCALES.size() - 1
+
+	for control in _base_font_sizes.keys():
+		if is_instance_valid(control):
+			var base_size: int = _base_font_sizes[control]
+			var scaled_size := int(round(base_size * scale_factor))
+			(control as Control).add_theme_font_size_override("font_size", scaled_size)
+
+	_update_card_heights(scale_factor)
+
+func _update_card_heights(scale_factor: float) -> void:
+	if practice_grid:
+		_update_adaptive_heights_recursive(practice_grid, scale_factor)
+	if challenge_list:
+		_update_adaptive_heights_recursive(challenge_list, scale_factor)
+	if minigame_grid:
+		_update_adaptive_heights_recursive(minigame_grid, scale_factor)
+	if minigame_host:
+		_update_adaptive_heights_recursive(minigame_host, scale_factor)
+
+func _update_adaptive_heights_recursive(node: Node, scale_factor: float) -> void:
+	if node.has_method("update_adaptive_minimum_size"):
+		node.call("update_adaptive_minimum_size", scale_factor)
+	for child in node.get_children():
+		_update_adaptive_heights_recursive(child, scale_factor)
+
+func _cache_base_font_sizes(node: Node) -> void:
+	for child in node.get_children():
+		if child is Control and child != font_decrease_button and child != font_increase_button:
+			var base_size: int = child.get_theme_font_size("font_size")
+			if base_size > 0:
+				_base_font_sizes[child] = base_size
+		_cache_base_font_sizes(child)
+
+func _configure_scroll_pass_through(node: Node) -> void:
+	if node is Control and not (node is TextEdit) and not (node is ScrollContainer):
+		if node is BaseButton:
+			(node as Control).mouse_filter = Control.MOUSE_FILTER_PASS
+		else:
+			(node as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for child in node.get_children():
+		_configure_scroll_pass_through(child)
 
 # Lee la base de datos de misiones del gimnasio: prácticas diarias, retos
 # semanales y mini-juegos.
@@ -114,6 +217,8 @@ func _build_virtue_meters() -> void:
 		var meter: VirtueMeter = VIRTUE_METER_SCENE.instantiate()
 		virtue_grid.add_child(meter)
 		meter.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_cache_base_font_sizes(meter)
+		_configure_scroll_pass_through(meter)
 
 # Vuelve a pintar todo lo que depende del progreso guardado.
 func _refresh() -> void:
@@ -123,6 +228,7 @@ func _refresh() -> void:
 	_rebuild_practice_cards()
 	_rebuild_challenge_cards()
 	_rebuild_minigame_cards()
+	call_deferred("_apply_font_scale")
 
 func _refresh_level() -> void:
 	var level := ProgressStore.level(_progress)
@@ -176,6 +282,8 @@ func _rebuild_practice_cards() -> void:
 			str(practice["virtue"]) == _suggested_virtue,
 		)
 		card.pressed.connect(_show_practice_detail.bind(practice))
+		_cache_base_font_sizes(card)
+		_configure_scroll_pass_through(card)
 
 # Rehace las tarjetas de retos con el progreso de la semana en curso. Los retos
 # por encima del nivel del aprendiz se muestran bloqueados.
@@ -194,6 +302,8 @@ func _rebuild_challenge_cards() -> void:
 			level >= int(challenge.get("required_level", 1)),
 		)
 		card.day_registered.connect(_on_challenge_day_registered)
+		_cache_base_font_sizes(card)
+		_configure_scroll_pass_through(card)
 
 # Rehace las tarjetas de los mini-juegos declarados en la base de datos.
 func _rebuild_minigame_cards() -> void:
@@ -210,6 +320,10 @@ func _rebuild_minigame_cards() -> void:
 			ProgressStore.is_minigame_rewarded_today(_progress, str(minigame["id"])),
 		)
 		card.pressed.connect(_open_minigame.bind(minigame))
+		_cache_base_font_sizes(card)
+		_configure_scroll_pass_through(card)
+
+	call_deferred("_apply_font_scale")
 
 # Carga la escena de un mini-juego, la muestra en la pestaña y arranca una
 # partida.
@@ -227,6 +341,9 @@ func _open_minigame(minigame: Dictionary) -> void:
 	game.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	game.finished.connect(_on_minigame_finished.bind(minigame))
 	game.start()
+
+	_cache_base_font_sizes(game)
+	call_deferred("_apply_font_scale")
 
 	minigame_title_label.text = str(minigame["title"])
 	minigame_list.visible = false
@@ -338,6 +455,7 @@ func _show_panel(panel: Control) -> void:
 	practices_panel.visible = panel == practices_panel
 	challenges_panel.visible = panel == challenges_panel
 	minigames_panel.visible = panel == minigames_panel
+	call_deferred("_apply_font_scale")
 
 func _show_practice_list() -> void:
 	practice_detail.visible = false
