@@ -275,7 +275,7 @@ sources/1 = SubResource("TileSetAtlasSource_ti8ex")
 size = Vector2(63, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2elun"]
-size = Vector2(71.5, 46)
+size = Vector2(86.5, 47)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ilbj"]
 size = Vector2(64, 60)
@@ -323,7 +323,7 @@ position = Vector2(-1, -10)
 texture = ExtResource("7_sgtpi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gym" unique_id=1749317410]
-position = Vector2(15.25, 5)
+position = Vector2(22.75, 4.5)
 shape = SubResource("RectangleShape2D_2elun")
 
 [node name="Stoa" type="Area2D" parent="." unique_id=810644478]

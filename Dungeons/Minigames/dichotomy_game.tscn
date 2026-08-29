@@ -67,7 +67,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 2
 
 [node name="HelpLabel" type="Label" parent="Board"]
 layout_mode = 2
@@ -93,20 +93,19 @@ size_flags_horizontal = 3
 title = "Fuera de mi control"
 highlight_color = Color(0.90588, 0.29804, 0.23529, 1)
 
-[node name="FeedbackLabel" type="Label" parent="Board"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.15294, 0.68235, 0.37647, 1)
-theme_override_fonts/font = SubResource("FontSemiBold")
-theme_override_font_sizes/font_size = 12
-autowrap_mode = 3
-
 [node name="RemainingLabel" type="Label" parent="Board"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.10196, 0.10196, 0.10196, 0.78)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 12
 text = "Te quedan 5 de 5 situaciones"
+
+[node name="FeedbackLabel" type="Label" parent="Board"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.15294, 0.68235, 0.37647, 1)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
 
 [node name="SituationScroll" type="ScrollContainer" parent="Board"]
 layout_mode = 2

@@ -56,6 +56,7 @@ func start() -> void:
 		card.setup(situation)
 
 	feedback_label.text = ""
+	feedback_label.visible = false
 	_update_remaining()
 	board.visible = true
 	result_panel.visible = false
@@ -100,6 +101,7 @@ func _on_item_dropped(item: Control, zone_is_controllable: bool) -> void:
 
 	feedback_label.text = (CORRECT_TEMPLATE if correct else WRONG_TEMPLATE) % card.situation["explanation"]
 	feedback_label.add_theme_color_override("font_color", CORRECT_COLOR if correct else WRONG_COLOR)
+	feedback_label.visible = true
 
 	situation_list.remove_child(card)
 	card.queue_free()

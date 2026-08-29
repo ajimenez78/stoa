@@ -33,9 +33,9 @@ title_label = NodePath("Margin/Column/TitleLabel")
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 10
+theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 8
 
 [node name="Column" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
