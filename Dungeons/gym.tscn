@@ -366,9 +366,9 @@ theme_override_constants/separation = 8
 
 [node name="PracticesTab" type="Button" parent="UI/Layout/Column/Tabs" unique_id=1304044573]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
+theme_override_colors/font_color = Color(0.24, 0.18, 0.12, 1)
 theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
-theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
+theme_override_colors/font_hover_color = Color(0.15, 0.10, 0.05, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 14
@@ -384,9 +384,9 @@ text = "Prácticas Diarias"
 
 [node name="ChallengesTab" type="Button" parent="UI/Layout/Column/Tabs" unique_id=1161316142]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
+theme_override_colors/font_color = Color(0.24, 0.18, 0.12, 1)
 theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
-theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
+theme_override_colors/font_hover_color = Color(0.15, 0.10, 0.05, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 14
@@ -401,9 +401,9 @@ text = "Retos Semanales"
 
 [node name="MinigamesTab" type="Button" parent="UI/Layout/Column/Tabs" unique_id=1425699952]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
+theme_override_colors/font_color = Color(0.24, 0.18, 0.12, 1)
 theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
-theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
+theme_override_colors/font_hover_color = Color(0.15, 0.10, 0.05, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 14

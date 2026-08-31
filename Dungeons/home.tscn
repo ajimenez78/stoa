@@ -466,9 +466,9 @@ theme_override_constants/separation = 8
 [node name="NewEntryTab" type="Button" parent="UI/Layout/ScrollContainer/Column/Tabs" unique_id=271059194]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
+theme_override_colors/font_color = Color(0.24, 0.18, 0.12, 1)
 theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
-theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
+theme_override_colors/font_hover_color = Color(0.15, 0.10, 0.05, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 14
@@ -485,9 +485,9 @@ text = "Nueva Entrada"
 [node name="HistoryTab" type="Button" parent="UI/Layout/ScrollContainer/Column/Tabs" unique_id=176742939]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
+theme_override_colors/font_color = Color(0.24, 0.18, 0.12, 1)
 theme_override_colors/font_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
-theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
+theme_override_colors/font_hover_color = Color(0.15, 0.10, 0.05, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.96078, 0.96078, 0.94118, 1)
 theme_override_fonts/font = SubResource("FontSemiBold")
 theme_override_font_sizes/font_size = 14
