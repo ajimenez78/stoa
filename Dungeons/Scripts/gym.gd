@@ -27,6 +27,7 @@ const FONT_SCALES: Array[float] = [0.85, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
 @export var font_scale_label: Label
 
 @export_group("Progreso")
+@export var progress_panel: Control
 @export var level_label: Label
 @export var level_bar: ProgressBar
 @export var level_hint_label: Label
@@ -348,6 +349,8 @@ func _open_minigame(minigame: Dictionary) -> void:
 	minigame_title_label.text = str(minigame["title"])
 	minigame_list.visible = false
 	minigame_play.visible = true
+	if progress_panel:
+		progress_panel.visible = false
 
 # Anota el resultado de la partida. El mini-juego que lo emite llega como último
 # argumento, atado al conectar la señal.
@@ -452,6 +455,8 @@ func _show_minigames() -> void:
 
 # Deja visible solo el contenido de la pestaña elegida.
 func _show_panel(panel: Control) -> void:
+	if progress_panel:
+		progress_panel.visible = true
 	practices_panel.visible = panel == practices_panel
 	challenges_panel.visible = panel == challenges_panel
 	minigames_panel.visible = panel == minigames_panel
@@ -464,6 +469,8 @@ func _show_practice_list() -> void:
 # Vuelve al catálogo de mini-juegos y abandona la partida en curso.
 func _show_minigame_list() -> void:
 	_clear_minigame()
+	if progress_panel:
+		progress_panel.visible = true
 	minigame_play.visible = false
 	minigame_list.visible = true
 

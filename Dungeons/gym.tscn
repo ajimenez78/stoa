@@ -161,8 +161,9 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="Gym" type="Node2D" unique_id=603651888 node_paths=PackedStringArray("level_label", "level_bar", "level_hint_label", "virtue_grid", "practices_tab", "challenges_tab", "minigames_tab", "practices_panel", "practice_list", "practice_grid", "practice_detail", "back_button", "detail_title_label", "detail_description_label", "detail_meta_label", "detail_steps_label", "complete_button", "challenges_panel", "challenge_list", "minigames_panel", "minigame_list", "minigame_grid", "minigame_play", "minigame_back_button", "minigame_title_label", "minigame_host", "toast_label")]
+[node name="Gym" type="Node2D" unique_id=603651888 node_paths=PackedStringArray("progress_panel", "level_label", "level_bar", "level_hint_label", "virtue_grid", "practices_tab", "challenges_tab", "minigames_tab", "practices_panel", "practice_list", "practice_grid", "practice_detail", "back_button", "detail_title_label", "detail_description_label", "detail_meta_label", "detail_steps_label", "complete_button", "challenges_panel", "challenge_list", "minigames_panel", "minigame_list", "minigame_grid", "minigame_play", "minigame_back_button", "minigame_title_label", "minigame_host", "toast_label")]
 script = ExtResource("1_gym")
+progress_panel = NodePath("UI/Layout/Column/Progress")
 level_label = NodePath("UI/Layout/Column/Progress/Margin/Column/Header/LevelLabel")
 level_bar = NodePath("UI/Layout/Column/Progress/Margin/Column/LevelRow/LevelBar")
 level_hint_label = NodePath("UI/Layout/Column/Progress/Margin/Column/LevelRow/LevelHintLabel")
