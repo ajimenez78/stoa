@@ -18,12 +18,10 @@ config/name="Stoa"
 run/main_scene="uid://dhp3l3uq4qej6"
 config/quit_on_go_back=false
 config/features=PackedStringArray("4.7", "Mobile")
-config/icon="res://icon.png"
-boot_splash/show_image=true
-boot_splash/image="res://icon.png"
-boot_splash/fullsize=false
-boot_splash/use_filter=true
 boot_splash/bg_color=Color(0.12, 0.12, 0.14, 1)
+boot_splash/stretch_mode=0
+boot_splash/image="res://icon.png"
+config/icon="res://icon.png"
 
 [autoload]
 

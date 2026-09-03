@@ -72,11 +72,17 @@ func _set_status(status_text: String, color: Color) -> void:
 func update_adaptive_minimum_size(scale_factor: float = 1.0) -> void:
 	_last_scale_factor = scale_factor
 	var base_min_h := int(round(60 * scale_factor))
-	if is_inside_tree() and size.x > 50 and has_node("Margin"):
+	if is_inside_tree() and has_node("Margin"):
 		var margin := $Margin as MarginContainer
 		if margin:
 			custom_minimum_size.y = 0
+			var prev_custom_x := custom_minimum_size.x
+			if size.x <= 50:
+				var target_w: float = max(280.0, get_viewport_rect().size.x - 40.0)
+				custom_minimum_size.x = target_w
 			var content_min_h := int(margin.get_combined_minimum_size().y)
+			if size.x <= 50:
+				custom_minimum_size.x = prev_custom_x
 			custom_minimum_size.y = max(base_min_h, content_min_h)
 	else:
 		custom_minimum_size.y = base_min_h

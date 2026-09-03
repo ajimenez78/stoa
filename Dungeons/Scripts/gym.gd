@@ -42,8 +42,10 @@ const FONT_SCALES: Array[float] = [0.85, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
 @export_group("Prácticas diarias")
 @export var practices_panel: Control
 @export var practice_list: Control
+@export var practice_scroll: ScrollContainer
 @export var practice_grid: GridContainer
 @export var practice_detail: Control
+@export var practice_detail_scroll: ScrollContainer
 @export var back_button: Button
 @export var detail_title_label: Label
 @export var detail_description_label: Label
@@ -180,9 +182,16 @@ func _apply_font_scale() -> void:
 
 	for control in _base_font_sizes.keys():
 		if is_instance_valid(control):
-			var base_size: int = _base_font_sizes[control]
-			var scaled_size := int(round(base_size * scale_factor))
-			(control as Control).add_theme_font_size_override("font_size", scaled_size)
+			var val = _base_font_sizes[control]
+			if val is Dictionary and control is RichTextLabel:
+				var rtl := control as RichTextLabel
+				var normal_scaled := int(round(float(val.get("normal", 13)) * scale_factor))
+				var bold_scaled := int(round(float(val.get("bold", 13)) * scale_factor))
+				rtl.add_theme_font_size_override("normal_font_size", normal_scaled)
+				rtl.add_theme_font_size_override("bold_font_size", bold_scaled)
+			elif val is int or val is float:
+				var scaled_size := int(round(float(val) * scale_factor))
+				(control as Control).add_theme_font_size_override("font_size", scaled_size)
 
 	_update_card_heights(scale_factor)
 
@@ -202,13 +211,29 @@ func _update_adaptive_heights_recursive(node: Node, scale_factor: float) -> void
 	for child in node.get_children():
 		_update_adaptive_heights_recursive(child, scale_factor)
 
+func _clean_stale_font_size_cache() -> void:
+	for control in _base_font_sizes.keys():
+		if not is_instance_valid(control):
+			_base_font_sizes.erase(control)
+
 func _cache_base_font_sizes(node: Node) -> void:
+	_clean_stale_font_size_cache()
 	for child in node.get_children():
 		if child is Control and child != font_decrease_button and child != font_increase_button:
 			if not _base_font_sizes.has(child):
-				var base_size: int = child.get_theme_font_size("font_size")
-				if base_size > 0:
-					_base_font_sizes[child] = base_size
+				if child is RichTextLabel:
+					var rtl := child as RichTextLabel
+					var normal_s := rtl.get_theme_font_size("normal_font_size")
+					var bold_s := rtl.get_theme_font_size("bold_font_size")
+					if normal_s <= 0:
+						normal_s = 13
+					if bold_s <= 0:
+						bold_s = 13
+					_base_font_sizes[child] = {"normal": normal_s, "bold": bold_s}
+				else:
+					var base_size := (child as Control).get_theme_font_size("font_size")
+					if base_size > 0:
+						_base_font_sizes[child] = base_size
 		_cache_base_font_sizes(child)
 
 func _configure_scroll_pass_through(node: Node) -> void:
@@ -430,6 +455,7 @@ func _clear_minigame() -> void:
 
 # Muestra las instrucciones de una práctica y el botón para darla por hecha.
 func _show_practice_detail(practice: Dictionary) -> void:
+	_collapse_progress_panel()
 	_selected_practice = practice
 
 	detail_title_label.text = str(practice["title"])
@@ -444,6 +470,9 @@ func _show_practice_detail(practice: Dictionary) -> void:
 	var done_today := ProgressStore.is_practice_done_today(_progress, str(practice["id"]))
 	complete_button.disabled = done_today
 	complete_button.text = "Ya completada hoy" if done_today else "Marcar como completada"
+
+	if practice_detail_scroll:
+		practice_detail_scroll.scroll_vertical = 0
 
 	practice_list.visible = false
 	practice_detail.visible = true
@@ -508,8 +537,12 @@ func _show_panel(panel: Control) -> void:
 	call_deferred("_apply_font_scale")
 
 func _show_practice_list() -> void:
+	_collapse_progress_panel()
+	if practice_scroll:
+		practice_scroll.scroll_vertical = 0
 	practice_detail.visible = false
 	practice_list.visible = true
+	call_deferred("_apply_font_scale")
 
 # Vuelve al catálogo de mini-juegos y abandona la partida en curso.
 func _show_minigame_list() -> void:

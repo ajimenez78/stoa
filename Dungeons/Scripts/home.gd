@@ -151,11 +151,17 @@ func _scroll_to_editor() -> void:
 	if scroll_container and entry_text_edit:
 		scroll_container.ensure_control_visible(entry_text_edit)
 
+func _clean_stale_font_size_cache() -> void:
+	for control in _base_font_sizes.keys():
+		if not is_instance_valid(control):
+			_base_font_sizes.erase(control)
+
 func _cache_base_font_sizes(node: Node) -> void:
+	_clean_stale_font_size_cache()
 	for child in node.get_children():
 		if child is Control and child != font_decrease_button and child != font_increase_button:
 			if not _base_font_sizes.has(child):
-				var base_size: int = child.get_theme_font_size("font_size")
+				var base_size := (child as Control).get_theme_font_size("font_size")
 				if base_size > 0:
 					_base_font_sizes[child] = base_size
 		_cache_base_font_sizes(child)
