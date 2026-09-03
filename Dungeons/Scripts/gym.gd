@@ -32,6 +32,7 @@ const FONT_SCALES: Array[float] = [0.85, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
 @export var level_bar: ProgressBar
 @export var level_hint_label: Label
 @export var virtue_grid: GridContainer
+@export var toggle_progress_button: Button
 
 @export_group("Pestañas")
 @export var practices_tab: Button
@@ -73,6 +74,7 @@ var _suggested_virtue: String
 var _toast_tween: Tween
 var _current_scale_index := 1
 var _base_font_sizes: Dictionary = {}
+var _progress_expanded := true
 
 func _ready() -> void:
 	_init_font_scale_index()
@@ -85,11 +87,15 @@ func _ready() -> void:
 		font_increase_button = %FontIncreaseButton as Button
 	if font_scale_label == null and has_node("%FontSizeLabel"):
 		font_scale_label = %FontSizeLabel as Label
+	if toggle_progress_button == null and has_node("%ToggleProgressButton"):
+		toggle_progress_button = %ToggleProgressButton as Button
 
 	if font_decrease_button:
 		font_decrease_button.pressed.connect(_on_font_decrease_pressed)
 	if font_increase_button:
 		font_increase_button.pressed.connect(_on_font_increase_pressed)
+	if toggle_progress_button:
+		toggle_progress_button.pressed.connect(_on_toggle_progress_pressed)
 
 	practices_tab.pressed.connect(_show_practices)
 	challenges_tab.pressed.connect(_show_challenges)
@@ -112,6 +118,20 @@ func _ready() -> void:
 
 	get_viewport().size_changed.connect(_update_responsive_layout)
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_VISIBILITY_CHANGED and is_node_ready() and is_visible_in_tree():
+		_progress = ProgressStore.load_progress()
+		_refresh()
+
+func _on_toggle_progress_pressed() -> void:
+	_progress_expanded = not _progress_expanded
+	if virtue_grid:
+		virtue_grid.visible = _progress_expanded
+	if level_hint_label:
+		level_hint_label.visible = _progress_expanded
+	if toggle_progress_button:
+		toggle_progress_button.text = " ▲ " if _progress_expanded else " ▼ "
+
 func _init_font_scale_index() -> void:
 	var is_mobile := OS.has_feature("mobile") or DisplayServer.is_touchscreen_available()
 	var is_small_screen := get_viewport_rect().size.x < 600
@@ -128,12 +148,25 @@ func _update_responsive_layout() -> void:
 	if minigame_grid:
 		minigame_grid.columns = 1
 
+func _collapse_progress_panel() -> void:
+	if not _progress_expanded:
+		return
+	_progress_expanded = false
+	if virtue_grid:
+		virtue_grid.visible = false
+	if level_hint_label:
+		level_hint_label.visible = false
+	if toggle_progress_button:
+		toggle_progress_button.text = " ▼ "
+
 func _on_font_decrease_pressed() -> void:
+	_collapse_progress_panel()
 	if _current_scale_index > 0:
 		_current_scale_index -= 1
 		_apply_font_scale()
 
 func _on_font_increase_pressed() -> void:
+	_collapse_progress_panel()
 	if _current_scale_index < FONT_SCALES.size() - 1:
 		_current_scale_index += 1
 		_apply_font_scale()
@@ -172,9 +205,10 @@ func _update_adaptive_heights_recursive(node: Node, scale_factor: float) -> void
 func _cache_base_font_sizes(node: Node) -> void:
 	for child in node.get_children():
 		if child is Control and child != font_decrease_button and child != font_increase_button:
-			var base_size: int = child.get_theme_font_size("font_size")
-			if base_size > 0:
-				_base_font_sizes[child] = base_size
+			if not _base_font_sizes.has(child):
+				var base_size: int = child.get_theme_font_size("font_size")
+				if base_size > 0:
+					_base_font_sizes[child] = base_size
 		_cache_base_font_sizes(child)
 
 func _configure_scroll_pass_through(node: Node) -> void:
@@ -214,6 +248,11 @@ func _load_missions() -> Dictionary:
 # Crea una barra por virtud, en el orden en que están declaradas; sus valores se
 # actualizan en cada refresco.
 func _build_virtue_meters() -> void:
+	if virtue_grid == null:
+		return
+	for child in virtue_grid.get_children():
+		virtue_grid.remove_child(child)
+		child.queue_free()
 	for virtue: String in Virtues.DATA:
 		var meter: VirtueMeter = VIRTUE_METER_SCENE.instantiate()
 		virtue_grid.add_child(meter)
@@ -259,11 +298,17 @@ func _find_suggested_virtue() -> String:
 	return ""
 
 func _refresh_virtue_meters() -> void:
+	if virtue_grid == null:
+		return
+	if virtue_grid.get_child_count() < Virtues.DATA.size():
+		_build_virtue_meters()
 	var virtues: Dictionary = _progress["virtues"]
 	var index := 0
 	for virtue: String in Virtues.DATA:
-		var meter := virtue_grid.get_child(index) as VirtueMeter
-		meter.setup(virtue, int(virtues[virtue]))
+		if index < virtue_grid.get_child_count():
+			var meter := virtue_grid.get_child(index) as VirtueMeter
+			if meter:
+				meter.setup(virtue, int(virtues[virtue]))
 		index += 1
 
 # Rehace las tarjetas de prácticas, señalando las ya hechas hoy y la que cultiva

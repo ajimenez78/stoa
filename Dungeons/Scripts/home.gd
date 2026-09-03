@@ -154,9 +154,10 @@ func _scroll_to_editor() -> void:
 func _cache_base_font_sizes(node: Node) -> void:
 	for child in node.get_children():
 		if child is Control and child != font_decrease_button and child != font_increase_button:
-			var base_size: int = child.get_theme_font_size("font_size")
-			if base_size > 0:
-				_base_font_sizes[child] = base_size
+			if not _base_font_sizes.has(child):
+				var base_size: int = child.get_theme_font_size("font_size")
+				if base_size > 0:
+					_base_font_sizes[child] = base_size
 		_cache_base_font_sizes(child)
 
 func _configure_scroll_pass_through(node: Node) -> void:

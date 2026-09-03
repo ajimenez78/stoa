@@ -161,13 +161,14 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="Gym" type="Node2D" unique_id=603651888 node_paths=PackedStringArray("progress_panel", "level_label", "level_bar", "level_hint_label", "virtue_grid", "practices_tab", "challenges_tab", "minigames_tab", "practices_panel", "practice_list", "practice_grid", "practice_detail", "back_button", "detail_title_label", "detail_description_label", "detail_meta_label", "detail_steps_label", "complete_button", "challenges_panel", "challenge_list", "minigames_panel", "minigame_list", "minigame_grid", "minigame_play", "minigame_back_button", "minigame_title_label", "minigame_host", "toast_label")]
+[node name="Gym" type="Node2D" unique_id=603651888 node_paths=PackedStringArray("progress_panel", "level_label", "level_bar", "level_hint_label", "virtue_grid", "toggle_progress_button", "practices_tab", "challenges_tab", "minigames_tab", "practices_panel", "practice_list", "practice_grid", "practice_detail", "back_button", "detail_title_label", "detail_description_label", "detail_meta_label", "detail_steps_label", "complete_button", "challenges_panel", "challenge_list", "minigames_panel", "minigame_list", "minigame_grid", "minigame_play", "minigame_back_button", "minigame_title_label", "minigame_host", "toast_label")]
 script = ExtResource("1_gym")
 progress_panel = NodePath("UI/Layout/Column/Progress")
 level_label = NodePath("UI/Layout/Column/Progress/Margin/Column/Header/LevelLabel")
 level_bar = NodePath("UI/Layout/Column/Progress/Margin/Column/LevelRow/LevelBar")
 level_hint_label = NodePath("UI/Layout/Column/Progress/Margin/Column/LevelRow/LevelHintLabel")
 virtue_grid = NodePath("UI/Layout/Column/Progress/Margin/Column/VirtueGrid")
+toggle_progress_button = NodePath("UI/Layout/Column/Progress/Margin/Column/Header/ToggleProgressButton")
 practices_tab = NodePath("UI/Layout/Column/Tabs/PracticesTab")
 challenges_tab = NodePath("UI/Layout/Column/Tabs/ChallengesTab")
 minigames_tab = NodePath("UI/Layout/Column/Tabs/MinigamesTab")
@@ -334,6 +335,20 @@ theme_override_fonts/font = SubResource("FontBold")
 theme_override_font_sizes/font_size = 18
 text = "Nivel 1"
 horizontal_alignment = 2
+
+[node name="ToggleProgressButton" type="Button" parent="UI/Layout/Column/Progress/Margin/Column/Header" unique_id=214829375]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.5451, 0.45098, 0.33333, 1)
+theme_override_colors/font_hover_color = Color(0.42745, 0.35294, 0.25882, 1)
+theme_override_colors/font_pressed_color = Color(0.42745, 0.35294, 0.25882, 1)
+theme_override_fonts/font = SubResource("FontBold")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/disabled = SubResource("Empty")
+text = " ▲ "
 
 [node name="LevelRow" type="HBoxContainer" parent="UI/Layout/Column/Progress/Margin/Column" unique_id=1903321438]
 layout_mode = 2
