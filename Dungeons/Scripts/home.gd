@@ -37,6 +37,7 @@ const MONTH_NAMES := [
 
 const PROMPT_CARD_SCENE := preload("res://Dungeons/UI/prompt_card.tscn")
 const ENTRY_CARD_SCENE := preload("res://Dungeons/UI/journal_entry_card.tscn")
+const CREDITS_DIALOG_SCENE := preload("res://Dungeons/UI/credits_dialog.tscn")
 
 @onready var entries_value_label: Label = %EntriesValueLabel
 @onready var streak_value_label: Label = %StreakValueLabel
@@ -59,6 +60,7 @@ const ENTRY_CARD_SCENE := preload("res://Dungeons/UI/journal_entry_card.tscn")
 
 @onready var font_decrease_button: Button = %FontDecreaseButton
 @onready var font_increase_button: Button = %FontIncreaseButton
+@onready var credits_button: Button = %CreditsButton
 @onready var font_size_label: Label = %FontSizeLabel
 @onready var scroll_container: ScrollContainer = %ScrollContainer
 @onready var stats_container: BoxContainer = %Stats
@@ -74,6 +76,7 @@ var _progress: Dictionary
 var _selected_prompt: Dictionary = PROMPTS[0]
 var _prompt_group := ButtonGroup.new()
 var _toast_tween: Tween
+var _credits_dialog: CreditsDialog
 
 func _ready() -> void:
 	_init_font_scale_index()
@@ -90,9 +93,12 @@ func _ready() -> void:
 		font_decrease_button.pressed.connect(_on_font_decrease_pressed)
 	if font_increase_button:
 		font_increase_button.pressed.connect(_on_font_increase_pressed)
+	if credits_button:
+		credits_button.pressed.connect(_on_credits_pressed)
 
 	if scroll_container:
 		_configure_scroll_pass_through(scroll_container)
+
 
 	_cache_base_font_sizes(self)
 
@@ -159,12 +165,19 @@ func _clean_stale_font_size_cache() -> void:
 func _cache_base_font_sizes(node: Node) -> void:
 	_clean_stale_font_size_cache()
 	for child in node.get_children():
-		if child is Control and child != font_decrease_button and child != font_increase_button:
+		if child is Control and child != font_decrease_button and child != font_increase_button and child != credits_button:
 			if not _base_font_sizes.has(child):
 				var base_size := (child as Control).get_theme_font_size("font_size")
 				if base_size > 0:
 					_base_font_sizes[child] = base_size
 		_cache_base_font_sizes(child)
+
+func _on_credits_pressed() -> void:
+	if not _credits_dialog or not is_instance_valid(_credits_dialog):
+		_credits_dialog = CREDITS_DIALOG_SCENE.instantiate() as CreditsDialog
+		$UI.add_child(_credits_dialog)
+	_credits_dialog.set_font_scale(FONT_SCALES[_current_scale_index])
+	_credits_dialog.open()
 
 func _configure_scroll_pass_through(node: Node) -> void:
 	if node is Control and not (node is TextEdit) and not (node is ScrollContainer):
@@ -211,6 +224,9 @@ func _apply_font_scale() -> void:
 				card.update_adaptive_minimum_size(scale_factor)
 			elif card is Control:
 				(card as Control).custom_minimum_size.y = int(round(90 * scale_factor))
+
+	if _credits_dialog and is_instance_valid(_credits_dialog):
+		_credits_dialog.set_font_scale(scale_factor)
 
 # Guarda la reflexión a medio escribir al salir del hogar.
 func _exit_tree() -> void:

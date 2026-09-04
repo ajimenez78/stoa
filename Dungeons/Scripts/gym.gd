@@ -5,6 +5,7 @@ const MISSIONS_DATABASE_PATH := "res://Dungeons/gym_missions.json"
 const MISSION_CARD_SCENE := preload("res://Dungeons/UI/mission_card.tscn")
 const CHALLENGE_CARD_SCENE := preload("res://Dungeons/UI/challenge_card.tscn")
 const VIRTUE_METER_SCENE := preload("res://Dungeons/UI/virtue_meter.tscn")
+const CREDITS_DIALOG_SCENE := preload("res://Dungeons/UI/credits_dialog.tscn")
 
 const PRACTICE_META_TEMPLATE := "Duración: %s · Cultiva %s (+%d puntos)"
 const PRACTICE_DONE_MESSAGE := "Práctica completada. Has ganado %d puntos de %s."
@@ -24,6 +25,7 @@ const FONT_SCALES: Array[float] = [0.85, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
 @export_group("Tamaño de Fuente")
 @export var font_decrease_button: Button
 @export var font_increase_button: Button
+@export var credits_button: Button
 @export var font_scale_label: Label
 
 @export_group("Progreso")
@@ -77,6 +79,7 @@ var _toast_tween: Tween
 var _current_scale_index := 1
 var _base_font_sizes: Dictionary = {}
 var _progress_expanded := true
+var _credits_dialog: CreditsDialog
 
 func _ready() -> void:
 	_init_font_scale_index()
@@ -87,6 +90,8 @@ func _ready() -> void:
 		font_decrease_button = %FontDecreaseButton as Button
 	if font_increase_button == null and has_node("%FontIncreaseButton"):
 		font_increase_button = %FontIncreaseButton as Button
+	if credits_button == null and has_node("%CreditsButton"):
+		credits_button = %CreditsButton as Button
 	if font_scale_label == null and has_node("%FontSizeLabel"):
 		font_scale_label = %FontSizeLabel as Label
 	if toggle_progress_button == null and has_node("%ToggleProgressButton"):
@@ -96,8 +101,11 @@ func _ready() -> void:
 		font_decrease_button.pressed.connect(_on_font_decrease_pressed)
 	if font_increase_button:
 		font_increase_button.pressed.connect(_on_font_increase_pressed)
+	if credits_button:
+		credits_button.pressed.connect(_on_credits_pressed)
 	if toggle_progress_button:
 		toggle_progress_button.pressed.connect(_on_toggle_progress_pressed)
+
 
 	practices_tab.pressed.connect(_show_practices)
 	challenges_tab.pressed.connect(_show_challenges)
@@ -195,6 +203,9 @@ func _apply_font_scale() -> void:
 
 	_update_card_heights(scale_factor)
 
+	if _credits_dialog and is_instance_valid(_credits_dialog):
+		_credits_dialog.set_font_scale(scale_factor)
+
 func _update_card_heights(scale_factor: float) -> void:
 	if practice_grid:
 		_update_adaptive_heights_recursive(practice_grid, scale_factor)
@@ -219,7 +230,7 @@ func _clean_stale_font_size_cache() -> void:
 func _cache_base_font_sizes(node: Node) -> void:
 	_clean_stale_font_size_cache()
 	for child in node.get_children():
-		if child is Control and child != font_decrease_button and child != font_increase_button:
+		if child is Control and child != font_decrease_button and child != font_increase_button and child != credits_button:
 			if not _base_font_sizes.has(child):
 				if child is RichTextLabel:
 					var rtl := child as RichTextLabel
@@ -235,6 +246,18 @@ func _cache_base_font_sizes(node: Node) -> void:
 					if base_size > 0:
 						_base_font_sizes[child] = base_size
 		_cache_base_font_sizes(child)
+
+func _on_credits_pressed() -> void:
+	if not _credits_dialog or not is_instance_valid(_credits_dialog):
+		_credits_dialog = CREDITS_DIALOG_SCENE.instantiate() as CreditsDialog
+		var canvas_layer := get_node_or_null("UI") as CanvasLayer
+		if canvas_layer:
+			canvas_layer.add_child(_credits_dialog)
+		else:
+			add_child(_credits_dialog)
+	_credits_dialog.set_font_scale(FONT_SCALES[_current_scale_index])
+	_credits_dialog.open()
+
 
 func _configure_scroll_pass_through(node: Node) -> void:
 	if node is Control and not (node is TextEdit) and not (node is ScrollContainer):

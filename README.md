@@ -7,3 +7,8 @@
 - [Cómo añadir mini-juegos al Gimnasio Estoico](Dungeons/Minigames/README.md)
 - Prácticas diarias y retos semanales del gimnasio: [`Dungeons/gym_missions.json`](Dungeons/gym_missions.json)
 - Frases de los filósofos que recita el mentor en la Stoa: [`Dungeons/quotes.json`](Dungeons/quotes.json)
+
+## Créditos y Licencias
+
+- Música de fondo: "Volviendo al Hogar" de [FiftySounds](https://www.fiftysounds.com/es/)
+- Consulta el archivo [`CREDITS.md`](CREDITS.md) para más detalles sobre las licencias de terceros.
