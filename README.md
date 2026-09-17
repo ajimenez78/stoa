@@ -1,7 +1,7 @@
 # Stoa: Un viaje interior
 
 [![Godot](https://img.shields.io/badge/Godot-4.7%2B-blue?logo=godot-engine&logoColor=white)](https://godotengine.org)
-[![GDD Google Doc](https://img.shields.io/badge/GDD-Google%20Doc-blue?logo=google-docs&logoColor=white)](https://docs.google.com/document/d/1nLAktXKdIWnROiCxghWwAuX-49K0ZGJzblWr9kq6qmo/edit?usp=sharing)
+[![GDD Google Doc](https://img.shields.io/badge/GDD-Google%20Doc-blue?logo=google-docs&logoColor=white)](https://docs.google.com/document/d/e/2PACX-1vQUyZvZb9Db5rbEDn4J1nB0cQgKnZ87DQ9K2x1xgkl7ibmkJ9K2BRR8HduQIGSM8kIoDo2CFy2xmqzq/pub)
 [![GDD Markdown](https://img.shields.io/badge/GDD-Local%20Markdown-blue?logo=markdown&logoColor=white)](GDD.md)
 [![Platform](https://img.shields.io/badge/Platforms-Android%20%7C%20iOS%20%7C%20Web-green)](#technical-overview)
 [![Localization](https://img.shields.io/badge/Language-Spanish-red)](#language-and-localization)
@@ -102,7 +102,7 @@ You can define new daily practices or weekly missions inside [`Dungeons/gym_miss
   "virtue": "wisdom",
   "points": 8,
   "instructions": [
-    "Step 1...",
+	"Step 1...",
     "Step 2..."
   ]
 }
