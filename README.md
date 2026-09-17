@@ -22,7 +22,7 @@ An immersive, gamified RPG companion built to guide users through the practical 
 
 *Stoa* is more than a mobile game; it is conceived as a **life companion**. Players step into the shoes of a young protagonist feeling overwhelmed by modern anxiety, distractions, and the constant search for external validation. Guided by a wise mentor, they embark on an inner journey to master their responses to life's external events.
 
-For a comprehensive explanation of the game's philosophy, narrative arcs, and detailed architectural blueprints, consult the official **[Google Doc GDD](https://docs.google.com/document/d/1nLAktXKdIWnROiCxghWwAuX-49K0ZGJzblWr9kq6qmo/edit?usp=sharing)** or the local **[Game Design Document (GDD.md)](GDD.md)**.
+For a comprehensive explanation of the game's philosophy, narrative arcs, and detailed architectural blueprints, consult the official **[Google Doc GDD](https://docs.google.com/document/d/e/2PACX-1vQUyZvZb9Db5rbEDn4J1nB0cQgKnZ87DQ9K2x1xgkl7ibmkJ9K2BRR8HduQIGSM8kIoDo2CFy2xmqzq/pub)** or the local **[Game Design Document (GDD.md)](GDD.md)**.
 
 ---
 
