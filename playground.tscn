@@ -20,4 +20,4 @@ position = Vector2(0, 25)
 [node name="Zeno" parent="." unique_id=640111377 instance=ExtResource("3_m8u5f")]
 position = Vector2(349, 341)
 
-[node name="SettingsMenu" parent="." instance=ExtResource("5_settings")]
+[node name="SettingsMenu" parent="." unique_id=1372861501 instance=ExtResource("5_settings")]

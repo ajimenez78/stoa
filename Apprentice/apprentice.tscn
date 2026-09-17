@@ -210,6 +210,44 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_dm7fg"]
 radius = 7.071068
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_back_normal"]
+bg_color = Color(0.96078, 0.96078, 0.94118, 0.62)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.83137, 0.77255, 0.72549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_back_pressed"]
+bg_color = Color(0.83137, 0.77255, 0.72549, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5451, 0.45098, 0.33333, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_back_hover"]
+bg_color = Color(0.96078, 0.96078, 0.94118, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5451, 0.45098, 0.33333, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_back_focus"]
+
 [node name="Apprentice" type="CharacterBody2D" unique_id=975076575]
 collision_mask = 21
 script = ExtResource("1_c4sw5")
@@ -253,9 +291,16 @@ action_up = &"up"
 action_down = &"down"
 
 [node name="BackButton" type="Button" parent="TouchControls" unique_id=1228750351]
-offset_left = 16.0
-offset_top = 13.0
-offset_right = 67.0
-offset_bottom = 65.0
+custom_minimum_size = Vector2(64, 64)
+offset_left = 32.0
+offset_top = 18.0
+offset_right = 96.0
+offset_bottom = 82.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_back_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_back_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_back_hover")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_back_focus")
 icon = ExtResource("43_eflca")
+icon_alignment = 1
 expand_icon = true
+
