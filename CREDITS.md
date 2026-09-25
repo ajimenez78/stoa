@@ -9,3 +9,9 @@ Este proyecto utiliza recursos de terceros bajo sus respectivas licencias. Agrad
   * **Licencia:** Licencia gratuita con atribución (Free License)
   * **Sitio web:** [https://www.fiftysounds.com/es/](https://www.fiftysounds.com/es/)
   * **Uso:** Música de fondo principal del juego.
+
+---
+
+## 🔒 Política de Privacidad
+
+* La Política de Privacidad del juego está disponible en: [https://arturo-jimenez.es/stoa-privacy-policy/](https://arturo-jimenez.es/stoa-privacy-policy/)

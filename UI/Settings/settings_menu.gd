@@ -1,10 +1,16 @@
 extends CanvasLayer
 
+const CREDITS_DIALOG_SCENE := preload("res://Dungeons/UI/credits_dialog.tscn")
+
 @onready var settings_button: Button = %SettingsButton
 @onready var modal_overlay: Control = %ModalOverlay
 @onready var close_button: Button = %CloseButton
 @onready var music_check_button: CheckButton = %MusicCheckButton
+@onready var privacy_button: Button = %PrivacyButton
+@onready var credits_menu_button: Button = %CreditsMenuButton
 @onready var backdrop_button: Button = %BackdropButton
+
+var _credits_dialog: CreditsDialog
 
 func _ready() -> void:
 	# Sincronizar estado inicial del conmutador de música
@@ -20,6 +26,15 @@ func _ready() -> void:
 	close_button.pressed.connect(_on_close_button_pressed)
 	backdrop_button.pressed.connect(_on_close_button_pressed)
 	music_check_button.toggled.connect(_on_music_toggled)
+	if privacy_button:
+		privacy_button.pressed.connect(_on_privacy_pressed)
+	if credits_menu_button:
+		credits_menu_button.pressed.connect(_on_credits_menu_pressed)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if modal_overlay.visible and event.is_action_pressed("ui_cancel"):
+		modal_overlay.visible = false
+		get_viewport().set_input_as_handled()
 
 func _on_settings_button_pressed() -> void:
 	# Actualizar el conmutador por si la preferencia cambió
@@ -31,3 +46,13 @@ func _on_close_button_pressed() -> void:
 
 func _on_music_toggled(toggled_on: bool) -> void:
 	ProgressStore.set_music_enabled(toggled_on)
+
+func _on_privacy_pressed() -> void:
+	OS.shell_open("https://arturo-jimenez.es/stoa-privacy-policy/")
+
+func _on_credits_menu_pressed() -> void:
+	modal_overlay.visible = false
+	if not _credits_dialog or not is_instance_valid(_credits_dialog):
+		_credits_dialog = CREDITS_DIALOG_SCENE.instantiate() as CreditsDialog
+		add_child(_credits_dialog)
+	_credits_dialog.open()

@@ -51,3 +51,11 @@ El sistema DEBE (MUST) guardar la preferencia del estado de la música de fondo 
 #### Scenario: Restoring music setting on application launch
 - **WHEN** la aplicación se inicia o se carga una nueva escena
 - **THEN** el sistema consulta la preferencia guardada en el almacenamiento local y aplica el estado de música de fondo (activado o desactivado) correspondiente
+
+### Requirement: Acceso directo a Créditos desde el menú de Configuración
+
+El menú modal de configuración (`SettingsMenu`) SHALL incluir una sección o botón que permita abrir el diálogo de créditos y licencias directamente.
+
+#### Scenario: Apertura de créditos desde Configuración
+- **WHEN** el usuario presiona el botón "Créditos y Licencias" dentro del menú de configuración
+- **THEN** se despliega el cuadro modal `CreditsDialog` sobre la interfaz activa

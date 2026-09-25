@@ -3,6 +3,7 @@ class_name CreditsDialog extends Control
 
 @onready var close_button: Button = %CloseButton
 @onready var link_button: Button = %LinkButton
+@onready var privacy_link_button: Button = %PrivacyLinkButton
 @onready var backdrop: ColorRect = %Backdrop
 
 var _base_font_sizes: Dictionary = {}
@@ -13,6 +14,8 @@ func _ready() -> void:
 		close_button.pressed.connect(_on_close_pressed)
 	if link_button:
 		link_button.pressed.connect(_on_link_pressed)
+	if privacy_link_button:
+		privacy_link_button.pressed.connect(_on_privacy_link_pressed)
 	if backdrop:
 		backdrop.gui_input.connect(_on_backdrop_gui_input)
 
@@ -41,14 +44,24 @@ func _apply_font_scale() -> void:
 			var scaled_size := int(round(base_size * _current_scale_factor))
 			(control as Control).add_theme_font_size_override("font_size", scaled_size)
 
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		hide()
+		get_viewport().set_input_as_handled()
+
 func _on_close_pressed() -> void:
 	hide()
 
 func _on_link_pressed() -> void:
 	OS.shell_open("https://www.fiftysounds.com/es/")
 
+func _on_privacy_link_pressed() -> void:
+	OS.shell_open("https://arturo-jimenez.es/stoa-privacy-policy/")
+
 func _on_backdrop_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		hide()
+	elif event is InputEventScreenTouch and event.pressed:
 		hide()
 
 func open() -> void:

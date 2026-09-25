@@ -254,7 +254,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 12
+theme_override_constants/margin_right = 70
 theme_override_constants/margin_bottom = 8
 
 [node name="TopControlsHBox" type="HBoxContainer" parent="UI/Layout/ScrollContainer/Column/TopControlsPanel/MarginContainer" unique_id=192349794]

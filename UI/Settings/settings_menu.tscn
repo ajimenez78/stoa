@@ -109,7 +109,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="ModalOverlay/CenterContainer"]
-custom_minimum_size = Vector2(420, 200)
+custom_minimum_size = Vector2(420, 320)
 layout_mode = 2
 theme_override_styles/panel = SubResource("ModalPanelStyle")
 
@@ -167,3 +167,51 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 18
 button_pressed = true
+
+[node name="HSeparator" type="HSeparator" parent="ModalOverlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PrivacyHBox" type="HBoxContainer" parent="ModalOverlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PrivacyLabel" type="Label" parent="ModalOverlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PrivacyHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.18, 0.15, 0.12, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Política de Privacidad"
+
+[node name="PrivacyButton" type="Button" parent="ModalOverlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PrivacyHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.24, 0.12, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "🌐 Abrir"
+
+[node name="HSeparator2" type="HSeparator" parent="ModalOverlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CreditsHBox" type="HBoxContainer" parent="ModalOverlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="CreditsLabel" type="Label" parent="ModalOverlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/CreditsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.18, 0.15, 0.12, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "Créditos y Licencias"
+
+[node name="CreditsMenuButton" type="Button" parent="ModalOverlay/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/CreditsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.24, 0.12, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "ℹ️ Ver"

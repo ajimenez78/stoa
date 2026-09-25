@@ -116,4 +116,5 @@ The Stoic Gym dynamically loads mini-games through a modular interface contract 
 ## 🎵 Credits & Third-Party Licenses
 
 * **Background Music**: *"Volviendo al Hogar"* by [FiftySounds](https://www.fiftysounds.com/es/) (Free license with attribution).
+* **Privacy Policy**: Read the official [Privacy Policy](https://arturo-jimenez.es/stoa-privacy-policy/).
 * For detailed information regarding third-party licenses and credits, please review **[`CREDITS.md`](CREDITS.md)**.

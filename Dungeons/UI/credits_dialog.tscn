@@ -69,7 +69,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(320, 260)
+custom_minimum_size = Vector2(350, 380)
 layout_mode = 2
 theme_override_styles/panel = SubResource("ModalPanelStyle")
 
@@ -98,12 +98,14 @@ text = "Créditos y Licencias"
 
 [node name="CloseButton" type="Button" parent="CenterContainer/Panel/Margin/Content/Header"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(28, 28)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
+theme_override_fonts/font = SubResource("FontBold")
+theme_override_font_sizes/font_size = 18
 text = "✕"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/Panel/Margin/Content"]
-custom_minimum_size = Vector2(0, 140)
+custom_minimum_size = Vector2(0, 270)
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -144,3 +146,31 @@ theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("LinkButtonStyle")
 text = "🌐 Ir a FiftySounds.com"
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/Panel/Margin/Content/ScrollContainer/CreditsList"]
+layout_mode = 2
+
+[node name="PrivacyCategoryLabel" type="Label" parent="CenterContainer/Panel/Margin/Content/ScrollContainer/CreditsList"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.545098, 0.45098, 0.333333, 1)
+theme_override_fonts/font = SubResource("FontSemiBold")
+theme_override_font_sizes/font_size = 13
+text = "Política de Privacidad"
+
+[node name="PrivacyDescriptionLabel" type="Label" parent="CenterContainer/Panel/Margin/Content/ScrollContainer/CreditsList"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 0.85)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "Consulta información sobre la privacidad y gestión de datos."
+autowrap_mode = 3
+
+[node name="PrivacyLinkButton" type="Button" parent="CenterContainer/Panel/Margin/Content/ScrollContainer/CreditsList"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.25, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("LinkButtonStyle")
+text = "🌐 Ver Política de Privacidad"
