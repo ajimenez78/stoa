@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:944982-30e46be3d1a646e182caaf899dcd0012--latest.app.atoms.dev)",
+      "Read(//tmp/**)",
+      "Bash(curl -sL \"https://944982-30e46be3d1a646e182caaf899dcd0012--latest.app.atoms.dev/\" -o stoa_index.html)",
+      "Bash(curl -sL \"https://944982-30e46be3d1a646e182caaf899dcd0012--latest.app.atoms.dev/assets/index-B4EheKch.js\" -o stoa_app.js)",
+      "Bash(grep -o -iE \"[Dd]iario[^\\\\\"'\\\\`]{0,60}\" stoa_app.js)",
+      "Bash(python3 -)",
+      "Bash(python3 -c ' *)",
+      "Bash(timeout 180 Godot_v4.7.1-stable_linux.x86_64 --headless --editor --quit-after 250 --path .)",
+      "Bash(rm -f ~/.local/share/godot/app_userdata/Stoa/progress.json)",
+      "Bash(timeout 120 Godot_v4.7.1-stable_linux.x86_64 --path . res://__shot.tscn)",
+      "Bash(grep -o -iE \"gimnasio[^\\\\\"'\\\\`]{0,80}\" stoa_app.js)",
+      "Bash(grep -viE \"^$|WARNING: Blocking|Godot Engine v|https://godotengine|texture format|Using \\\\\"|OpenGL|Vulkan|CanvasTexture\")",
+      "Bash(timeout 120 Godot_v4.7.1-stable_linux.x86_64 --headless --path . res://__gym_test.tscn)",
+      "Bash(grep -viE \"^$|Godot Engine v|https://godotengine|Using \\\\\"|OpenGL|Vulkan\")",
+      "Bash(timeout 120 Godot_v4.7.1-stable_linux.x86_64 --headless --path . res://__store_test.tscn)",
+      "Bash(timeout 120 Godot_v4.7.1-stable_linux.x86_64 --path . res://__gym_shot.tscn)",
+      "Bash(git checkout *)",
+      "Bash(git mv *)",
+      "Bash(timeout 180 Godot_v4.7.1-stable_linux.x86_64 --headless --editor --quit-after 5 --path .)",
+      "Bash(timeout 120 Godot_v4.7.1-stable_linux.x86_64 --path . res://__mg_shot.tscn)",
+      "Bash(grep -viE \"^$|Godot Engine|godotengine|Using \\\\\"|OpenGL|Vulkan|ObjectDB|resources still|RID alloc|   at: \")",
+      "Bash(mkdir -p /tmp/docheck)",
+      "Bash(timeout 120 Godot_v4.7.1-stable_linux.x86_64 --headless --path . res://__doc_run.tscn)",
+      "Bash(~/.local/bin/Godot_v4.7.1-stable_linux.x86_64 --headless --path . -s tmp_check_scene.gd)",
+      "Bash(Godot_v4.7.1-stable_linux.x86_64 --headless --path . -s tmp_check_scene.gd)",
+      "Bash(Godot_v4.7.1-stable_linux.x86_64 --path . --headless --quit-after 120)",
+      "Bash(git ls-tree *)",
+      "Bash(Godot_v4.7.1-stable_linux.x86_64 --headless --path . res://tmp_anim_test.tscn)",
+      "Bash(git stash *)"
+    ]
+  }
+}
