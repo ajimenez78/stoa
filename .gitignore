@@ -18,5 +18,5 @@ data_*/
 mono_crash.*.json
 
 # Android build
-.android/
+android/
 
