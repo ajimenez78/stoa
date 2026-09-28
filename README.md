@@ -18,6 +18,14 @@ An immersive, gamified RPG companion built to guide users through the practical 
 
 ---
 
+## 🧪 Try It & Join the Testers Program
+
+* **Web version (staging)**: [Play Stoa in your browser](https://staging.d2oc1af88h7wf7.amplifyapp.com/)
+* **Short guide**: [Getting started with Stoa](https://staging.d2oc1af88h7wf7.amplifyapp.com/stoa)
+* **Closed testing**: Want to join the testers program? Send an email to [ajimenez78@gmail.com](mailto:ajimenez78@gmail.com) to enroll.
+
+---
+
 ## 🏛️ Game Overview & Vision
 
 *Stoa* is more than a mobile game; it is conceived as a **life companion**. Players step into the shoes of a young protagonist feeling overwhelmed by modern anxiety, distractions, and the constant search for external validation. Guided by a wise mentor, they embark on an inner journey to master their responses to life's external events.
