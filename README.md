@@ -26,6 +26,15 @@ For a comprehensive explanation of the game's philosophy, narrative arcs, and de
 
 ---
 
+## 📸 Screenshots
+
+| 🏛️ La Stoa | 🏋️ Stoic Gym | 🏠 Home |
+|:---:|:---:|:---:|
+| ![La Stoa — meeting the mentor](Screenshots/stoa.png) | ![Stoic Gym — the training temple](Screenshots/gym.png) | ![Home — the player's dwelling](Screenshots/home.png) |
+| Meet the wise mentor in the portico | Train mind and character at the temple | Reflect and journal at home |
+
+---
+
 ## 🗺️ Key Locations & Gameplay Elements
 
 ```mermaid
