@@ -122,6 +122,12 @@ The Stoic Gym dynamically loads mini-games through a modular interface contract 
 
 ---
 
+## 🧭 Roadmap
+
+Stoa is in an early stage, currently in closed testing. Planned next steps include bug fixing, internationalization (starting with English), visual improvements, gradual architecture evolution, and more content. See the full **[Roadmap (ROADMAP.md)](ROADMAP.md)**.
+
+---
+
 ## 🎵 Credits & Third-Party Licenses
 
 * **Background Music**: *"Volviendo al Hogar"* by [FiftySounds](https://www.fiftysounds.com/es/) (Free license with attribution).
